@@ -70,7 +70,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Models\" />
+	  <Folder Include="Models\Devices\" />
+	  <Folder Include="Models\Usages\" />
+	  <Folder Include="Models\Settings\" />
 	</ItemGroup>
 
 	<ItemGroup>

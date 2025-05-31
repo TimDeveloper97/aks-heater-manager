@@ -2,9 +2,9 @@
 
 namespace maui_heater_manager.ViewModels;
 
-class DeviceViewModel : BaseViewModel
+public partial  class DeviceViewModel : BaseViewModel
 {
-    public DeviceViewModel()
+    public DeviceViewModel(IServiceProvider serviceProvider) : base(serviceProvider)
     {
         Title = "DeviceViewModel";
     }

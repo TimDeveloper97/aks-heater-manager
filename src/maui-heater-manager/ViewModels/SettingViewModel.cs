@@ -2,9 +2,9 @@
 
 namespace maui_heater_manager.ViewModels;
 
-class SettingViewModel : BaseViewModel
+public partial class SettingViewModel : BaseViewModel
 {
-    public SettingViewModel()
+    public SettingViewModel(IServiceProvider serviceProvider) : base(serviceProvider)
     {
         Title = "SettingViewModel";
     }
