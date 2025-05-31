@@ -4,15 +4,17 @@
                  xmlns:domain="clr-namespace:maui_heater_manager.Domains"
                  xmlns:viewmodels="clr-namespace:maui_heater_manager.ViewModels"
                  x:TypeArguments="viewmodels:NowViewModel"
+                 xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
                  x:Class="maui_heater_manager.Pages.NowPage"
                  Title="NowPage">
-    <Grid RowDefinitions="*,auto,*" Padding="10">
+    <Grid RowDefinitions="6*,auto, auto,4*" Padding="10">
 
         <!--item device-->
         <Grid Grid.Row="0">
             <AbsoluteLayout HeightRequest="300" WidthRequest="300"
-                BackgroundColor="Transparent"
-                BindableLayout.ItemsSource="{Binding Circles}">
+                            BackgroundColor="Transparent"
+                            BindableLayout.ItemsSource="{Binding Circles}"
+                                IsVisible="{Binding IsCircleVisible}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate>
                         <Frame
@@ -43,8 +45,21 @@
             </AbsoluteLayout>
         </Grid>
 
+        <Grid Grid.Row="0" IsVisible="{Binding IsCircleVisible, Converter={StaticResource ReverseBoolConverter}}">
+            <lvc:CartesianChart
+                SyncContext="{Binding Sync}"
+                Series="{Binding Series}">
+            </lvc:CartesianChart>
+        </Grid>
+
+        <!-- Tab Buttons -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" HorizontalOptions="Center">
+            <Button Text="Circles" Command="{Binding ShowCirclesCommand}" />
+            <Button Grid.Column="1" Text="Empty" Command="{Binding ShowEmptyCommand}" />
+        </Grid>
+
         <!--today usage-->
-        <Grid Grid.Row="1" ColumnDefinitions="*,*" Margin="10">
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" Margin="10">
             <Label Text="ToDay" FontSize="Large"/>
             <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End">
                 <Image Source="dotnet_bot.png" HeightRequest="20" WidthRequest="20" />
@@ -60,7 +75,7 @@
         </Grid>
 
         <!--menu item log-->
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <CollectionView ItemsSource="{Binding Logs}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>

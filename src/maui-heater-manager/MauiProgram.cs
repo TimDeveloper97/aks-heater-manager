@@ -1,8 +1,10 @@
 ﻿using CommunityToolkit.Maui;
+using LiveChartsCore.SkiaSharpView.Maui;
 using maui_heater_manager.Pages;
 using maui_heater_manager.ViewModels;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace maui_heater_manager;
 
@@ -10,10 +12,19 @@ public static class MauiProgram
 {
     public static MauiApp CreateMauiApp()
     {
+        // github chart
+        // https://www.nuget.org/packages/LiveChartsCore.SkiaSharpView.Maui
+        // link: https://livecharts.dev/docs/maui/2.0.0-rc5.4/gallery
+
+        // CommunityToolkit.Maui
+        // CommunityToolkit.Mvvm
+
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
             .UseMauiCommunityToolkit()
+            .UseSkiaSharp()
+            .UseLiveCharts()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

@@ -1,7 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView;
 using maui_heater_manager.Domains;
 using maui_heater_manager.Models.Nows;
 using Microsoft.Maui.Layouts;
+using SkiaSharp;
 using System;
 using System.Collections.ObjectModel;
 
@@ -11,6 +16,9 @@ public partial class NowViewModel : BaseViewModel
 {
     [ObservableProperty]
     string todayUsage = string.Empty;
+
+    [ObservableProperty]
+    bool isCircleVisible = true;
 
     [ObservableProperty]
     ObservableCollection<HeaterLog> logs = new();
@@ -25,7 +33,14 @@ public partial class NowViewModel : BaseViewModel
 
         GenerateRandomLogs();
         GenerateRandomCircles();
+        GenerateRandomChart();
     }
+
+    [RelayCommand]
+    void ShowCircles() => IsCircleVisible = true;
+
+    [RelayCommand]
+    void ShowEmpty() => IsCircleVisible = false;
 }
 
 public partial class NowViewModel
@@ -125,6 +140,76 @@ public partial class NowViewModel
                 Content = contents[i]
             });
             currentAngle += angles[i];
+        }
+    }
+}
+
+public partial class NowViewModel
+{
+    private readonly Random _r = new();
+    private int _delay = 100;
+    private ObservableCollection<int> _values;
+    private int _current;
+
+    public ISeries[] Series { get; set; }
+
+    public object Sync { get; } = new object();
+
+    public bool IsReading { get; set; } = true;
+
+    private void GenerateRandomChart()
+    {
+        var items = new List<int>();
+        for (var i = 0; i < 1500; i++)
+        {
+            _current += _r.Next(-9, 10);
+            items.Add(_current);
+        }
+
+        _values = new ObservableCollection<int>(items);
+
+        // create a series with the data 
+        Series = [
+            new LineSeries<int>
+            {
+                Values = _values,
+                GeometryFill = null,
+                GeometryStroke = null,
+                LineSmoothness = 0,
+                Stroke = new SolidColorPaint(SKColors.Blue, 1)
+            }
+        ];
+
+        _delay = 1;
+        var readTasks = 10;
+
+        // Finally, we need to start the tasks that will add points to the series. 
+        // we are creating {readTasks} tasks 
+        // that will add a point every {_delay} milliseconds 
+        for (var i = 0; i < readTasks; i++)
+        {
+            _ = Task.Run(ReadData);
+        }
+    }
+
+    private async Task ReadData()
+    {
+        await Task.Delay(1000);
+
+        // to keep this sample simple, we run the next infinite loop 
+        // in a real application you should stop the loop/task when the view is disposed 
+
+        while (IsReading)
+        {
+            await Task.Delay(_delay);
+
+            _current = Interlocked.Add(ref _current, _r.Next(-9, 10));
+
+            lock (Sync)
+            {
+                _values.Add(_current);
+                _values.RemoveAt(0);
+            }
         }
     }
 }
