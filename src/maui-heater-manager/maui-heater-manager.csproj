@@ -72,7 +72,6 @@
 
 	<ItemGroup>
 	  <Folder Include="Models\Usages\" />
-	  <Folder Include="Models\Settings\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -83,6 +82,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\SettingPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Settings\AccountPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\UsagePage.xaml">

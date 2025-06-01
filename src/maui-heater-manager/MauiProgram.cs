@@ -1,7 +1,9 @@
 ﻿using CommunityToolkit.Maui;
 using LiveChartsCore.SkiaSharpView.Maui;
 using maui_heater_manager.Pages;
+using maui_heater_manager.Pages.Settings;
 using maui_heater_manager.ViewModels;
+using maui_heater_manager.ViewModels.Settings;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using SkiaSharp.Views.Maui.Controls.Hosting;
@@ -58,8 +60,10 @@ public static class MauiProgram
         services.AddTransient<UsagePage, UsageViewModel>();
         services.AddTransient<DevicePage, DeviceViewModel>();
         services.AddTransient<SettingPage, SettingViewModel>();
+        services.AddTransient<AccountPage, AccountViewModel>();
 
-        //Routing.RegisterRoute(nameof(APage), typeof(APage));
+        // Add router
+        Routing.RegisterRoute(nameof(AccountPage), typeof(AccountPage));
     }
 
     private static void BuildService(IServiceCollection services)
