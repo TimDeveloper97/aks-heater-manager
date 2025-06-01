@@ -54,15 +54,23 @@
 
         <!-- Tab Buttons -->
         <Grid Grid.Row="1" ColumnDefinitions="*,*" HorizontalOptions="Center">
-            <Button Text="Circles" Command="{Binding ShowCirclesCommand}" />
-            <Button Grid.Column="1" Text="Empty" Command="{Binding ShowEmptyCommand}" />
+            <Image Source="circle.png" HeightRequest="20" WidthRequest="20" Margin="0,0,10,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ShowCircleCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Source="chart.png" Grid.Column="1" HeightRequest="20" WidthRequest="20">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ShowChartCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
         </Grid>
 
         <!--today usage-->
         <Grid Grid.Row="2" ColumnDefinitions="*,*" Margin="10">
             <Label Text="ToDay" FontSize="Large"/>
             <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End">
-                <Image Source="dotnet_bot.png" HeightRequest="20" WidthRequest="20" />
+                <Image Source="meter.png" HeightRequest="30" WidthRequest="30" />
                 <Label FontSize="18" >
                     <Label.FormattedText>
                         <FormattedString>
@@ -82,7 +90,7 @@
                         <StackLayout>
                             <Frame Padding="0">
                                 <Grid ColumnDefinitions="50,*" Margin="5,10">
-                                    <Image Source="dotnet_bot.png" HeightRequest="50" WidthRequest="50" />
+                                    <Image Source="fancolor.png" HeightRequest="50" WidthRequest="50" />
                                     <VerticalStackLayout Grid.Column="1">
                                         <Label Text="{Binding Time, StringFormat='{0:hh:mm tt}'}"/>
                                         <Label Text="{Binding Title}" FontSize="Title"/>

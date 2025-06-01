@@ -6,24 +6,25 @@
     xmlns:local="clr-namespace:maui_heater_manager"
     xmlns:page="clr-namespace:maui_heater_manager.Pages"
     Shell.FlyoutBehavior="Flyout"
+    WidthRequest="300"
     Title="maui_heater_manager">
 
-    <FlyoutItem Title="Now" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Now" Icon="home.png">
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate page:NowPage}" />
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Usage" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Usage" Icon="chart.png">
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate page:UsagePage}" />
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Devices" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Devices" Icon="device.png">
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate page:DevicePage}" />
         </Tab>
     </FlyoutItem>
-    <FlyoutItem Title="Settings" Icon="dotnet_bot.png">
+    <FlyoutItem Title="Settings" Icon="setting.png">
         <Tab>
             <ShellContent ContentTemplate="{DataTemplate page:SettingPage}" />
         </Tab>

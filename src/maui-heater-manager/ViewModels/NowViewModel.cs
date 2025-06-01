@@ -40,7 +40,7 @@ public partial class NowViewModel : BaseViewModel
     void ShowCircles() => IsCircleVisible = true;
 
     [RelayCommand]
-    void ShowEmpty() => IsCircleVisible = false;
+    void ShowChart() => IsCircleVisible = false;
 }
 
 public partial class NowViewModel
