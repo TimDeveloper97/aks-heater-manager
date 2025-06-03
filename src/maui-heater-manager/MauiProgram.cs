@@ -5,6 +5,7 @@ using maui_heater_manager.Pages.Settings;
 using maui_heater_manager.ViewModels;
 using maui_heater_manager.ViewModels.Settings;
 using Microsoft.Extensions.Logging;
+using Plugin.LocalNotification;
 using Serilog;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
@@ -32,7 +33,8 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             })
-            .UseMauiCommunityToolkit();
+            .UseMauiCommunityToolkit()
+            .UseLocalNotification();
 
         BuildLogging();
         BuildBinding(builder.Services);

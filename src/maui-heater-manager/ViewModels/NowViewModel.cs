@@ -9,6 +9,7 @@ using Microsoft.Maui.Layouts;
 using SkiaSharp;
 using System;
 using System.Collections.ObjectModel;
+using Plugin.LocalNotification;
 
 namespace maui_heater_manager.ViewModels;
 
@@ -37,7 +38,11 @@ public partial class NowViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    void ShowCircles() => IsCircleVisible = true;
+    void ShowCircles()
+    {
+        IsCircleVisible = true;
+        GenerateNotification();
+    }
 
     [RelayCommand]
     void ShowChart() => IsCircleVisible = false;
@@ -45,6 +50,23 @@ public partial class NowViewModel : BaseViewModel
 
 public partial class NowViewModel
 {
+    private void GenerateNotification()
+    {
+        var notification = new NotificationRequest
+        {
+            NotificationId = 100,
+            Title = "Thông báo",
+            Description = "Đây là nội dung thông báo",
+            ReturningData = "Dummy data",
+            Schedule = new NotificationRequestSchedule
+            {
+                NotifyTime = DateTime.Now.AddSeconds(1) 
+            }
+        };
+
+        LocalNotificationCenter.Current.Show(notification);
+    }
+
     private void GenerateRandomLogs()
     {
         for (int i = 0; i < 3; i++)
