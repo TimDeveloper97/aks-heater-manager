@@ -7,7 +7,7 @@
                  xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
                  x:Class="maui_heater_manager.Pages.NowPage"
                  Title="NowPage">
-    <Grid RowDefinitions="6*,auto, auto,4*" Padding="10">
+    <Grid RowDefinitions="5*,auto, auto,4*" Padding="10">
 
         <!--item device-->
         <Grid Grid.Row="0">
@@ -56,7 +56,7 @@
         <Grid Grid.Row="1" ColumnDefinitions="*,*" HorizontalOptions="Center">
             <Image Source="circle.png" HeightRequest="20" WidthRequest="20" Margin="0,0,10,0">
                 <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ShowCircleCommand}" />
+                    <TapGestureRecognizer Command="{Binding ShowCirclesCommand}" />
                 </Image.GestureRecognizers>
             </Image>
             <Image Source="chart.png" Grid.Column="1" HeightRequest="20" WidthRequest="20">

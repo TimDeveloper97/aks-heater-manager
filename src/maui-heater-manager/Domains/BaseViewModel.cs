@@ -1,7 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Windows.Services.Maps;
 
 namespace maui_heater_manager.Domains;
 
@@ -20,7 +18,7 @@ public abstract partial class BaseViewModel
 
     public BaseViewModel(IServiceProvider serviceProvider)
     {
-        _logger = serviceProvider.GetService<ILogger<BaseViewModel>>()
-            ?? throw new Exception("");
+        //_logger = serviceProvider.GetService<ILogger<BaseViewModel>>()
+        //    ?? throw new Exception("");
     }
 }
