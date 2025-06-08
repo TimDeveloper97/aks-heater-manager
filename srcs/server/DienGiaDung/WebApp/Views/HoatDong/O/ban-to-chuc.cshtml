@@ -1,0 +1,104 @@
+﻿
+@{
+    var user = (Actors.BTC)Model;
+    var one = DB.HoatDong.FindOne(user.RequestContext.Id);
+
+    var db = DB.GetHoatDongDB(one.ObjectId);
+    var tab = db.BTC;
+    var lst = db.GetAccountList();
+
+    var pageTitle = "người dùng";
+
+    var usersConfig = DB.Config.User;
+    var roles = new Document();
+
+    foreach (var k in usersConfig.Keys.OrderBy(x => x))
+    {
+        if (k == nameof(Actors.Admin)) { continue; }
+        roles.Add(k, usersConfig.GetDocument(k).Name);
+    }
+
+    //var groups = lst.GroupBy(nameof(user.Role));
+    //foreach (var g in groups)
+    //{
+    //    g.Name = (string)roles[g.Role];
+    //}
+}
+
+<div class="page-header">
+    <h3 class="main-title">Ban tổ chức</h3>
+    <h5 class="sub-title">@one.Name</h5>
+    <div class="actions right" style="top:1rem;">
+        <div class="dropdown mx-0">
+            <a class="btn btn-dark-primary btn-detail" href="#">Cập nhật</a>
+            <div class="dropdown-menu-right">
+                <a class="insert-action"><i class="fa fa-fw fa-plus text-primary"></i> Thêm mới</a>
+                <a onclick="begin_create_acc()"><i class="fa fa-fw fa-upload text-success"></i> Tạo tài khoản đăng nhập</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="summary" style="margin: -2rem 1rem 2rem 1rem">
+    <div class="card data-list-view" id="chi-tiet">
+        <div>
+            <div id="items-container" class="row">
+                @foreach (var e in lst)
+                {
+                    var ghi_chu = roles[e.Role];
+                    var x = e.Xe;
+                    if (x != null) { ghi_chu += $" (xe số {x})"; }
+                    <div class="item col-sm-3">
+                        <div class="card person">
+                            <div>
+                                <div class="Name"><b class="binding" data-path="Name">@e.Name</b></div>
+                                <div><span class="binding" data-path="SoDT">@e.SoDT</span></div>
+                                <div><span class="binding" data-path="GhiChu">@ghi_chu</span></div>
+                                <div class="actions right">
+                                    <button class="btn btn-sm btn-warning update-action">
+                                        <i class="fa fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-action">
+                                        <i class="fa fa-close"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .card.person {
+        padding: 1em;
+        background-color: #fefefe;
+    }
+</style>
+@MyRazor.HtmlMenu("hoat-dong")
+
+<script>
+    let vm = new HoatDongViewModel('@db.Name', '@tab.Name')
+    let view = new HoatDongDataView('@pageTitle', vm)
+    let roles = @(roles.ToHtml());
+
+    view.createEditors = function () {
+        return {
+            Role: new ComboBox().caption("Quyền").options(roles),
+            SoDT: new PhoneBox().caption("Điện thoại").required(),
+            Name: new TextBox().caption("Họ tên").required(),
+            GhiChu: new TextBox().caption("Ghi chú"),
+        }
+    }
+
+    function begin_create_acc() {
+        var s = "Tạo tài khoản đăng nhập:<ul>";
+        for (let i in roles) s += "<li>" + roles[i] + "</li>";
+        s += "</ul>";
+        dialog.ask(s, "Tạo tài khoản", () => {
+            actor.post("create-hoat-dong-accounts/@db.Name", null, () => {
+                new Toast().text("Tạo tài khoản thành công").mode("success").show(3);
+            })
+        })
+    }</script>

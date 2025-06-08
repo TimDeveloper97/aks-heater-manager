@@ -1,0 +1,150 @@
+﻿
+@{
+    var user = (TokenUser)Model;
+    var one = DB.HoatDong.FindOne(user.RequestContext.Id);
+
+    var db = DB.GetHoatDongDB(one.ObjectId);
+    var tvs = db.ThanhVien.SelectAll();
+    var don_vi = tvs.GroupBy(nameof(one.DiaChi));
+
+    var pageTitle = "thành viên";
+
+    var total = tvs.Count;
+}
+<div class="page-header">
+    <h3 class="main-title">Thành viên</h3>
+    <h5 class="sub-title">@one.Name</h5>
+    <div class="actions right" style="top:1rem;">
+        <div class="dropdown mx-0">
+            <a class="btn btn-dark-primary btn-detail" href="#">Cập nhật</a>
+            <div class="dropdown-menu-right">
+                <a class="insert-action"><i class="fa fa-fw fa-plus text-primary"></i> Thêm thành viên</a>
+                <a onclick="begin_import()"><i class="fa fa-fw fa-upload text-success"></i> Nhập danh sách</a>
+                <a class="menu-seperator delete-all-action"><i class="fa fa-fw fa-trash text-danger"></i> Xóa toàn bộ</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="summary" style="margin: -2rem 1rem 2rem 1rem">
+    <div class="card" id="tong-hop">
+        <div>
+            <a class="btn-detail"><h4>Bảng tổng hợp</h4></a>
+            <div class="overflow-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Đơn vị</th>
+                            <th>Số lượng</th>
+                            <th />
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var g in don_vi)
+                        {
+                            <tr>
+                                <td><a href="#">@(g.DiaChi)</a></td>
+                                <td>@(g.Records.Count)</td>
+                                <td />
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="card data-list-view" id="chi-tiet" style="display:none">
+        <div>
+            <div>
+                <h4 id="table-name"></h4>
+                <div class="actions right">
+                    <button class="btn btn-sm btn-secondary" onclick="showTongHop()">
+                        <i class="fa fa-close"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="items-container" class="row">
+                <div class="item col-sm-3">
+                    <div class="card person">
+                        <div>
+                            <div class="Name"><b class="binding" data-path="Name"></b></div>
+                            <div><span class="binding" data-path="SoDT"></span></div>
+                            <div>
+                                Xe số <span class="binding" data-path="Xe"></span>,
+                                Phòng số <span class="binding" data-path="Phong"></span>
+                            </div>
+                            <div class="actions right">
+                                <button class="btn btn-sm btn-warning update-action">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger delete-action">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@MyRazor.HtmlMenu("hoat-dong")
+
+<style>
+    .card.person {
+        padding: 1em;
+        background-color: #fefefe;
+    }
+</style>
+<script>
+    Table.init().light('thead').hover('tbody')
+    let vm = new HoatDongViewModel('@db.Name')
+    let view = new HoatDongDataView('@pageTitle', vm)
+    view.createEditors = function () {
+        return {
+            MaCB: new TextBox().caption("Mã CB").column(6),
+            SoDT: new PhoneBox().caption("Điện thoại").required().column(6),
+            DiaChi: new TextBox().caption("Đơn vị").required(),
+            Name: new TextBox().caption("Họ tên").required().column(6),
+            GioiTinh: new ComboBox().caption("Giới tính").required().column(6).options("Nam;Nữ"),
+            Xe: new NumberBox().caption("Phân xe").column(3),
+            Phong: new TextBox().caption("Phân phòng").column(3),
+        }
+    }
+
+    let thanhVienList = $("#chi-tiet")
+    let iv = new View(thanhVienList.find(".item"));
+    iv.content.remove();
+
+    $("td > a").click(function () {
+        let n = this.innerText;
+        view.selectThanhVien({ DiaChi: n }, iv, $("#items-container"))
+
+        $("#tong-hop").hide();
+
+        $("#table-name").html(n);
+        thanhVienList.show();
+    })
+
+    function showTongHop() {
+        $("#tong-hop").show();
+        thanhVienList.hide();
+    }
+
+    function begin_import() {
+        view.beginImport({
+            pk: "SoDT",
+            cols: {
+                SoDT: "Số ĐT",
+                Name: "Họ tên",
+                DiaChi: "Đơn vị",
+                GioiTinh: "Giới tính",
+                Xe: "Số xe",
+                Phong: "Số phòng",
+            }
+        })
+    }
+</script>

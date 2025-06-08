@@ -1,0 +1,198 @@
+﻿
+@{
+    var user = (TokenUser)Model;
+    var one = DB.HoatDong.FindOne((string)user.Value);
+
+    var db = DB.GetHoatDongDB(one.ObjectId);
+    var tab = db.ChuongTrinh;
+    var lst = db.GetChuongTrinh(true);
+
+    var me = db.ThanhVien.Find(user.ObjectId);
+    user.Name = me.Name;
+
+    var so_xe = me.Xe;
+    var xe_info = new Document();
+    if (so_xe != null)
+    {
+        xe_info = db.Xe[so_xe];
+    }
+
+    var ks = db.GetPhongInfo(null, user.ObjectId);
+    var key = ks.State;
+    var dang_ky = me.GetDocument("dang-ky");
+}
+
+<div class="page-header">
+    <h3 class="main-title">Các sự kiện</h3>
+    <h5 class="sub-title">@one.Name</h5>
+    <div class="actions right">
+        <button class="btn btn-dark-primary" onclick="on_dang_ky(this)">
+            Đăng ký
+        </button>
+    </div>
+</div>
+
+<style>
+    .time {
+        font-family: Consolas;
+        color: forestgreen;
+    }
+    .s-frame {
+        height: 20px;
+        width: 40px;
+        border-radius: 10px;
+        background-color: var(--bs-primary);
+        padding: 1px;
+    }
+        .s-frame.pass {
+            background-color: #CCC;
+        }
+    .s-check {
+        background-color: #FFF;
+        border-radius: 10px;
+        width: 18px;
+        height: 18px;
+        float: right;
+    }
+    .s-frame.pass > .s-check {
+        float: left;
+    }
+    
+    .bag.pass .fa {
+        color: var(--bs-secondary);
+    }
+    
+    #chuong-trinh .actions {
+        right: 0.5em;
+        z-index: 2;
+        padding: 0;
+        display: none;
+    }
+    #chuong-trinh.dang-ky .bag-icon {
+        display: none;
+    }
+    #chuong-trinh.dang-ky .actions {
+        display: block;
+    }
+
+    .card-header {
+        position: relative;
+    }
+    .card-header .btn {
+        float: right;
+    }
+    .card-body td {
+        padding: 0.5em;
+    }
+    td .fa {
+        color: transparent;
+    }
+    td.key .fa {
+        color: var(--bs-primary);
+    }
+</style>
+<div style="margin: 1rem; margin-top: -2rem;">
+
+    <div id="phong" class="card" style="display:none">
+        <div>
+            <button class="btn btn-secondary btn-sm">
+                <i class="fa fa-close"></i>
+            </button>
+
+            <h5>
+                <span>Phòng số </span>
+                <span>@ks.ObjectId</span>
+                @if (ks.Value != null)
+                {
+                    <span>(@ks.Value)</span>
+                }
+                else
+                {
+                    <span>(chưa được nhận phòng)</span>
+                }
+            </h5>
+        </div>
+        <div>
+            <h5><b>Bạn cùng phòng</b></h5>
+            <table>
+                @foreach (var e in ks.Records)
+                {
+                    <tr>
+                        <td class="@(e.ObjectId == key ? "key" : "")"><i class="fa fa-key"></i></td>
+                        <td>@e.Name</td>
+                        <td>@e.SoDT</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div id="chuong-trinh" class="row">
+        @foreach (var e in lst)
+        {
+            var dk = dang_ky.GetString(e.ObjectId) == "x" ? "pass" : "";
+            var loai = e.GetString("Loai");
+
+            <div class="col-sm-4">
+                <div class="bag bag-@(e.State) pointer-event @dk">
+                    <div class="bag-line"></div>
+                    <div class="bag-icon"><i class="fa fa-list"></i></div>
+                    <div class="card">
+                        <div>
+                            <div>
+                                <b class="Name">@e.Name</b>
+                                <div><i>@e.DiaChi</i></div>
+                            </div>
+                            <div class="time">
+                                <span>@($"{e.BD:dd/MM} {e.BD:HH:mm} - {e.KT:HH:mm}")</span>
+                            </div>
+
+                            @if (loai == "diem-danh")
+                            {
+                                <div>Xe số <span>@me.Xe</span></div>
+                            }
+                            else if (loai == "check-in" || loai == "check-out")
+                            {
+                                <div><a href="#" onclick="show_info('phong')">Phòng số <span>@me.Phong</span></a></div>
+                            }
+                        </div>
+
+                        <div class="actions right">
+                            <div class="s-frame @dk" id="@e.ObjectId">
+                                <div class="s-check"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@if (so_xe != null)
+{
+    @MyRazor.TruongXeMenu(db, me.Xe)
+}
+<script>
+    let vm = new HoatDongViewModel('@db.Name', "@tab.Name")
+    function on_dang_ky(btn) {
+        $("#chuong-trinh").toggleClass("dang-ky");
+    }
+
+    $(".s-frame").click(function () {
+        actor.post("dang-ky-su-kien/@(db.Name)/" + this.id, null, r => {
+            $(this).toggleClass("pass");
+            $(this).parents(".bag").toggleClass("pass");
+        });
+    })
+    $(".card").each(function () {
+        let me = $(this);
+        me.find("button").click(function () {
+            me.hide();
+            $("#chuong-trinh").show();
+        })
+    })
+    function show_info(name) {
+        $("#chuong-trinh").hide();
+        $(document.getElementById(name)).show();
+    }
+</script>

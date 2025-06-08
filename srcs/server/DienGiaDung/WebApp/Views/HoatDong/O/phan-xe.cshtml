@@ -1,0 +1,168 @@
+﻿
+@{
+    var user = (TokenUser)Model;
+    var one = DB.HoatDong.FindOne(user.RequestContext.Id);
+
+    var db = DB.GetHoatDongDB(one.ObjectId);
+    var lst = db.ThanhVien.SelectAll();
+
+    var cac_xe = new DocumentList(db.Xe.Values.OrderBy(x => x.ObjectId));
+    var total = lst.Count;
+    var pageTitle = "Phân xe, phân phòng";
+
+    Func<string, Document, HtmlString> inf = (i, e) => {
+        var s = $"<i class='fa fa-fw fa-{i}'></i> ";
+        if (e != null) {
+            s += $"{e.Name} ({e.SoDT})";
+        }
+        else {
+            s += "chưa có thông tin";
+        }
+
+        return new HtmlString(s);
+    };
+}
+
+<div class="page-header">
+    <h3 class="main-title">@pageTitle</h3>
+    <h5 class="sub-title">@one.Name</h5>
+    <div class="actions right" style="top:1rem;">
+        <a class="btn btn-dark-primary btn-detail" href="#" onclick="begin_import()">Cập nhật</a>
+    </div>
+</div>
+
+<style>
+    .Name {
+        font-weight: 600;
+        color: var(--bs-primary);
+    }
+    .info > div > div {
+        min-width: 200px;
+        display: inline;
+    }
+
+    .item .card {
+        padding: 1em;
+    }
+</style>
+
+<div id="summary" style="margin: -2rem 1rem 2rem 1rem;display:block">
+    <div id="phan-xe">
+        <div class="data-list-view">
+            <div class="row">
+                @foreach (Models.HoatDongDB.XeInfo e in cac_xe)
+                {
+                    var id = e.ObjectId;
+                    var tx = e.TruongXe;
+                    var hd = e.HDV;
+                    var lx = e.TaiXe;
+                    <div class="item col-sm-4">
+                        <div>
+                            <div class="card">
+                                <div>
+                                    <div class="Name"><span>Xe số @id</span><span></span></div>
+                                    <div class=""><span><i class="fa fa-fw fa-user"></i> Số lượng</span> <span>@e.ThanhVien.Count</span></div>
+                                    <div class=""><a href="#" onclick="begin_set_tx('@id')">@inf("medal", tx)</a></div>
+                                    <div class=""><a href="#" onclick="edit_hd('@id')">@inf("flag", hd)</a></div>
+                                    <div class=""><a href="#" onclick="edit_lx('@id')">@inf("bus", lx)</a></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@MyRazor.HtmlMenu("hoat-dong")
+
+<script>
+    let vm = new HoatDongViewModel('@db.Name')
+    let view = new HoatDongDataView('@pageTitle', vm);
+
+    function begin_import() {
+        view.beginImport({
+            _id: "Điện thoại",
+            Xe: "Số xe",
+            Phong: "Số phòng",
+        })
+    }
+
+    function save(x, r, v) {
+        let m = vm.createViewModel(null, "PhucVu");
+        m.primaryKey = v.SoDT;
+        v.Role = r;
+        v.Xe = x;
+
+        m.send("+", v);
+    }
+    function begin_set_tx(x) {
+        vm.getThanhVien({ Xe: x }, lst => {
+            let opts = []
+            for (let e of lst) {
+                opts.push("<b>" + e.Name + "</b><i>" + e.SoDT + "</i>")
+            }
+            opts.sort();
+
+            new EditorDialog({
+                sel: new SingleChoiceBox().options(opts)
+            }, v => {
+
+                let i = $(v.sel);
+                save(x, "TruongXe", {
+                    SoDT: i[1].innerHTML,
+                    Name: i[0].innerHTML
+                })
+            }).show().title("Chọn trưởng xe số " + x);
+        })
+    }
+
+    function edit_hd(x) {
+        new EditorDialog({
+            SoDT: new PhoneBox().caption("Điện thoại").required(),
+            Name: new TextBox().caption("Tên").required()
+        }, v => {
+            save(x, "HDV", v);
+        }).show().title("Hướng dẫn viên xe số " + x)
+    }
+    function edit_lx(x) {
+        new EditorDialog({
+            SoDT: new PhoneBox().caption("Điện thoại").required(),
+            Name: new TextBox().caption("Tên").required()
+        }, v => {
+            save(x, '@nameof(Models.HoatDongDB.XeInfo.TaiXe)', v);
+        }).show().title("Lái xe số " + x)
+    }
+</script>
+
+<style>
+    .form-group > div {
+        max-height: 250px;
+        overflow-y: auto;
+        padding: 1em;
+    }
+
+    .form-check .form-label {
+        opacity: 0.85;
+        color: #333;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .form-check:hover .form-label {
+        background-color: var(--bs-primary);
+        color: white;
+    }
+
+    td .d-flex {
+    }
+
+        td .d-flex button {
+            margin-right: 1em;
+        }
+</style>
+
+<script>
+</script>

@@ -1,0 +1,126 @@
+﻿
+@{
+    var user = (TokenUser)Model;
+    var one = DB.HoatDong.FindOne(user.RequestContext.Id);
+
+    var db = DB.GetHoatDongDB(one.ObjectId);
+    var tab = db.ChuongTrinh;
+    var lst = db.GetChuongTrinh(false);
+
+    Document last = null;
+    if (lst.Count > 0) {
+        last = lst[lst.Count - 1];
+    }
+    if (last == null) {
+        last = one;
+    }
+    var newOne = new Document().Copy(last);
+    newOne.Name = null;
+    if (last.KT != null) {
+        newOne.BD = last.KT;
+    }
+
+    var pageTitle = "chương trình";
+    var group = new DocumentList();
+    var last_group = new DocumentGroup();
+    foreach (var e in lst)
+    {
+        var ngay = $"{e.Ngay:dd/MM}";
+        var lngy = last_group.Value;
+        if (lngy == null) {
+            last_group.Value = ngay;
+            group.Add(last_group);
+        }
+        else if (!lngy.Equals(ngay)) {
+            group.Add(last_group = new DocumentGroup { Value = ngay });
+        }
+        last_group.Records.Add(e);
+    }
+}
+
+<div class="page-header">
+    <h3 class="main-title">Chương trình</h3>
+    <h5 class="sub-title">@one.Name</h5>
+    <div class="actions right" style="top:1rem;">
+        <a class="btn btn-dark-primary insert-action">Thêm mới</a>
+    </div>
+</div>
+
+<style>
+    .time {
+        font-family: Consolas;
+    }
+    .item {
+        border-bottom: 1px solid #ccc;
+    }
+</style>
+<div class="row" id="summary" style="margin:-2rem 1rem 2rem 1rem">
+    <div class="data-list-view">
+        <div>
+            @foreach (DocumentGroup g in group) {
+                <div class="card mb-2">
+                    <div>
+                        <h5><b>Ngày @g.Value</b></h5>
+                        @foreach (var e in g.Records)
+                        {
+                            <div id="@e.ObjectId" class="item">
+                                <div class="time">
+                                    <div>@($"{e.BD:HH:mm} - {e.KT:HH:mm}")</div>
+                                </div>
+                                <div><b class="Name">@e.Name</b><br />@e.DiaChi</div>
+
+                                <div style="position:relative">
+                                    <div class="actions right">
+                                        <button class="btn btn-sm btn-warning update-action">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-warning update-action" onclick="refr('@e.ObjectId')">
+                                            <i class="fa fa-refresh"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-danger delete-action">
+                                            <i class="fa fa-close"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@MyRazor.HtmlMenu("hoat-dong")
+<script>
+    Table.init().light('thead')
+
+    let vm = new HoatDongViewModel('@db.Name', "@tab.Name")
+    vm.createNewItem = function () {
+        return @(newOne.ToHtml())
+    }
+    let view = new HoatDongDataView('@pageTitle', vm)
+    view.createEditors = function () {
+        let opts = {
+            "diem-danh": "Di chuyển",
+            "dich-vu": "Ăn trưa, ăn tối",
+            "hoi-nghi": "Hội nghị, hội thảo",
+            "hoat-nao": "Hoạt động tập thể",
+            "check-in": "Nhận phòng khách sạn",
+            "check-out": "Trả phòng khách sạn",
+        }
+        return {
+            Name: new TextBox().caption("Tên").required(),
+            DiaChi: new TextBox().caption("Địa điểm"),
+            Ngay: new DateBox().caption("Ngày").required().column(4),
+            BD: new TimeBox().caption("Bắt đầu").required().column(4),
+            KT: new TimeBox().caption("Kết thúc").column(4),
+            Loai: new ComboBox().caption("Loại sự kiện").required().options(opts),
+        }
+    }
+
+    function refr(i) {
+        actor.post('reset-diem-danh/@db.Name/' + i)
+    }
+</script>

@@ -1,0 +1,49 @@
+﻿
+@{
+    var user = (Actors.Admin)Model;
+    var lst = DB.Accounts.Select();
+}
+
+<div class="card">
+    <div>
+        <h4>Danh sách tài khoản</h4>
+        <div class="actions right">
+            <button class="btn btn-sm btn-primary" onclick="begin_add()">
+                <i class="fa fa-plus"></i>
+            </button>
+        </div>
+    </div>
+
+    <div>
+        @foreach (var e in lst)
+        {
+            var phone = e.ObjectId;
+            <div class="item" id="@phone">
+                <div>@e.Name</div>
+                <div><a href="tel:@phone">@phone</a></div>
+                <div>@e.Role</div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function begin_add() {
+        let ed = {
+            _id: new PhoneBox().caption("Số điện thoại").required(),
+            Name: new TextBox().caption("Tên").required(),
+        }
+        let frm = new EditorDialog(ed, v => {
+            actor.post("create-account", v, () => {
+
+            })
+        })
+        frm.title("Thêm tài khoản").show()
+    }
+
+</script>
+<script>
+    $(".item").click(function () {
+        //redirect("/account/o/customer/" + this.id)
+    })
+</script>

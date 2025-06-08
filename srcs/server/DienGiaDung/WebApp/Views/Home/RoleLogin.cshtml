@@ -1,0 +1,109 @@
+﻿@{ 
+    Layout = null;
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>@(ViewBag.Title ?? DB.Config.Name)</title>
+
+    @MyHelper.Fonts("css")
+    @MyHelper.Css()
+    @MyHelper.Scripts()
+    @MyHelper.Scripts("vst")
+
+    @{
+        var roles = new Document();
+        foreach (var p in DB.Config.User) {
+            roles.Add(p.Key, Document.FromObject(p.Value).Name);
+        }
+    }
+    <style>
+        .form-caption a {
+            margin-right: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="mt-10">
+        <div id="rol-form">
+        </div>
+        <div id="acc-form">
+        </div>
+    </div>
+    <script>
+        var actor = new Actor("guest");
+        class LoginForm extends SingleForm {
+            constructor(role) {
+                super("#acc-form")
+
+                function error(s) {
+                    loginForm.comment(s, "danger");
+                }
+
+                let ed = {
+                    un: new PhoneBox().caption("Số điện thoại").required(),
+                    ps: new PasswordBox().caption("Mật khẩu").required(),
+                    ke: new CheckBox().caption("Tự động đăng nhập cho lần sau").val(1)
+                }
+
+                if (role == "Admin") {
+                    ed.un = null;
+                }
+                this.controls(ed).title("<a href='#' onclick='loginForm.back()'><i class='fa fa-arrow-left'></i></a>Tài khoản")
+                this.accept("Đăng nhập", v => {
+                    let data = {
+                        _id: v.un ?? "0",
+                        Password: v.ps,
+                    }
+                    if (v.ke) {
+                        cookie.set("@AppKeys.LoginInfo", data, 7);
+                    }
+                    else {
+                        cookie.remove("@AppKeys.LoginInfo");
+                    }
+
+                    api.error = function (c, m) {
+                        error("Sai tên người dùng hoặc mật khẩu");
+                    }
+                    actor.post("try-login", data, r => {
+                        session.loggedIn(r.token)
+                    });
+                })
+
+                this.back = function () {
+                    this.content.children().remove()
+                    roleForm.show()
+                }
+            }
+        }
+        class RoleForm extends SingleForm {
+            constructor() {
+                super("#rol-form");
+                this.controls({ Role: new SingleChoiceBox().caption().options(@roles.ToHtml()).val(0) })
+                this.title("Chọn quyền truy cập")
+                    .accept("Xác nhận", v => {
+                        this.hide();
+                        loginForm = new LoginForm(v.Role);
+                    })
+            }
+        }
+        let roleForm = new RoleForm();
+        let loginForm = null;
+    </script>
+
+    <script>
+        let cus = {
+            UserName: "01234",
+            Password: "1234",
+            Staff: {
+                "0989xxx": {},
+                "0988xxx": {}
+            },
+            Device: [ "0000", "1111" ]
+        }
+    </script>
+</body>
+</html>

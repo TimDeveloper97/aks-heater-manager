@@ -1,0 +1,235 @@
+﻿
+@{
+    var user = (TokenUser)Model;
+
+    if (!(user is Actors.BTC))
+    {
+        Response.Redirect($"/hoatdong/D/index/{user.Value}");
+        return;
+    }
+
+    var one = DB.HoatDong.FindOne((string)user.RequestContext.Tag);
+
+    var db = DB.GetHoatDongDB(one.ObjectId);
+
+    var tvs = db.GetThanhVien(null);
+
+    var don_vi = tvs.GroupBy(nameof(one.DiaChi));
+    var cac_xe = new DocumentList(db.Xe.Values.OrderBy(x => x.ObjectId));
+
+    var pageTitle = "thành viên";
+
+    var total = tvs.Count;
+
+    user.Url = $"hoatdong/index/{db.Name}";
+}
+
+<div class="page-header">
+    <h3 class="main-title"></h3>
+    <h5 class="sub-title">@one.Name</h5>
+    <div class="actions right" style="top:1rem;">
+        <a class="btn btn-dark-primary btn-detail">Cập nhật</a>
+    </div>
+</div>
+
+<div class="row" id="summary" style="margin-top:-2rem">
+    <div class="col-sm-4">
+        <div class="card nav-tabs" data-target="#chuong-trinh">
+            <div class="bag bag-danger" icon="list">
+                <div>
+                    <b>@one.DiaChi</b>
+                </div>
+                <div>
+                    <span>@($"{one.BD:dd/MM} - {one.KT:dd/MM}")</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card nav-tabs" data-target="#thanh-vien">
+            <div class="bag bag-success" icon="user">
+                <div>
+                    <b>@(don_vi.Length)</b> đơn vị
+                </div>
+                <div>
+                    <b>@(tvs.Count)</b> thành viên tham gia
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card nav-tabs" data-target="#phan-xe">
+            <div class="bag bag-warning" icon="bus">
+                <div>
+                    <b>@(db.Xe.Count)</b> xe đưa đón
+                </div>
+                <div>
+                    @(one.GetString("DoiTac"))
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="margin-top:1em;">
+    <div class="card" id="chuong-trinh" title="Chương trình">
+        <div>
+            <div class="overflow-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ngày, Giờ</th>
+                            <th>Nội dung</th>
+                            <th>Số lượng</th>
+                            <th />
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var e in db.GetBaoCao())
+                        {
+                            bool b = e.State != "warning";
+                            var s = e.GetDocument("dang-ky");
+                            <tr>
+                                <td class="time">
+                                    <b>@($"{e.BD:dd/MM}")</b>
+                                    <div>@($"{e.BD:HH:mm} - {e.KT:HH:mm}")</div>
+                                </td>
+                                <td><b class="Name">@e.Name</b><br/>@e.DiaChi</td>
+                                <td>
+                                    <span class="text-success">@(s["1"])</span> /
+                                    <span>@(s["0"])</span> /
+                                    <span class="text-danger">@(s["x"])</span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card" id="thanh-vien" title="Danh sách đơn vị">
+        <div>
+            <div class="overflow-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Đơn vị</th>
+                            <th>Số lượng</th>
+                            <th />
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var g in don_vi)
+                        {
+                            <tr>
+                                <td>@(g.DiaChi)</td>
+                                <td>@(g.Records.Count)</td>
+                                <td />
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="card" id="phan-xe" title="Các xe">
+        <div>
+            <div class="overflow-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th class="text-center">Số người</th>
+                            <th>Trưởng xe</th>
+                            <th>Hướng dẫn</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Models.HoatDongDB.XeInfo g in cac_xe)
+                        {
+                            var x = g.ObjectId;
+                            var tx = g.TruongXe;
+                            var hd = g.HDV;
+                            <tr>
+                                <td>@x</td>
+                                <td class="text-center">@(g.ThanhVien.Count)</td>
+                                <td>
+                                    @if (tx != null) 
+                                    {
+                                        <div>@tx.Name</div>
+                                        <div>@tx.SoDT</div>
+                                    }
+                                </td>
+                                <td>
+                                    @if (hd != null) 
+                                    {
+                                        <div>@hd.Name</div>
+                                        <div>@hd.SoDT</div>
+                                    }
+                                </td>
+                                <td />
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@MyRazor.HtmlMenu("hoat-dong")
+
+<script>
+    let vm = new HoatDongViewModel('@db.Name')
+    let view = new HoatDongDataView('@pageTitle', vm)
+
+    Table.init().light("thead")
+
+    function set_detail(url) {
+        view.mainTitle(document.getElementById(url).getAttribute("title"))
+        $(".btn-detail").prop("href", "/hoatdong/o/" + url + "/@db.Name")
+    }
+    $(".nav-tabs").click(function () {
+        set_detail(this.getAttribute("data-target").substr(1))
+    })
+    set_detail("chuong-trinh")
+
+
+    function bao_cao(i) {
+        let model = vm.createViewModel("bao-cao-chuong-trinh", i)
+        model.post(null, r => {
+
+            console.log(r)
+
+            var pass = r.value['x'] ?? 0;
+            var miss = r.value['0'] ?? 0;
+            var here = r.value['1'] ?? 0;
+
+            var join = miss + here;
+
+            var tab = "<table class='summary'>"
+                + "<tr><td>Tham gia</td><td>" + join + "</td></tr>"
+                + "<tr><td>Không tham gia</td><td>" + pass + "</td></tr>"
+                + "<tr><td>Đã có mặt</td><td>" + here + "</td></tr>"
+                + "<tr><td>Còn thiếu</td><td>" + miss + "</td></tr>"
+                + "</table>"
+
+            dialog.message("<h4>" + r.Name + "</h4>" + tab, "Báo cáo")
+        })
+    }
+</script>
+
+<style>
+    .summary {
+        width: 100%;
+        background-color: var(--bs-secondary);
+        color: white;
+    }
+    .summary tr {
+        border-bottom: 1px solid var(--bs-dark-secondary)
+    }
+    .summary td {
+        padding: 0.5em;
+    }
+</style>

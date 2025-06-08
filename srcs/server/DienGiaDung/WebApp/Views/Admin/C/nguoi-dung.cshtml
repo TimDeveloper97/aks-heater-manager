@@ -1,0 +1,20 @@
+﻿@{
+}
+<div id="main-form">
+
+</div>
+<script>
+    let eds = {
+        _id: new PhoneBox().caption("Số điện thoại").required(),
+        Name: new TextBox().caption("Tên").required(),
+    }
+    let frm = new SingleForm("#main-form").title("Đăng ký người dùng")
+    frm.controls(eds).accept(null, v => {
+        actor.post("admin/add-user", v, r => {
+            dialog.message("Đã tạo người dùng<ul><li>Tên đăng nhập: "
+                + v.Name + "</li><li>Mật khẩu: " + r + "</li></ul>", "Tạo người dùng").show()
+
+            frm.val({})
+        });
+    });
+</script>

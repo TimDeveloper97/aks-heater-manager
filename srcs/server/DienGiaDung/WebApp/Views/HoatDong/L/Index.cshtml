@@ -1,0 +1,88 @@
+﻿
+@{
+    var user = (Actors.Admin)Model;
+    var lst = DB.HoatDong.Select();
+
+    const string api = "manage-hoat-dong";
+    const string pageTitle = "hoạt động";
+}
+
+<style>
+    .Name {
+        font-size: 1.1em;
+        font-weight: 600;
+    }
+</style>
+
+<div class="page-header">
+    <h3 class="main-title">Sự kiện</h3>
+    <h5 class="sub-title">Danh sách các sự kiện</h5>
+    <div class="actions right">
+        <button class="btn btn-dark-primary insert-action">
+            Thêm mới
+        </button>
+    </div>
+</div>
+
+<style>
+    .item {
+        background-color: #FFF !important;
+    }
+    .item .info > div {
+        line-height: 2em;
+    }
+</style>
+
+<div style="margin-top: -2em">
+    <div class="data-list-view">
+        <div class="row">
+            @foreach (var e in lst)
+            {
+                var id = e.ObjectId;
+                <div class="col-sm-4">
+                    <div class="item card" id="@id">
+                        <div>
+                            <div class="actions right">
+                                <button class="btn btn-sm btn-primary open-action">
+                                    <i class="fa fa-folder-open"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning update-action">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger delete-action">
+                                    <i class="fa fa-close"></i>
+                                </button>
+                            </div>
+                            <div class="info">
+                                <div class="Name">@e.Name</div>
+                                <div class="DiaChi"><i class="icon fa fa-fw fa-place-of-worship"></i>@e.DiaChi</div>
+                                <div class="BD">
+                                    <i class="icon fa fa-calendar">
+                                    </i>@($"{e.BD:dd/MM}") - @($"{e.KT:dd/MM/yyyy}")
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    let vm = new DataViewModel('@api')
+    let view = new DataListView('@pageTitle', vm)
+    view.createEditors = function () {
+        return {
+            Name: new TextBox().caption("Tên").required(),
+            DiaChi: new TextBox().caption("Địa điểm").required(),
+            BD: new DateBox().caption("Ngày bắt đầu").required().column(6),
+            KT: new DateBox().caption("Ngày kết thúc").required().column(6),
+            DoiTac: new TextBox().caption("Đơn vị hỗ trợ")
+        }
+    }
+    view.openItem = function (i) {
+        redirect("/hoatdong/index/" + i)
+    }
+</script>
+

@@ -1,0 +1,128 @@
+﻿
+@{
+    var user = (Actors.BTC)Model;
+    var db = DB.GetHoatDongDB(user.RequestContext.Id);
+    var lst = new DocumentList {
+        new Document { ObjectId = "ChuongTrinh", Name = "Chương trình sự kiện", Url = "chuong-trinh" },
+        new Document { ObjectId = "ThanhVien", Name = "Danh sách thành viên" },
+        new Document { ObjectId = "PhanXe", Name = "Danh sách phân xe" },
+        new Document { ObjectId = "PhanPhong", Name = "Danh sách phân phòng" },
+    };
+}
+
+<div class="page-header">
+    <h3 class="main-title">Quản lý dữ liệu</h3>
+    <h5 class="sub-title"></h5>
+    <div class="actions right" style="top:1rem;">
+        <div class="dropdown mx-0">
+            <a class="btn btn-dark-primary btn-detail" href="#">Tác vụ</a>
+            <div class="dropdown-menu-right">
+                <a onclick="khop_phong()">Khớp phòng</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .item {
+        background-color: #FFF !important;
+        padding: 1em;
+        margin: 0.5em;
+    }
+    .item .info > div {
+        line-height: 2em;
+        font-size: 1.2em;
+        display: flex;
+        justify-items: center;
+    }
+    .item .info > div > .fa {
+        font-size: 2em;
+        color: #f80;
+        opacity: 0.25;
+        margin-right: -0.75em;
+    }
+</style>
+
+<div style="margin-top: -2em">
+    <div class="data-list-view">
+        <div class="row">
+            @foreach (var e in lst)
+            {
+                var id = e.ObjectId;
+                var url = $"/hoatdong/l/{e.Url}/{db.Name}";
+                <div class="col-sm-6">
+                    <div class="card mb-1">
+                        <div class="item" id="@id">
+                            <div class="actions right">
+                                <button class="btn btn-sm btn-primary">
+                                    <i class="fa fa-folder-open"></i>
+                                </button>
+                                <button class="btn btn-sm btn-warning"
+                                        onclick="begin_import('@id')">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                            </div>
+                            <div class="info">
+                                <div class="Name"><i class="fa fa-folder"></i> <a href="@url">@e.Name</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    let vm = new DataViewModel();
+    let view = new DataListView("", vm);
+    function begin_import(i, t) {
+        let cfg = {
+            ThanhVien: {
+                pk: "SoDT",
+                cols: {
+                    MaCB: "Mã CB",
+                    Name: "Họ tên",
+                    DiaChi: "Đơn vị",
+                    SoDT: "Điện thoại",
+                    GioiTinh: "Giới tính",
+                }
+            },
+            PhanXe: {
+                pk: "SoDT",
+                cols: {
+                    SoDT: "Điện thoại",
+                    Xe: "Xe số",
+                }
+            },
+            PhanPhong: {
+                pk: "SoDT",
+                cols: {
+                    SoDT: "Điện thoại",
+                    Phong: "Phòng số",
+                }
+            },
+            Phong: {
+                cols: {
+                    _id: 'Phòng số',
+                    value: 'Phòng thực'
+                }
+            }
+        };
+        c = cfg[i];
+        c.title = t ?? document.getElementById(i).querySelector(".Name").innerText;
+        vm.import = function (rows) {
+            actor.post("import-hoat-dong/@db.Name/" + i, { items: rows }, (r) => {
+                new Toast().mode("success").text("Cập nhật thành công " + rows.length + " bản ghi").show(2)
+            })
+        }
+        view.beginImport(c);
+    }
+
+    function khop_phong() {
+        begin_import('Phong', 'Khớp phòng')
+    }
+
+</script>
+

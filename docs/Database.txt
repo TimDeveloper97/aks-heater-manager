@@ -1,0 +1,21 @@
+Database 
+3 nguyên lý 2 cơ chế ( nguyên lý 3 + 2)
+
+Nguyên lý:
+- Pages/Block: mỗi 1 page tương ứng với 8k (tùy theo từng lại cơ sở dữ liệu nhưng hầu hết là vậy) trong 1 table sẽ có các field tương ứng thì khi thêm 1 table nó tương ứng như nào với 1 page nếu nó quá 1 page thì mỗi lần tạo bản ghi sẽ có nhiều page hơn
+
+=> Page là đơn vị nhỏ nhất trong database và số lượng page càng nhiều thì việc query càng chậm. Page chứa nhiều bản ghi của các Table khác nhau
+
+- Cache: nơi lưu giữ liệu tạm, tăng tốc trong quá trình tìm kiếm. Sẽ cache lưu đơn vị nhỏ nhất là 1 Pages/Block. Quá trình read/write data sẽ đều làm việc với cache bằng việc đưa data lên memory để tiến hành thao tác.
+
+=> Đều làm việc với đơn vị nhỏ nhất là Pages/Block
+Physicl read và logical read so sánh giữa 2 cái đó (Oracel - AWR)
+
+- Cost: cách truy vấn trong DB có nhiều cách khác nhau. Mỗi 1 cách đều có cost tương ứng. 
+Khi tiến hành truy vấn thì DB sẽ có chiến lược là đánh giá cách đó có chi phí nhỏ nhất thì sẽ tiến hành thực hiện.
+ + Dựa vào số lượng Page cần thực thi (CPU, ...)
+ + Đã lưu ở Cache chưa? hay xuống CPU để lấy
+ + Dữ liệu có vừa đủ lưu trong Page hay ko
+
+=> SQL EXECUTE PLAN
+

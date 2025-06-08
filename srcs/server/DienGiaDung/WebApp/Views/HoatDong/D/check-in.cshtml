@@ -1,0 +1,190 @@
+﻿
+@{
+    var user = (TokenUser)Model;
+
+    var one = DB.HoatDong.FindOne((string)user.Value);
+
+    var db = DB.GetHoatDongDB(one.ObjectId);
+
+    var lst = db.GetDanhSachPhong(user.Xe);
+    var tvs = new DocumentList();
+
+    foreach (DocumentGroup g in lst)
+    {
+        var p = g.Phong;
+        var src = g.ValueContext;
+        var v = src.Value;
+        var s = src.State;
+
+        g.Value = v;
+        g.State = s;
+
+        foreach (var e in g.Records)
+        {
+            e.ObjectId = g.ObjectId;
+            e.Phong = p;
+            e.Value = v;
+
+            if (s == e.SoDT) { e.State = "key"; }
+
+            tvs.Add(e);
+        }
+    }
+}
+
+<div class="page-header">
+    <h3 class="main-title">Nhận phòng</h3>
+    <h5 class="sub-title">@one.Name</h5>
+</div>
+
+@MyRazor.TruongXeMenu(db, user.Xe)
+
+<div id="main-list" class="page-content" style="overflow-x:hidden;">
+    <div class="text-center" style="margin: 2em;">
+        <div>
+            @foreach (var g in lst.OrderBy(x => x.Phong))
+            {
+                var s = g.State;
+                var i = g.ObjectId;
+                <button style="margin:2px"
+                        id="btn@(i)"
+                        data-target="#@(i)"
+                        class="btn btn-sm btn-@(s == null ? "secondary" : "success") btn-phong">
+                    @(g.Phong)
+                </button>
+            }
+        </div>
+    </div>
+
+    <div id="check-list">
+        <table>
+            @foreach (var e in tvs)
+            {
+                <tr class="bag btn-phong" data-target="#@e.ObjectId" data-alphabet="@(e.Ten[0])">
+                    <td>@e.Name</td>
+                    <td><i class="right">Phòng @e.Phong</i></td>
+                </tr>
+            }
+        </table>
+    </div>
+
+
+    <div class="row">
+        @foreach (DocumentGroup g in lst.OrderBy(x => x.Phong))
+        {
+            <div class="form" id="@g.ObjectId">
+                <div class="card">
+                    <div>
+                        <h4 class="text-center">Phòng số @g.Phong</h4>
+                        <input class="form-control" style="text-align:center" value="@g.Value" />
+
+                        <div class="table">
+                            @foreach (var e in g.Records)
+                            {
+                                <div class="d-flex @(e.State)">
+
+                                    <label><i class="fa fa-key"></i> <span class="Name">@e.Name</span></label>
+                                    <span class="SoDT">@e.SoDT</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .form {
+        margin-left: auto;
+        margin-right: auto;
+        display: none;
+    }
+
+    .form {
+        padding: 2em;
+        padding-top: 0.5em;
+    }
+
+        .form .d-flex {
+            justify-content: space-between;
+            position: relative;
+            margin: 0.5em 0;
+            cursor: pointer;
+        }
+
+            .form .d-flex .fa {
+                color: transparent;
+                position: absolute;
+                padding: 0;
+                padding-top: 0.25em;
+            }
+
+            .form .d-flex.key .fa {
+                color: var(--bs-primary);
+            }
+
+            .form .d-flex .Name {
+                margin-left: .25em;
+            }
+
+            .form .d-flex:hover .Name {
+                color: var(--bs-primary);
+            }
+
+        .form .table {
+            margin-top: 2em;
+        }
+</style>
+
+<script>
+    let model = new DataViewModel('khop-phong/@db.Name');
+    let forms = $(".form");
+    $(".btn-phong").click(function () {
+        forms.hide();
+        checkList.hide();
+
+        let frm = $(this.getAttribute("data-target")).show();
+        model.primaryKey = frm.prop("id");
+    })
+    $("input").change(function () {
+        model.send("u", { value: this.value }, () => { });
+    })
+    forms.find(".d-flex").click(function () {
+        let name = this.querySelector(".Name").innerText;
+        let id = this.querySelector(".SoDT").innerText;
+        dialog.ask("Giao chìa khóa phòng cho " + name, null, () => {
+            model.send("u", { s: id }, () => {
+                this.classList.add("key");
+                document.getElementById("btn" + model.primaryKey)
+                    .classList.add("btn-success")
+            })
+        })
+    })
+</script>
+
+<script>
+    Table.init().light("thead")
+
+    let checkList = $("#check-list")
+    let alp = $alphabet(".bag", k => {
+        checkList.show();
+        $(".form").hide();
+    });
+
+    session.ready = function () {
+
+        setTimeout(() => {
+
+            checkList.show();
+            if (window.innerWidth < 768) {
+                checkList.height(window.innerHeight
+                    - document.getElementById("main-list").offsetTop
+                    - checkList[0].offsetTop - 20)
+            }
+
+        }, 200)
+
+    }
+</script>

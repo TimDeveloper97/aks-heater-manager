@@ -1,0 +1,155 @@
+﻿
+@{
+    var user = (TokenUser)Model;
+    var one = DB.HoatDong.FindOne(user.RequestContext.Id);
+
+    var db = DB.GetHoatDongDB(one.ObjectId);
+    var tab = db.ThanhVien;
+    var lst = tab.SelectAll();
+
+    var api = $"manage-hoat-dong/{db.Name}/{tab.Name}";
+    var pageTitle = "phân phòng";
+
+    var cac_xe = lst.GroupBy(nameof(db.Xe));
+    foreach (var g in cac_xe) {
+        var phong = g.Records.GroupBy(nameof(db.Phong));
+        g.SoLuong = phong.Length;
+    }
+    var total = lst.Count;
+}
+
+<style>
+    .bags {
+        height: 3em;
+        display: flex;
+        justify-items: center;
+    }
+
+        .bags:hover {
+            cursor: pointer;
+        }
+
+            .bags:hover .content {
+                color: var(--bs-primary)
+            }
+
+        .bags .icon {
+            height: 3em;
+            width: 3em;
+            position: relative;
+        }
+
+            .bags .icon label {
+                position: absolute;
+                color: #FFF;
+                top: 0.75em;
+                left: 0.5em;
+            }
+
+            .bags .icon .fa {
+                font-size: 2.75em;
+                color: #F80;
+            }
+
+        .bags .content {
+            margin: 0.5em 1em;
+        }
+</style>
+<div class="card" id="tong-hop">
+    <div>
+        <h4>Danh sách phân phòng (@total)</h4>
+        <h5><a href="/hoatdong/o/chuong-trinh/@db.Name">@one.Name</a></h5>
+        <div class="actions right">
+            <button class="btn btn-sm btn-warning" onclick="begin_import()"><i class="fa fa-upload"></i></button>
+        </div>
+    </div>
+
+    <div>
+        <div>
+            @foreach (var g in cac_xe.OrderBy(x => x.DiaChi))
+            {
+                var so_xe = g.GetString("Xe");
+                <div class="bags" id="@so_xe">
+                    <div class="icon" style="position:relative">
+                        <label>@g.SoLuong</label>
+                        <i class="fa fa-folder"></i>
+                    </div>
+                    <div class="content">Xe số @so_xe</div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="card data-list-view" id="chi-tiet" style="display:none">
+    <div>
+        <h4 id="table-name"></h4>
+        <div class="actions right">
+            <button class="btn btn-sm btn-secondary" onclick="showTongHop()">
+                <i class="fa fa-close"></i>
+            </button>
+        </div>
+    </div>
+    <div>
+        <div class="item card">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="Name"><i class="fa fa-user icon"></i><b class="binding" data-path="Name"></b></div>
+                    <div><i class="fa fa-home icon"></i><span class="binding" data-path="DiaChi"></span></div>
+                </div>
+                <div class="col-sm-6">
+
+                    <div><i class="fa fa-phone icon"></i><span class="binding" data-path="SoDT"></span></div>
+                    <div><i class="fa fa-bus icon"></i><span class="binding" data-path="Xe"></span></div>
+                    <div><i class="fa fa-hotel icon"></i><span class="binding" data-path="Phong"></span></div>
+
+                    <div class="actions right">
+                        <button class="btn btn-sm btn-warning update-action">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger delete-action">
+                            <i class="fa fa-close"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@MyRazor.HtmlMenu("hoat-dong")
+<script>
+    let view = new HoatDongDataView('@pageTitle', '@api')
+    view.createEditors = function () {
+        return {
+            _id: new TextBox().caption("Mã CB").required().column(6),
+            Xe: new NumberBox().caption("Phân xe").column(3),
+        }
+    }
+
+    let thanhVienList = $("#chi-tiet")
+    let iv = new View(thanhVienList.find(".item"));
+    iv.content.remove();
+
+    $(".bags").click(function () {
+        let n = this.querySelector(".content").innerText
+        view.selectByXe(this.id, iv, thanhVienList.children().last())
+
+        $("#tong-hop").hide();
+
+        $("#table-name").html(n);
+        thanhVienList.show();
+    })
+
+    function showTongHop() {
+        $("#tong-hop").show();
+        thanhVienList.hide();
+    }
+
+    function begin_import() {
+        view.beginImport({
+            _id: "Mã CB",
+            Phong: "Phân phòng",
+        })
+    }
+</script>
