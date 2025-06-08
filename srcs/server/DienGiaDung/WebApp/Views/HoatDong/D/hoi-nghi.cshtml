@@ -1,0 +1,47 @@
+﻿
+@{
+    var user = (TokenUser)Model;
+    var id = user.RequestContext.Params[2];
+
+    var one = DB.HoatDong.FindOne((string)user.Value);
+    var db = DB.GetHoatDongDB(one.ObjectId);
+    var ev = db.ChuongTrinh.Find(id);
+    var tvs = db.GetDiemDanh(id, new Document { Xe = user.Xe });
+}
+
+@MyRazor.TruongXeMenu(db, user.Xe)
+
+<div class="page-header">
+    <h3 class="main-title">Điểm danh</h3>
+    <h5 class="sub-title">@ev.Name</h5>
+</div>
+
+<div class="page-content">
+    <div id="check-list" style="">
+        @foreach (var e in tvs)
+        {
+            <div class="bag" id="@e.ObjectId" data-state="@(e.State ?? "0")" data-alphabet="@(e.Ten[0])">
+                <div class="d-flex">
+                    <div>
+                        <div class="binding" data-path="Name">@e.Name</div>
+                        <i class="binding" data-path="DiaChi">@e.DiaChi</i>
+                    </div>
+                    <div>
+                        <div class="binding" data-path="SoDT">@e.SoDT</div>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    </div>
+</div>
+
+<div class="tools" style="display:none">
+    <button class="btn btn-sm btn-success" onclick="eng.show('here')">0</button>
+    <button class="btn btn-sm btn-secondary" onclick="eng.show('miss')">0</button>
+</div>
+
+<script>
+    let eng = new DiemDanh('@db.Name', '@id')
+</script>

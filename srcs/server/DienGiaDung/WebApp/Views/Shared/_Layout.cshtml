@@ -1,0 +1,109 @@
+﻿<!DOCTYPE html>
+<html>
+
+@{
+    var user = Model as Actor;
+    string role = user?.Role;
+
+    Document profile = new Document {
+        Name = user is Actors.Admin ? "Admin" : user.Name,
+    };
+}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>@(ViewBag.Title ?? DB.Config.Name)</title>
+
+    @MyHelper.Fonts("css")
+    @MyHelper.Css()
+    @MyHelper.Scripts()
+    @MyHelper.Scripts("vst")
+</head>
+
+<body class="bg-light">
+    <div id="db-wrapper">
+        @if (role != null)
+        {
+            <div id="left-menu">
+                <a href="/home" style="padding:0;margin-left:1em;" class="navbar-brand text-primary">
+                    @(DB.Config.Name)<br />
+                </a>
+
+                @MyRazor.HtmlMenu(role)
+            </div>
+        }
+
+        <div id="page-content">
+            <div class="navbar navbar-horizotal navbar-top">
+                <nav class="d-flex justify">
+                    <div id="left-banner-content" class="d-flex v-center">
+                        <span id="side-menu-icon"></span>
+                    </div>
+
+                    <div id="mid-banner-content" class="ms-lg-3 d-lg-block">
+                        <script>var search = { show: 0, key: 0, text: 0 }</script>
+                        <form id="form-search" class="d-flex align-items-center" onsubmit="return false">
+                            <input placeholder="tìm kiếm ..." type="search" name="search" class="form-control">
+                        </form>
+                    </div>
+
+                    <div id="right-banner-content" class="d-flex v-center">
+
+
+                        @if (role != null)
+                        {
+                            <div class="dropdown mx-3">
+                                <a href="#">
+                                    <div class="rounded-circle toolbar-item btn-primary avatar avatar-indicators avatar-online">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                </a>
+                                <div id="dropdownUser" class="dropdown-menu-right">
+                                    <div class="my-1" style="text-align:center">
+                                        <a href="#">
+                                            <h4>@(profile.Name)</h4>
+                                        </a>
+                                    </div>
+                                    <a class="menu-seperator" href="/@(user.Url ?? role)"><i class="fa fa-home fa-fw"></i>Trang chủ</a>
+                                    <a class="menu-seperator" href="/me/o"><i class="fa fa-shield fa-fw"></i>Bảo mật tài khoản</a>
+                                    <a class="menu-seperator" href="/home/logout"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <a style="padding:0 5px;border-radius:0;" class="btn btn-primary" href="/home/login">login</a>
+                        }
+
+                        @*<div id="first" class="dropdown mx-0">
+                            <a><svg class="dots icon" /></a>
+                            <div class="dropdown-menu-right">
+                                <a>Item 1</a>
+                                <a>Item 2</a>
+                                <a>Item 3</a>
+                            </div>
+                        </div>*@
+                    </div>
+                </nav>
+            </div>
+            <div id="main-content" class="container body-content">
+                @RenderBody()
+
+            </div>
+        </div>
+    </div>
+
+    @if (role != null)
+    {
+        <script>
+            var actor = new Actor('@role');
+            SideMenu.init();
+        </script>
+    }
+
+    @MyHelper.Scripts("building")
+    <script>session.start()</script>
+</body>
+</html>

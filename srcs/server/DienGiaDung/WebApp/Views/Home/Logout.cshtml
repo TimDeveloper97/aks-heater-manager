@@ -1,0 +1,9 @@
+﻿@{ 
+    Actor.Logged.Remove((Actor)Model);
+    Session.Abandon();
+}
+
+<script>
+    cookie.remove("@AppKeys.LoginInfo");
+    setTimeout(()=>redirect("/home"), 100)
+</script>

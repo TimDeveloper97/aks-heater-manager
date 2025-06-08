@@ -1,0 +1,47 @@
+﻿
+@{
+    var user = (TokenUser)Model;
+
+    var one = DB.HoatDong.FindOne((string)user.Value);
+    var db = DB.GetHoatDongDB(one.ObjectId);
+    var tvs = db.GetThanhVien(new Document { Xe = user.Xe }).OrderBy(x => x.Ten);
+}
+
+@MyRazor.TruongXeMenu(db, user.Xe)
+
+<div class="page-header">
+    <h3 class="main-title">Điểm danh</h3>
+    <h5 class="sub-title"></h5>
+    <div class="actions right" style="top:1rem;">
+    </div>
+</div>
+
+<div class="page-content">
+    <div id="check-list" style="">
+        @foreach (var e in tvs)
+        {
+            <div class="bag" id="@e.ObjectId" data-state="@(e.State ?? "0")" data-alphabet="@(e.Ten[0])">
+                <div class="d-flex">
+                    <div>
+                        <div class="binding" data-path="Name">@e.Name</div>
+                        <i class="binding" data-path="DiaChi">@e.DiaChi</i>
+                    </div>
+                    <div>
+                        <div class="binding" data-path="SoDT">@e.SoDT</div>
+                    </div>
+                </div>
+            </div>
+
+        }
+
+    </div>
+</div>
+
+<div class="tools" style="display:none">
+    <button class="btn btn-sm btn-success" onclick="eng.show('here')">0</button>
+    <button class="btn btn-sm btn-secondary" onclick="eng.show('miss')">0</button>
+</div>
+
+<script>
+    let eng = new DiemDanh('@db.Name')
+</script>

@@ -1,0 +1,37 @@
+﻿@{
+}
+<div id="main-form">
+    <div class="card">
+        <div>
+            <h4>Danh sách giảng viên</h4>
+        </div>
+        <div>
+            @foreach (var e in DB.Accounts.Select(x => x.Role == nameof(Actors.GiangVien)))
+            {
+                <div class="row">
+                    <div class="col-6">@e.ObjectId</div>
+                    <div class="col-6">@e.Name</div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="tools">
+    <button class="btn btn-sm btn-success" onclick="begin_add()"><i class="fa fa-plus"></i> Tạo tài khoản</button>
+</div>
+<script>
+    function begin_add() {
+        let eds = {
+            Name: new TextBox().caption("Tên").required(),
+            _id: new PhoneBox().caption("Số điện thoại").required(),
+            Password: new PasswodBox().caption("Mật khẩu"),
+        }
+        let frm = new EditorDialog(eds, v => {
+            actor.post("admin/add-user", v, r => {
+                dialog.message("Đã tạo người dùng<ul><li>Tên đăng nhập: "
+                    + v._id + "</li><li>Mật khẩu: " + r + "</li></ul>", "Tạo người dùng")
+            })
+        })
+        frm.title("Đăng ký giảng viên").show()
+    }
+</script>

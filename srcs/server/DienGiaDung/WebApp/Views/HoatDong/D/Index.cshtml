@@ -1,0 +1,95 @@
+﻿
+@{
+    var user = (TokenUser)Model;
+
+    var one = DB.HoatDong.FindOne((string)user.Value);
+
+    var db = DB.GetHoatDongDB(one.ObjectId);
+
+    var lst = db.GetChuongTrinh(false);
+    foreach (var e in lst) { e.Url = $"/hoatdong/d/{e.GetString("Loai")}/{db.Name}/{e.ObjectId}"; }
+
+    var xe = user.Xe;
+    if (xe == null)
+    {
+        if (user.Role == nameof(Actors.HDV))
+        {
+            xe = db.BTC.Find(user.ObjectId).Xe;
+        }
+        else
+        {
+            xe = db.ThanhVien.Find(user.ObjectId).Xe;
+        }
+        user.Xe = xe;
+    }
+}
+
+<div class="page-header">
+    <h3 class="main-title">Điểm danh</h3>
+    <h5 class="sub-title">@one.Name</h5>
+    <div class="actions right" style="top:1rem;">
+        <div class="dropdown mx-0">
+            <a class="btn btn-dark-primary btn-detail" href="#">Hiển thị</a>
+            <div class="dropdown-menu-right" id="tac-vu-menu">
+                <a href="#" onclick="items.prop('hidden',false)">Toàn bộ chương trình</a>
+                <a href="#" class="menu-seperator" data-path="danger"> Sự kiện đang diễn ra</a>
+                <a href="#" data-path="warning"> Sự kiện sắp tới</a>
+                <a href="#" data-path="secondary"> Sự kiện đã kết thúc</a>
+                <a href="/hoatdong/d/ngoai-chuong-trinh/@(db.Name)" class="menu-seperator">
+                    <i class="fa fa-check text-success"></i>
+                    Điểm danh tại chỗ
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@MyRazor.TruongXeMenu(db, user.Xe)
+
+<div id="chuong-trinh" style="margin: 1rem; margin-top: -2rem;">
+    <div class="row">
+        @foreach (var e in lst)
+        {
+            <div class="col-sm-4">
+                    <div class="bag bag-@(e.State) pointer-event" data-path="@e.Url" icon="list">
+                        <div class="card">
+                            <div>
+                                <div>
+                                    <b class="Name">@e.Name</b>
+                                    <div>@e.DiaChi</div>
+                                </div>
+                                <div>
+                                    <span>@($"{e.BD:HH:mm} - {e.KT:HH:mm}")</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function hienThi(cls) {
+        cls = "bag-" + cls;
+        items.each(function () {
+            this.hidden = !(this.classList.contains(cls))
+        })
+    }
+</script>
+
+<script>
+    let items = $(".bag").click(function () {
+        redirect(this.getAttribute("data-path"))
+    })
+
+    $("#tac-vu-menu").find("a").each(function () {
+        let cls = this.getAttribute("data-path");
+        if (!cls) return;
+
+        this.innerHTML = "<i class='fa fa-bolt text-" + cls + "'></i> "
+            + this.innerHTML;
+        this.setAttribute("onclick", "hienThi('" + cls + "')")
+    })
+    hienThi("danger")
+</script>

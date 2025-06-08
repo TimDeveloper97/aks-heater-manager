@@ -1,0 +1,32 @@
+﻿{
+  "Name": "Sự kiện",
+  "TuDien": {
+    "-1": "Mất kết nối",
+    "0": "Tạm dừng",
+    "1": "Đang bật",
+    "2": "Chờ tắt",
+    "3": "Chờ bật"
+  },
+  "Cookie": {
+    "login-info": 7,
+    "token": 1
+  },
+  "User": {
+    "SinhVien": {
+      "Name": "Sinh viên",
+      "Timeout": 120
+    },
+    "GiamThi": {
+      "Name": "Giám thị",
+      "Timeout": 120
+    },
+    "GiangVien": {
+      "Name": "Giảng viên",
+      "Timeout": 120
+    },
+    "Admin": {
+      "Name": "Quản trị hệ thống",
+      "Timeout": 120
+    }
+  }
+}
