@@ -134,9 +134,35 @@ DB.SEQ.Insert(doc);
 | Each              | Foreach document id in collection              |
 | FindAndDelete     | Find and delete document id in collection      |
 | FindAndUpdate     | Find and update document id in collection      |
+| GetDocument    | Get document by name in collection      |
+| SelectContext    | Get document by name in collection      |
 | ...               | ...                                            |
 
-#### ...
+#### 3. CRUD Document
+
+- **Purpose:**  
+  Class `Document` is used to manage the collect in database.
+- **Use:**
+
+Every document exist 3 type: string, object, array.
+
+| Feature           | Description                                    |
+|-------------------|------------------------------------------------|
+| Push          | Push key and value to document                  |
+| Pop              | Pop key in document                               |
+| GetArray             | Get array object in document  |
+| GetString            | Get string in document                  |
+| Add              | Add object in document                 |
+| ContainsKey            | Contains key in document              |
+| ContainsValue            | Contains value in document               |
+| InsertOrUpdate    | Insert or update document id in collection     |
+| DistinctRow       | Get document by column name in collection      |
+| DistinctColumn    | Error???            |
+| GroupBy           | Group document same value with input column name in collection            |
+| Each              | Foreach document id in collection              |
+| FindAndDelete     | Find and delete document id in collection      |
+| FindAndUpdate     | Find and update document id in collection      |
+| ...               | ...                                            |
 
 ## Example
 
