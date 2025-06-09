@@ -1,0 +1,30 @@
+{
+    "_id": "ObjectId",
+    "name": "String",
+    "type": "String",
+    "info": {
+        "brand": "String",
+        "model": "String",
+        "serialNumber": "String",
+        "warranty": {
+            "startDate": "Date",
+            "endDate": "Date"
+        }
+    },
+    "location": {
+        "latitude": "Number",
+        "longitude": "Number"
+    },
+    "alert": {
+        "email": "String",
+        "sms": "String",
+        "home": "String",
+        "warning": "String"
+    },
+    "customerId": "CustomerObjectId",
+    "technicialSetupId": "TechnicialId",
+    "technicialSupportId": "TechnicialId",
+    "status": "String",
+    "createdAt": "Date",
+    "updatedAt": "Date"
+}

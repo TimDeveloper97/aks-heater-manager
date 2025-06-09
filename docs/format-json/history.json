@@ -1,0 +1,19 @@
+{
+    "_id": "ObjectId",
+    "deviceId": "DeviceId",
+    "userId": "UserLevel2Id",
+    "type": "warning | alert | info | error | success | report",
+    "title": "String",
+    "content": "String",
+    "value": {
+        "key1": "String",
+        "key2": "String",
+        "key3": "String"
+    },
+    "timestamp": "Date",
+    "extra": {
+        "key1": "String",
+        "key2": "String",
+        "key3": "String"
+    }
+}

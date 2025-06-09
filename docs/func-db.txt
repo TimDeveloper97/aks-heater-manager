@@ -1,0 +1,10 @@
+MainDB
+  Account (Collection)
+    Technical (document)
+    Admin : Technical
+    User2 (document)
+    Staff : User2
+  Device (Collection)
+  History (Collection)
+  
+  
