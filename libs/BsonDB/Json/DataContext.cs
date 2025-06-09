@@ -1,5 +1,9 @@
-﻿using BsonData;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace System
 {
@@ -24,6 +28,7 @@ namespace System
             if (names == null) names = src.Keys.ToArray();
             foreach (var name in names)
             {
+
                 if (this.ContainsKey(name) == false)
                 {
                     object v = null;
@@ -43,8 +48,7 @@ namespace System
 
             foreach (var name in names)
             {
-                var v = GetValueCore(name, true);
-                dst.Push(name, v);
+                findField(name, (k, v) => dst.Push(k, v));
             }
             return dst;
         }
@@ -86,48 +90,38 @@ namespace System
         }
         #endregion
 
-        protected virtual object GetValueCore(string name, bool remove = false)
+
+        string correctName(string key)
         {
-            object value;
-            if (base.TryGetValue(name, out value))
-            {
-                if (remove)
-                {
-                    base.Remove(name);
-                }
-            }
-            return value;
+            if (char.IsUpper(key[0]))
+                return char.ToLower(key[0]) + key.Substring(1);
+            return key;
         }
-        public Document Set(string name, object value)
+
+        void findField(string name, Action<string, object> callback)
         {
-            this.Add(name, value);
-            return this;
+            var k = correctName(name);
+            if (TryGetValue(k, out object v))
+                callback(k, v);
+        }
+
+        object getField(string name, Func<string, object, object> callback)
+        {
+            var k = correctName(name);
+            TryGetValue(k, out object v);
+            return callback(k, v);
         }
         public void Push(string name, object value)
         {
-            if (value == null || value.Equals(string.Empty))
+            var k = correctName(name);
+            Remove(k);
+            if (value != null && !value.Equals(string.Empty))
             {
-                Remove(name);
-                return;
-            }
-
-            if (base.ContainsKey(name))
-            {
-                base[name] = value;
-            }
-            else
-            {
-                base.Add(name, value);
+                base.Add(k, value);
             }
         }
-        public object Pop(string name)
-        {
-            return GetValueCore(name, true);
-        }
-        public T Pop<T>(string name)
-        {
-            return (T)(GetValueCore(name, true) ?? default(T));
-        }
+        public object Pop(string name) => getField(name, (k, v) => Remove(k));
+        public T Pop<T>(string name) => (T)(Pop(name) ?? default(T));
 
         /// <summary>
         /// Select a document, if has callback then create document when not found
@@ -137,27 +131,26 @@ namespace System
         /// <returns></returns>
         public T SelectContext<T>(string name, Action<T> callback) where T : Document, new()
         {
-            var v = GetValueCore(name, false);
-            if (v == null)
-            {
-                if (callback == null) return null;
+            return (T)getField(name, (k, v) => {
+                if (v == null)
+                {
+                    if (callback == null) return null;
+                    Push(k, v = new T());
+                }
+                else if (v.GetType() != typeof(T))
+                {
+                    var obj = v is string ? JObject.Parse((string)v) : JObject.FromObject(v);
+                    v = obj.ToObject<T>();
+                    Push(k, v);
+                }
 
-                v = new T();
-                Push(name, v);
-            }
-            else if (v.GetType() != typeof(T))
-            {
-                var obj = v is string ? JObject.Parse((string)v) : JObject.FromObject(v);
-                v = obj.ToObject<T>();
-                Push(name, v);
-            }
-
-            var context = (T)v;
-            if (callback != null)
-            {
-                callback.Invoke(context);
-            }
-            return context;
+                var context = (T)v;
+                if (callback != null)
+                {
+                    callback.Invoke(context);
+                }
+                return context;
+            });
         }
         public Document SelectContext(string name, Action<Document> callback) => SelectContext<Document>(name, callback);
 
@@ -169,18 +162,16 @@ namespace System
         #region GET ITEMS VALUES
         public T GetObject<T>(string name)
         {
-            object v;
-            if (!TryGetValue(name, out v))
-            {
-                return default(T);
-            }
-            if (typeof(T) == v.GetType())
-            {
-                return (T)v;
-            }
-
-            var obj = (v is string ? JObject.Parse((string)v) : JObject.FromObject(v)).ToObject<T>();
-            return obj;
+            return (T)getField(name, (k, v) => {
+                if (v == null)
+                    return default(T);
+                
+                if (typeof(T) == v.GetType())
+                {
+                    return v;
+                }
+                return (v is string ? JObject.Parse((string)v) : JObject.FromObject(v)).ToObject<T>();
+            });
         }
         public T GetDocument<T>(string name) where T : Document, new()
         {
@@ -191,91 +182,55 @@ namespace System
             }
             return doc;
         }
-        public Document GetDocument(string name)
-        {
-            return GetDocument<Document>(name);
-        }
+        public Document GetDocument(string name) => GetDocument<Document>(name);
+
         public T GetArray<T>(string name)
         {
-            object v;
-            if (!TryGetValue(name, out v))
-            {
-                return default(T);
-            }
+            return (T)getField(name, (k, v) => {
+                if (v == null)
+                    return default(T);
 
-            if (v.GetType() == typeof(T)) { return (T)v; }
-
-            var obj = v is string ? JArray.Parse((string)v) : JArray.FromObject(v);
-            return obj.ToObject<T>();
+                if (typeof(T) == v.GetType())
+                {
+                    return v;
+                }
+                var obj = v is string ? JArray.Parse((string)v) : JArray.FromObject(v);
+                return obj.ToObject<T>();
+            });
         }
         public T GetValue<T>(string name, T defaultValue)
         {
-            object v;
-            if (TryGetValue(name, out v))
-            {
-                return (T)Convert.ChangeType(v, typeof(T));
-            }
-            return defaultValue;
-        }
-        public T GetValue<T>(string name)
-        {
-            return GetValue<T>(name, default(T));
-        }
-        public DateTime? GetDateTime(string name)
-        {
-            var v = GetValueCore(name, false);
-            if (v == null)
-            {
-                return null;
-            }
-            if (v is string)
-            {
-                try
+            return (T)getField(name, (k, v) => { 
+                if (v != null)
                 {
-                    v = DateTime.Parse((string)v);
+                    try 
+                    {
+                        return Convert.ChangeType(v, typeof(T));
+                    } 
+                    catch 
+                    { 
+                    };
                 }
-                catch
-                {
-                    return null;
-                }
-            }
-            return (DateTime)v;
+                return defaultValue;
+            });
         }
+        public T GetValue<T>(string name) => GetValue(name, default(T));
+        public DateTime? GetDateTime(string name) => GetValue<DateTime>(name);
         public virtual string GetString(string name) => GetValue<string>(name);
-
         public object SelectPath(string path)
         {
             var s = path.Split('.');
-            object v = GetValueCore(s[0], false);
-
-            if (s.Length < 2)
+            var n = s.Length - 1;
+            var doc = this;
+            for (int i = 0; i < n; i++)
             {
-                return v;
+                if (doc.Count == 0)
+                    return null;
+
+                doc = doc.GetDocument(s[i]);
             }
-
-            if (v != null)
-            {
-                try
-                {
-                    Document doc = v is string ? Parse((string)v) : FromObject(v);
-                    this[s[0]] = doc;
-
-                    for (var i = 1; i < s.Length - 1; i++)
-                    {
-                        var k = s[i];
-                        v = doc.GetValueCore(k, false);
-                        if (v == null) { return null; }
-
-                        doc[k] = v = FromObject(v);
-                        doc = (Document)v;
-                    }
-                    return doc.GetValueCore(s[s.Length - 1], false);
-                }
-                catch
-                {
-                }
-            }
-            return null;
+            doc.TryGetValue(correctName(s[n]), out object v);
+            return v;
         }
         #endregion
 
@@ -305,66 +260,18 @@ namespace System
 
         public string Join(string seperator, params string[] names)
         {
-            string s = string.Empty;
+            var lst = new List<object>();
             if (names.Length == 0)
             {
                 names = Keys.ToArray();
             }
             foreach (string name in names)
             {
-                object v;
-                if (this.TryGetValue(name, out v))
-                {
-                    if (s.Length > 0) { s += seperator; }
-                    s += v.ToString();
-                }
+                findField(name, (k, v) => lst.Add(v));
             }
-            return s;
+            return string.Join(seperator, lst);
         }
-        public string Unique(params string[] names)
-        {
-            return this.Join("_", names);
-        }
+        public string Unique(params string[] names) => this.Join("_", names);
         #endregion
-    }
-
-    partial class Document
-    {
-        public DocumentList ToList()
-        {
-            var lst = new DocumentList();
-            foreach (var p in this)
-            {
-                var e = FromObject(p.Value);
-                e.ObjectId = p.Key;
-                lst.Add(e);
-            }
-            return lst;
-        }
-        public Document InnerJoin(params Collection[] tables)
-        {
-            var doc = Clone();
-            var id = ObjectId;
-            foreach (var t in tables)
-            {
-                var e = t.Find(id);
-                if (e != null)
-                {
-                    doc.Copy(e);
-                }
-            }
-            return doc;
-        }
-        public Document Load(params Collection[] tables)
-        {
-            var doc = Clone();
-            var id = ObjectId;
-            foreach (var t in tables)
-            {
-                var e = t.Find(id) ?? new Document();
-                doc.Push(t.Name, e);
-            }
-            return doc;
-        }
     }
 }

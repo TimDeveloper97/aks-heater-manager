@@ -1,8 +1,15 @@
-﻿namespace System
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+
+namespace System
 {
     using BsonData;
     public class DocumentMap<T> : Dictionary<string, T>
-        where T : Document
+        where T: Document
     {
         new public T this[string objectId]
         {
@@ -56,7 +63,7 @@
         }
         public Document Push(object value)
         {
-
+            
             Document doc = value as Document;
             if (doc == null)
             {
@@ -95,17 +102,7 @@
             }
             return s;
         }
-
-        public DocumentList InnerJoin(params Collection[] tables)
-        {
-            var lst = new DocumentList();
-            foreach (var e in this)
-            {
-                lst.Add(e.InnerJoin(tables));
-            }
-            return lst;
-        }
-        public DocumentList ChangeType<T>() where T : Document, new()
+        public DocumentList ChangeType<T>() where T: Document, new()
         {
             var lst = new DocumentList();
             foreach (var e in this)
@@ -148,7 +145,7 @@
 namespace System
 {
     public class DocumentList<T> : DocumentList
-        where T : Document, new()
+        where T: Document, new()
     {
         protected Func<string, T> find_one;
         public DocumentList(BsonData.Collection table)

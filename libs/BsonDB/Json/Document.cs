@@ -17,7 +17,15 @@ namespace System
         #endregion
 
         #region Response
-        public object Value { get { return GetValueCore("value", false); } set => Push("value", value); }
+        public object Value 
+        { 
+            get 
+            {
+                TryGetValue("value", out object v);
+                return v; 
+            } 
+            set => Push("value", value); 
+        }
         public int Code { get { return GetValue<int>("code"); } set => Push("code", value); }
         public string Message { get { return GetString("message"); } set => Push("message", value); }
 
@@ -41,7 +49,8 @@ namespace System
                     return null;
                 }
             }
-            return this.GetValueCore(name, false);
+            TryGetValue(name, out object v);
+            return v;
 
 
         }
