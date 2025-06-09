@@ -1,4 +1,4 @@
-MainDB
+MainDB (DB)
   Account (Collection)
     Technical (document)
     Admin : Technical
@@ -6,5 +6,5 @@ MainDB
     Staff : User2
   Device (Collection)
   History (Collection)
-  
-  
+SUBS/Realtime (DB)
+  Power (Collection)
