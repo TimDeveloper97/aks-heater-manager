@@ -1,0 +1,21 @@
+{
+  "_id": "ObjectId",
+  "username": "String",
+  "password": "String",
+  "role": "admin | technical | customer | userlevel2",
+  "profile": {
+    "name": "String",
+    "email": "String",
+    "phone": "String",
+    "address": {
+      "street": "String",
+      "city": "String",
+      "state": "String",
+      "zipCode": "String"
+    },
+    "age": "Number"
+  },
+  "parentId": "AdminId | CustomerId | TechnicialId",
+  "createdAt": "Date",
+  "updatedAt": "Date"
+}
