@@ -1,0 +1,32 @@
+﻿{
+  "name": "Sự kiện",
+  "tuDien": {
+    "-1": "Mất kết nối",
+    "0": "Tạm dừng",
+    "1": "Đang bật",
+    "2": "Chờ tắt",
+    "3": "Chờ bật"
+  },
+  "cookie": {
+    "login-info": 7,
+    "token": 1
+  },
+  "user": {
+    "staff": {
+      "name": "Nhân viên",
+      "timeout": 120
+    },
+    "customer": {
+      "name": "Khách hàng",
+      "timeout": 120
+    },
+    "technical": {
+      "name": "Kỹ thuật viên",
+      "timeout": 120
+    },
+    "admin": {
+      "name": "Quản trị hệ thống",
+      "timeout": 120
+    }
+  }
+}

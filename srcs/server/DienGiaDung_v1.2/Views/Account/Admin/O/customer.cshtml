@@ -1,0 +1,47 @@
+﻿
+@{
+    var user = (Actors.Admin)Model;
+    var id = user.RequestContext.Id;
+    var one = DB.Accounts.Find<Actors.Customer>(id);
+
+    var devices = one.Devices;
+    var staffs = one.Staffs;
+}
+
+<div class="card mb-2">
+    <div>
+        <h4>@(one.Name)</h4>
+        <a href="tel:@id">@id</a>
+    </div>
+</div>
+<div class="card mb-2">
+    <div>
+        <h4>Thiết bị</h4>
+        <div>
+            <div>
+                @foreach (var e in devices)
+                {
+                    <div class="member">
+                        <a href="/device/o/index/@e.ObjectId">@e.Name</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card mb-2">
+    <div>
+        <h4>Nhân viên</h4>
+        <div>
+            <div>
+                @foreach (var e in staffs)
+                {
+                    <div class="member">
+                        <a href="#">@e.Name</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

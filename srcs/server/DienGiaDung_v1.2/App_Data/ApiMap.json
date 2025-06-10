@@ -1,0 +1,42 @@
+﻿{
+  "tuDien": {
+    "login": {
+      "value": "userName, password"
+    },
+    "add-user": {
+      "value": "_id, role, name"
+    },
+    "remove-user": {
+      "value": "_id"
+    },
+    "user-list": {},
+    "find-user": {
+      "value": "_id"
+    },
+    "device-to-user": {
+      "value": "deviceId, userId"
+    },
+    "device-list": {},
+    "add-device": { "value": "_id, name, addr, model, version" },
+    "remove-device": { "value": "_id" },
+    "find-device": { "value": "_id" },
+    "update-device": { "value": "_id, name, addr" },
+    "device-status": { "value": "_id" },
+    "device-log": { "value": "_id, start, end" },
+    "device-day-log": { "value": "_id, days" },
+    "change-pass": { "value": "password" },
+    "update-profile": {
+      "value": "name, ccid, addr, phone, email"
+    }
+  },
+  "user": {
+    "staff": {
+    },
+    "customer": {
+    },
+    "technical": {
+    },
+    "admin": {
+    }
+  }
+}

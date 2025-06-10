@@ -1,0 +1,171 @@
+﻿@{
+    var user = Model as Actors.Admin;
+}
+
+<style>
+    .code-content {
+        border: 1px solid #ccc;
+        margin-top: 5px;
+        padding: 0.5em;
+        font-family: Consolas;
+    }
+    .code-content pre {
+        height: 100%;
+    }
+    #current-user {
+        margin-left: 0.75em;
+    }
+</style>
+<div style="display:flex">
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 60px">Method</th>
+                    <th>Url</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="api-list">
+                @foreach (var e in Actor.ApiMap.Items)
+                {
+                    var url = e.Url;
+                    <tr class="item" id="@url">
+                        <td>POST</td>
+                        <td>/api/@(url == "login" ? "guest" : "{role}")/@url</td>
+                        <td class="api-parameters">@e.Value</td>
+                        <td />
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div style="margin:5px; width: 100%;">
+        <div class="code-content" style="height: 30px; margin-top: 0">
+            <div id="url-content"></div>
+        </div>
+        <div class="code-content" style="height: 200px; margin-top: 5px;">
+            <pre id="request-content"></pre>
+        </div>
+        <div class="code-content" style="min-height: 400px;margin-top:5px">
+            <pre id="response-content"></pre>
+        </div>
+    </div>
+</div>
+
+<div class="tools">
+    <div class="dropdown">
+        <button class="btn btn-sm btn-primary"><i class="fa fa-user"></i><span id="current-user">Admin</span></button>
+        <div id="user-list">
+            <a href="#" class="dropdown-item" onclick="select_user('0')">Admin</a>
+        </div>
+    </div>
+</div>
+<script>
+    class TestApi {
+        constructor(id = "", token = "", role = "guest") {
+
+            this.account = {
+                _id: id,
+                token: token,
+                name: null,
+                role: role,
+            }
+
+            function u(a) { return "/api/" + role.toLowerCase() + '/' + a }
+            function show_content(s, v) {
+                $("#" + s + "-content").html(JSON.stringify(v, null, 2))
+            }
+
+            this.run = function (p) {
+                let eds = {}
+                if (p.value) {
+                    for (let name of p.value.split(',')) {
+                        let k = name.trim()
+                        eds[k] = new TextBox().caption(k)
+                    }
+                }
+                let a = u(p.url);
+                var dlg = new EditorDialog(eds, v => {
+
+                    $("#url-content").html(window.location.protocol
+                        + "//" + window.location.host + a)
+                    $
+                    let data = {}
+                    if (role != 'guest') data.token = curr.account.token;
+                    if (p.value) data.value = v;
+
+                    show_content("request", data)
+                    request.error = function (m, c) {
+                        show_content("response", {
+                            code: c,
+                            message: m
+                        })
+                    }
+                    request.send(a, 'POST', data, r => {
+                        show_content("response", r)
+
+                        if (p.url == "login") {
+                            curr = new TestApi(r.role);
+                            curr.account = r;
+
+                            add_user()
+                        }
+                    });
+                })
+                dlg.title(a).show();
+            }
+        }
+    }
+</script>
+
+<script>
+    Table.init().dark("thead")
+
+    $("#api-list > tr").click(function () {
+        let a = $(this)
+        let p = {
+            url: a.prop("id"),
+            value: a.find(".api-parameters").text()
+        }
+
+        let e = new TestApi();
+        if (p.url != "login") {
+            if (!curr.account.token) {
+                dialog.message("Chưa đăng nhập");
+                return;
+            }
+            e = curr;
+        }
+        e.run(p)
+    })
+</script>
+
+<script>
+    function select_user(k) {
+        curr = users[k]
+
+        let a = curr.account;
+        $("#current-user").html((a.name ?? a.role));
+    }
+    function add_user() {
+        let a = curr.account;
+        let k = a._id;
+        if (!users[k]) {
+            $("<a href='#' class='dropdown-item' />")
+                .prop("onclick", "select_user('" + k + "')")
+                .html(a.name ?? a.role)
+                .appendTo("#user-list")
+        }
+
+        users[k] = curr;
+        select_user(k)
+    }
+
+    let users = {
+        '0': new TestApi('0', cookie.get("token"), "Admin"),
+    }
+    let curr = users['0']
+
+</script>

@@ -1,0 +1,41 @@
+﻿
+@{
+
+}
+
+<style>
+    pre.form-control {
+    }
+</style>
+<script>
+    let mode = {
+        "-": "đăng nhập trực tiếp",
+        "p": "yêu cầu mật khẩu đăng nhập"
+    }
+    let ed = {
+        security: new SingleChoiceBox().caption("Chế độ bảo mật").options(mode).val('p'),
+        password: new PasswordBox().caption("Mật khẩu").comment("Nhập mật khẩu"),
+        confirm: new PasswordBox().caption("Xác nhận").comment("Nhắc lại mật khẩu"),
+    }
+    let frm = new SingleForm()
+        .title('BẢO MẬT')
+        .comment("Đặt chế độ bảo mật cho tài khoản")
+        .appendTo(".body-content")
+        .controls(ed)
+        .accept("OK", v => {
+            if (v.confirm != v.password) {
+                new Toast().mode("warning").text("Mật khẩu không khớp")
+                    .show(3)
+                return;
+            }
+
+            actor.post("change-pass", { password: v.password }, r => {
+                redirect("/home/logout")
+            })
+        })
+    ed.security.change = function (v) {
+        let b = v == 'p'
+        ed.password.show(b)
+        ed.confirm.show(b)
+    }
+</script>
