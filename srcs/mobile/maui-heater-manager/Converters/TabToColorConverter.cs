@@ -14,7 +14,7 @@ public class TabToColorConverter : IValueConverter
         int.TryParse(value.ToString(), out selectedTab);
         int.TryParse(parameter.ToString(), out tabIndex);
 
-        return selectedTab == tabIndex ? Colors.DodgerBlue : Colors.Gray;
+        return selectedTab == tabIndex ? Color.FromHex("#512BD4") : Colors.Gray;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

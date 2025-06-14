@@ -20,10 +20,15 @@
     </domain:BasePage.Resources>-->
     
     <Grid RowDefinitions="*, 30">
-        <ContentView Content="{Binding Content}"/>
-        <Grid Grid.Row="1" ColumnDefinitions="*, *, *, *">
+        <ContentView Content="{Binding Content}" Margin="0,0,0,10"/>
+        <Grid Grid.Row="1" ColumnDefinitions="*, *, *, *" >
             <StackLayout Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">
-                <Image Source="home.png" WidthRequest="20"/>
+                <Image>
+                    <Image.Source>
+                        <FontImageSource Glyph="&#xf021;" FontFamily="FontAwesomeSolid" Size="20"
+                                         Color="{Binding SelectedTab, Converter={StaticResource TabToColorConverter}, ConverterParameter=1}" />
+                    </Image.Source>
+                </Image>
                 <Label Text="Tức thời"
                        TextColor="{Binding SelectedTab, Converter={StaticResource TabToColorConverter}, ConverterParameter=1}"/>
                 <StackLayout.GestureRecognizers>
@@ -31,7 +36,12 @@
                 </StackLayout.GestureRecognizers>
             </StackLayout>
             <StackLayout Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center">
-                <Image Source="chart.png" WidthRequest="20"/>
+                <Image>
+                    <Image.Source>
+                        <FontImageSource Glyph="&#xf201;" FontFamily="FontAwesomeSolid" Size="20" 
+                                         Color="{Binding SelectedTab, Converter={StaticResource TabToColorConverter}, ConverterParameter=2}"/>
+                    </Image.Source>
+                </Image>
                 <Label Text="Tra cứu"
                        TextColor="{Binding SelectedTab, Converter={StaticResource TabToColorConverter}, ConverterParameter=2}"/>
                 <StackLayout.GestureRecognizers>
@@ -39,7 +49,12 @@
                 </StackLayout.GestureRecognizers>
             </StackLayout>
             <StackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center">
-                <Image Source="log.png" WidthRequest="20"/>
+                <Image>
+                    <Image.Source>
+                        <FontImageSource Glyph="&#xf1da;" FontFamily="FontAwesomeSolid" Size="20" 
+                                         Color="{Binding SelectedTab, Converter={StaticResource TabToColorConverter}, ConverterParameter=3}"/>
+                    </Image.Source>
+                </Image>
                 <Label Text="Lịch sử"
                        TextColor="{Binding SelectedTab, Converter={StaticResource TabToColorConverter}, ConverterParameter=3}"/>
                 <StackLayout.GestureRecognizers>
@@ -47,7 +62,12 @@
                 </StackLayout.GestureRecognizers>
             </StackLayout>
             <StackLayout Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center">
-                <Image Source="setting.png" WidthRequest="20"/>
+                <Image>
+                    <Image.Source>
+                        <FontImageSource Glyph="&#xf013;" FontFamily="FontAwesomeSolid" Size="20" 
+                                         Color="{Binding SelectedTab, Converter={StaticResource TabToColorConverter}, ConverterParameter=4}"/>
+                    </Image.Source>
+                </Image>
                 <Label Text="Cài đặt"
                        TextColor="{Binding SelectedTab, Converter={StaticResource TabToColorConverter}, ConverterParameter=4}"/>
                 <StackLayout.GestureRecognizers>
