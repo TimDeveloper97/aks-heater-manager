@@ -32,9 +32,9 @@ public partial class NowViewModel : BaseViewModel
         Title = "NowViewModel";
         TodayUsage = "1400";
 
-        GenerateRandomLogs();
-        GenerateRandomCircles();
-        GenerateRandomChart();
+        //GenerateRandomLogs();
+        //GenerateRandomCircles();
+        //GenerateRandomChart();
     }
 
     [RelayCommand]
