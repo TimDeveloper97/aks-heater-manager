@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<domain:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="maui_heater_manager.Pages.DevicePage"
-             xmlns:domain="clr-namespace:maui_heater_manager.Domains"
-             xmlns:viewmodels="clr-namespace:maui_heater_manager.ViewModels"
-             x:TypeArguments="viewmodels:DeviceViewModel"
-             Title="DevicePage">
+             x:Class="maui_heater_manager.Pages.Mains.DevicesView">
     <!--menu item log-->
     <Grid Padding="10">
         <CollectionView ItemsSource="{Binding Devices}" VerticalScrollBarVisibility="Never">
@@ -25,4 +21,4 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
     </Grid>
-</domain:BasePage>
+</ContentView>

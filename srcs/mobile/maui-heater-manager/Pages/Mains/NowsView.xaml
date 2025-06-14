@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             x:Class="maui_heater_manager.Pages.Mains.NowsView">
+    <Grid RowDefinitions="*, 200" Padding="10">
+        <!--item device-->
+        <!--<Grid Grid.Row="0">
+            <AbsoluteLayout HeightRequest="300" WidthRequest="300"
+                         BackgroundColor="Transparent"
+                         BindableLayout.ItemsSource="{Binding Circles}"
+                             IsVisible="{Binding IsCircleVisible}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+             WidthRequest="{Binding Radius, Converter={StaticResource DoubleToDiameterConverter}}"
+             HeightRequest="{Binding Radius, Converter={StaticResource DoubleToDiameterConverter}}"
+             CornerRadius="{Binding Radius, Converter={StaticResource DoubleToDiameterConverter}}"
+             BackgroundColor="{Binding Fill}"
+             Padding="0"
+             HasShadow="False"
+             AbsoluteLayout.LayoutFlags="None">
+                            <AbsoluteLayout.LayoutBounds>
+                                <MultiBinding Converter="{StaticResource PointToRectConverter}">
+                                    <Binding Path="X"/>
+                                    <Binding Path="Y"/>
+                                    <Binding Path="Radius"/>
+                                </MultiBinding>
+                            </AbsoluteLayout.LayoutBounds>
+                            <Grid>
+                                <Label Text="{Binding Content}"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        TextColor="White"
+                        FontAttributes="Bold"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </AbsoluteLayout>
+        </Grid>-->
+
+        <Grid Grid.Row="0">
+            <lvc:CartesianChart
+             SyncContext="{Binding Sync}"
+             Series="{Binding Series}">
+            </lvc:CartesianChart>
+        </Grid>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,*" RowDefinitions="*,*" Padding="10">
+            <Button Grid.Column="0" Grid.Row="0" Text="Cảnh báo" Background="LightGray" Margin="10"/>
+            <Button Grid.Column="0" Grid.Row="1" Text="Bất thường" Background="LightGray" Margin="10" />
+            <Button Grid.Column="1" Grid.Row="0" Text="Ngắt relay tổng" Background="Black" Margin="10"/>
+            <Button Grid.Column="1" Grid.Row="1" Text="Ngắt relay phụ thường" Background="Black" Margin="10"/>
+        </Grid>
+    </Grid>
+</ContentView>

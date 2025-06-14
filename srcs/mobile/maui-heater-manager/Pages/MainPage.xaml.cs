@@ -3,9 +3,9 @@ using maui_heater_manager.ViewModels;
 
 namespace maui_heater_manager.Pages;
 
-public partial class DevicePage : BasePage<DeviceViewModel>
+public partial class MainPage : BasePage<MainViewModel>
 {
-    public DevicePage(DeviceViewModel viewModel) : base(viewModel)
+    public MainPage(MainViewModel viewModel) : base(viewModel)
     {
         InitializeComponent();
     }

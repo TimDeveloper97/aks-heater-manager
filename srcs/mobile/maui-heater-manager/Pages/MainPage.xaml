@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<domain:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="maui_heater_manager.Pages.MainPage"
+             xmlns:domain="clr-namespace:maui_heater_manager.Domains"
+             xmlns:viewmodels="clr-namespace:maui_heater_manager.ViewModels"
+             x:TypeArguments="viewmodels:MainViewModel"
+             Title="MainPage">
+    <!--<domain:BasePage.Resources>
+        <Trigger x:Key="IsDarkModeTrigger" TargetType="Label">
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Trigger.Value>
+                <OnPlatform x:TypeArguments="x:Boolean">
+                    <On Platform="Android, iOS, MacCatalyst" Value="True"/>
+                    <On Platform="Windows" Value="False"/>
+                </OnPlatform>
+            </Trigger.Value>
+        </Trigger>
+    </domain:BasePage.Resources>-->
+    
+    <Grid RowDefinitions="*, 30">
+        <ContentView Content="{Binding Content}"/>
+        <Grid Grid.Row="1" ColumnDefinitions="*, *, *, *">
+            <StackLayout Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image Source="home.png" WidthRequest="20"/>
+                <Label Text="Tức thời"
+                       TextColor="{Binding SelectedTab, Converter={StaticResource TabToColorConverter}, ConverterParameter=1}"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Now"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout Grid.Column="1" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image Source="chart.png" WidthRequest="20"/>
+                <Label Text="Tra cứu"
+                       TextColor="{Binding SelectedTab, Converter={StaticResource TabToColorConverter}, ConverterParameter=2}"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Usage"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image Source="log.png" WidthRequest="20"/>
+                <Label Text="Lịch sử"
+                       TextColor="{Binding SelectedTab, Converter={StaticResource TabToColorConverter}, ConverterParameter=3}"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Device"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+            <StackLayout Grid.Column="3" VerticalOptions="Center" HorizontalOptions="Center">
+                <Image Source="setting.png" WidthRequest="20"/>
+                <Label Text="Cài đặt"
+                       TextColor="{Binding SelectedTab, Converter={StaticResource TabToColorConverter}, ConverterParameter=4}"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Setting"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </Grid>
+    </Grid>
+</domain:BasePage>

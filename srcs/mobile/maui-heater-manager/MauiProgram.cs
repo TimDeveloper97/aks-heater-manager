@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using LiveChartsCore.SkiaSharpView.Maui;
 using maui_heater_manager.Pages;
+using maui_heater_manager.Pages.Mains;
 using maui_heater_manager.Pages.Settings;
 using maui_heater_manager.ViewModels;
 using maui_heater_manager.ViewModels.Settings;
@@ -58,14 +59,25 @@ public static class MauiProgram
     private static void BuildBinding(IServiceCollection services)
     {
         // Add page + viewModel
-        services.AddTransient<NowPage, NowViewModel>();
-        services.AddTransient<UsagePage, UsageViewModel>();
-        services.AddTransient<DevicePage, DeviceViewModel>();
-        services.AddTransient<SettingPage, SettingViewModel>();
+        services.AddTransient<NowsView, NowViewModel>();
+        services.AddTransient<HistoryView, UsageViewModel>();
+        services.AddTransient<DevicesView, DeviceViewModel>();
+        services.AddTransient<SettingView, SettingViewModel>();
         services.AddTransient<AccountPage, AccountViewModel>();
+        services.AddTransient<LoginPage, LoginViewModel>();
+        services.AddTransient<MainPage, MainViewModel>();
+        services.AddTransient<StatePage, StateViewModel>();
 
         // Add router
         Routing.RegisterRoute(nameof(AccountPage), typeof(AccountPage));
+        Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+        Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
+        Routing.RegisterRoute(nameof(StatePage), typeof(StatePage));
+
+        Routing.RegisterRoute(nameof(NowsView), typeof(NowsView));
+        Routing.RegisterRoute(nameof(HistoryView), typeof(HistoryView));
+        Routing.RegisterRoute(nameof(SettingView), typeof(SettingView));
+        Routing.RegisterRoute(nameof(DevicesView), typeof(DevicesView));
     }
 
     private static void BuildService(IServiceCollection services)

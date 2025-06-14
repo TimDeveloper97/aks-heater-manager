@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<domain:BasePage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="maui_heater_manager.Pages.LoginPage"
+             xmlns:domain="clr-namespace:maui_heater_manager.Domains"
+             xmlns:viewmodels="clr-namespace:maui_heater_manager.ViewModels"
+             x:TypeArguments="viewmodels:LoginViewModel"
+             Title="LoginPage">
+    <Grid Margin="20">
+        <Grid RowDefinitions="150,*,*">
+            <Image Source="logo.png" />
+
+            <VerticalStackLayout Grid.Row="1" 
+                                 Spacing="40"
+                                 VerticalOptions="Center">
+                <VerticalStackLayout>
+                    <Label Text="Tên đăng nhập" />
+                    <Entry Text="{Binding UserName, Mode=TwoWay}" />
+                </VerticalStackLayout>
+                <VerticalStackLayout>
+                    <Label Text="Mật khẩu" />
+                    <Entry IsPassword="True" Text="{Binding Password,Mode=TwoWay}" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <Button Text="Đăng nhập" 
+                    Grid.Row="2"
+                    Command="{Binding LoginCommand}"
+                    VerticalOptions="Center" />
+        </Grid>
+    </Grid>
+</domain:BasePage>

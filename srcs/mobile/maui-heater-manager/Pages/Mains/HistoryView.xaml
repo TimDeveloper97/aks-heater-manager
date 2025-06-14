@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
+             x:Class="maui_heater_manager.Pages.Mains.HistoryView">
+    <Grid RowDefinitions="auto,auto, *, auto,auto, *" Padding="10">
+        <!--header-->
+        <HorizontalStackLayout>
+            <Label Text="TRENDS" FontSize="Large" />
+            <Label Text="this week" FontSize="Small" VerticalOptions="End" Margin="5,0,0,4"/>
+        </HorizontalStackLayout>
+        <VerticalStackLayout Grid.Row="1" Spacing="10">
+            <BoxView Grid.Row="1" HeightRequest="1" Margin="5"/>
+            <Label Text="{Binding TotalTrend, StringFormat='{0} kWh'}" 
+               FontSize="Medium" 
+               FontAttributes="Bold"
+               HorizontalOptions="End"
+               Margin="0,10,0,0"/>
+        </VerticalStackLayout>
+
+        <!--chart-->
+        <Grid Row="2">
+            <lvc:CartesianChart Series="{Binding SeriesTrend}" 
+                            XAxes="{Binding XAxesTrend}">
+            </lvc:CartesianChart>
+        </Grid>
+
+    </Grid>
+</ContentView>
