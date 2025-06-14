@@ -5,28 +5,41 @@
              xmlns:domain="clr-namespace:maui_heater_manager.Domains"
              xmlns:viewmodels="clr-namespace:maui_heater_manager.ViewModels"
              x:TypeArguments="viewmodels:LoginViewModel"
+             xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+             Shell.NavBarIsVisible="False"
              Title="LoginPage">
-    <Grid Margin="20">
-        <Grid RowDefinitions="150,*,*">
-            <Image Source="logo.png" />
+    <Grid BackgroundColor="{StaticResource White}" Margin="-20" Padding="20">
+        <Grid BackgroundColor="{StaticResource Primary}" Rotation="-70" TranslationY="280" TranslationX="50" WidthRequest="400"/>
 
-            <VerticalStackLayout Grid.Row="1" 
-                                 Spacing="40"
-                                 VerticalOptions="Center">
-                <VerticalStackLayout>
-                    <Label Text="Tên đăng nhập" />
-                    <Entry Text="{Binding UserName, Mode=TwoWay}" />
-                </VerticalStackLayout>
-                <VerticalStackLayout>
-                    <Label Text="Mật khẩu" />
-                    <Entry IsPassword="True" Text="{Binding Password,Mode=TwoWay}" />
-                </VerticalStackLayout>
-            </VerticalStackLayout>
+        <StackLayout VerticalOptions="Start">
+            <Image Source="logo.png" HeightRequest="80"/>
+            <Label Text="Login" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Margin="-10,0,0,0"/>
+        </StackLayout>
 
-            <Button Text="Đăng nhập" 
-                    Grid.Row="2"
-                    Command="{Binding LoginCommand}"
-                    VerticalOptions="Center" />
-        </Grid>
+        <Frame BackgroundColor="{StaticResource White}" BorderColor="{StaticResource White}" HeightRequest="350"
+               HasShadow="True" VerticalOptions="Center">
+            <StackLayout VerticalOptions="Center">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label Text="Username" VerticalOptions="Center"/>
+                    <mdc:TextField
+                        Style="{DynamicResource OutlinedTextFieldStyle}"
+                        WidthRequest="300" LabelText="duyanh.dinh" SupportingText=""/>
+                </StackLayout>
+
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center" >
+                    <Label Text="Password" VerticalOptions="Center"/>
+                    <mdc:TextField
+                        Style="{DynamicResource OutlinedTextFieldStyle}" InputType="Password"
+                        WidthRequest="300" LabelText="password" SupportingText="" />
+                </StackLayout>
+
+                <HorizontalStackLayout>
+
+                </HorizontalStackLayout>
+
+                <mdc:Button Text="Login" WidthRequest="300" HeightRequest="50" Command="{Binding LoginCommand}"/>
+            </StackLayout>
+
+        </Frame>
     </Grid>
 </domain:BasePage>

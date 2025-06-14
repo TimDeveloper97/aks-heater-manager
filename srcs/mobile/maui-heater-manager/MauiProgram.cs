@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using LiveChartsCore.SkiaSharpView.Maui;
+using Material.Components.Maui.Extensions;
 using maui_heater_manager.Pages;
 using maui_heater_manager.Pages.Mains;
 using maui_heater_manager.Pages.Settings;
@@ -22,7 +23,7 @@ public static class MauiProgram
 
         // CommunityToolkit.Maui
         // CommunityToolkit.Mvvm
-
+        // https://mdc-maui.github.io/getting-started
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -36,7 +37,8 @@ public static class MauiProgram
                 fonts.AddFont("fa-solid-900.otf", "FontAwesomeSolid");
             })
             .UseMauiCommunityToolkit()
-            .UseLocalNotification();
+            .UseLocalNotification()
+            .UseMaterialComponents();
 
         BuildLogging();
         BuildBinding(builder.Services);

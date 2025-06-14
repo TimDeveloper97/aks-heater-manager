@@ -34,7 +34,7 @@ public partial class NowViewModel : BaseViewModel
 
         //GenerateRandomLogs();
         //GenerateRandomCircles();
-        //GenerateRandomChart();
+        GenerateRandomChart();
     }
 
     [RelayCommand]
@@ -168,70 +168,43 @@ public partial class NowViewModel
 
 public partial class NowViewModel
 {
-    private readonly Random _r = new();
-    private int _delay = 100;
-    private ObservableCollection<int> _values;
-    private int _current;
-
     public ISeries[] Series { get; set; }
 
-    public object Sync { get; } = new object();
+    public Axis[] XAxes { get; set; } = [
+        new Axis
+        {
+            // Tùy chọn: đặt nhãn, v.v.
+            SeparatorsPaint = new SolidColorPaint(SKColors.Gray, 1)
+        }
+    ];
 
-    public bool IsReading { get; set; } = true;
+    public Axis[] YAxes { get; set; } = [
+        new Axis
+        {
+            SeparatorsPaint = new SolidColorPaint(SKColors.Gray, 1)
+        }
+    ];
 
     private void GenerateRandomChart()
     {
-        var items = new List<int>();
-        for (var i = 0; i < 1500; i++)
-        {
-            _current += _r.Next(-9, 10);
-            items.Add(_current);
-        }
-
-        _values = new ObservableCollection<int>(items);
-
-        // create a series with the data 
         Series = [
-            new LineSeries<int>
-            {
-                Values = _values,
-                GeometryFill = null,
-                GeometryStroke = null,
-                LineSmoothness = 0,
-                Stroke = new SolidColorPaint(SKColors.Blue, 1)
-            }
-        ];
-
-        _delay = 1;
-        var readTasks = 10;
-
-        // Finally, we need to start the tasks that will add points to the series. 
-        // we are creating {readTasks} tasks 
-        // that will add a point every {_delay} milliseconds 
-        for (var i = 0; i < readTasks; i++)
+        new LineSeries<double>
         {
-            _ = Task.Run(ReadData);
-        }
-    }
-
-    private async Task ReadData()
-    {
-        await Task.Delay(1000);
-
-        // to keep this sample simple, we run the next infinite loop 
-        // in a real application you should stop the loop/task when the view is disposed 
-
-        while (IsReading)
+            Values = [5, 0, 5, 0, 5, 0],
+            Fill = null,
+            GeometrySize = 0,
+            // use the line smoothness property to control the curve
+            // it goes from 0 to 1
+            // where 0 is a straight line and 1 the most curved
+            LineSmoothness = 0
+        },
+        new LineSeries<double>
         {
-            await Task.Delay(_delay);
-
-            _current = Interlocked.Add(ref _current, _r.Next(-9, 10));
-
-            lock (Sync)
-            {
-                _values.Add(_current);
-                _values.RemoveAt(0);
-            }
+            Values = [7, 2, 7, 2, 7, 2],
+            Fill = null,
+            GeometrySize = 0,
+            LineSmoothness = 1
         }
-    }
+    ];
+}
 }

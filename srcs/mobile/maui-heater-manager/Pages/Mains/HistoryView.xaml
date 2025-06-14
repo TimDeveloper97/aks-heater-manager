@@ -3,15 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Maui;assembly=LiveChartsCore.SkiaSharpView.Maui"
              x:Class="maui_heater_manager.Pages.Mains.HistoryView">
-    <Grid RowDefinitions="auto,auto, *, auto,auto, *" Padding="10">
+    <Grid RowDefinitions="auto,auto, *, 30,auto,20" Padding="10">
         <!--header-->
         <HorizontalStackLayout>
-            <Label Text="TRENDS" FontSize="Large" />
-            <Label Text="this week" FontSize="Small" VerticalOptions="End" Margin="5,0,0,4"/>
+            <Label Text="POWER METERS" FontSize="Large" />
+            <Label Text="(Kwm)" Margin="5,0,0,2" FontSize="Small" VerticalOptions="End"/>
         </HorizontalStackLayout>
         <VerticalStackLayout Grid.Row="1" Spacing="10">
             <BoxView Grid.Row="1" HeightRequest="1" Margin="5"/>
-            <Label Text="{Binding TotalTrend, StringFormat='{0} kWh'}" 
+            <Label Text="{Binding TotalTrend, StringFormat='Total: {0} kWh'}" 
                FontSize="Medium" 
                FontAttributes="Bold"
                HorizontalOptions="End"
@@ -20,10 +20,52 @@
 
         <!--chart-->
         <Grid Row="2">
-            <lvc:CartesianChart Series="{Binding SeriesTrend}" 
-                            XAxes="{Binding XAxesTrend}">
+            <lvc:CartesianChart Series="{Binding SeriesTrend}" YAxes="{Binding YAxes}" XAxes="{Binding XAxesTrend}">
             </lvc:CartesianChart>
         </Grid>
 
+        <Frame Grid.Row="4" Padding="0,20">
+            <Grid ColumnDefinitions="*,auto,*,auto,*">
+                <StackLayout Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">
+                    <Image>
+                        <Image.Source>
+                            <FontImageSource Glyph="&#xf783;" FontFamily="FontAwesomeSolid" Size="20" Color="Black"/>
+                        </Image.Source>
+                    </Image>
+                    <Label Text="Ngày"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Now"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+
+                <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="{StaticResource Gray100}"/>
+
+                <StackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center">
+                    <Image>
+                        <Image.Source>
+                            <FontImageSource Glyph="&#xf784;" FontFamily="FontAwesomeSolid" Size="20" Color="Black"/>
+                        </Image.Source>
+                    </Image>
+                    <Label Text="Tuần"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Now"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+
+                <BoxView Grid.Column="3" WidthRequest="1" BackgroundColor="{StaticResource Gray100}"/>
+
+                <StackLayout Grid.Column="4" VerticalOptions="Center" HorizontalOptions="Center">
+                    <Image>
+                        <Image.Source>
+                            <FontImageSource Glyph="&#xf073;" FontFamily="FontAwesomeSolid" Size="20" Color="Black"/>
+                        </Image.Source>
+                    </Image>
+                    <Label Text="Tháng"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Now"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Grid>
+        </Frame>
     </Grid>
 </ContentView>

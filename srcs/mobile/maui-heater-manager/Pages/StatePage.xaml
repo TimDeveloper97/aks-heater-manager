@@ -7,9 +7,13 @@
              x:TypeArguments="viewmodels:StateViewModel"
              NavigationPage.HasBackButton="False"
              Shell.TabBarIsVisible="False"
+             Shell.NavBarIsVisible="False"
              Title="StatePage">
+    
     <!--menu item log-->
-    <Grid Padding="10">
+    <StackLayout Padding="10">
+        <Label Text="Trạm thiết bị" FontSize="30" Margin="0,10"/>
+
         <CollectionView ItemsSource="{Binding States}" VerticalScrollBarVisibility="Never">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
@@ -18,7 +22,7 @@
                             <Grid ColumnDefinitions="50,*,auto" Margin="15,10">
                                 <Image Source="{Binding Icon}" HeightRequest="30" WidthRequest="30" />
                                 <Label Grid.Column="1" Text="{Binding Title}" VerticalOptions="Center" FontSize="Subtitle"/>
-                                <Label Grid.Column="2" Text="{Binding Status}" VerticalOptions="Center" FontSize="Micro"/>
+                                <Label Grid.Column="2" Text="{Binding Status}" VerticalOptions="Center" FontSize="Medium"/>
                             </Grid>
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type domain:BasePage}}, Path=BindingContext.NavigateCommand}" CommandParameter="{Binding .}"/>
@@ -29,5 +33,5 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </Grid>
+    </StackLayout>
 </domain:BasePage>

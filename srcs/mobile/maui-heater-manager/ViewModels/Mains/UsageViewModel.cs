@@ -23,6 +23,14 @@ public partial class UsageViewModel : BaseViewModel
         }
     ];
 
+
+    public Axis[] YAxes { get; set; } = [
+        new Axis
+        {
+            SeparatorsPaint = new SolidColorPaint(SKColors.Gray, 1)
+        }
+    ];
+
     // Các ngày trong tuần
     public Axis[] XAxesTrend { get; set; } = [
         new Axis
