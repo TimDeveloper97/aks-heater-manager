@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace T.Helper.Models;
+namespace AquilaService.Models;
 
 /// <summary>
 /// Request data
