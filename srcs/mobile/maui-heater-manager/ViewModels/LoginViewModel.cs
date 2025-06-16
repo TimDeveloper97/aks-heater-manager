@@ -13,5 +13,8 @@ public partial class LoginViewModel : BaseViewModel
 
 
     [RelayCommand]
-    async Task Login() => await Shell.Current.GoToAsync(nameof(StatePage));
+    async Task Login()
+    {
+        await Shell.Current.GoToAsync(nameof(StatePage));
+    }
 }

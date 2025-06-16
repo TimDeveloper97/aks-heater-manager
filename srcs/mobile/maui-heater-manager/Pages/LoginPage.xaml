@@ -6,15 +6,16 @@
              xmlns:viewmodels="clr-namespace:maui_heater_manager.ViewModels"
              x:TypeArguments="viewmodels:LoginViewModel"
              xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
+             xmlns:icon="clr-namespace:IconPacks.IconKind;assembly=IconPacks.Material"
              Shell.NavBarIsVisible="False"
              Title="LoginPage">
-    <Grid BackgroundColor="{StaticResource White}" Margin="-20" Padding="20">
+    <Grid BackgroundColor="{StaticResource WhiteShallow}" Margin="-20" Padding="20">
         <Grid BackgroundColor="{StaticResource Primary}" Rotation="-70" TranslationY="280" TranslationX="50"
               WidthRequest="400" HeightRequest="1000"/>
 
         <StackLayout VerticalOptions="Start">
-            <Image Source="logo.png" HeightRequest="80"/>
-            <Label Text="AKS" FontSize="30" FontFamily="OpenSansSemibold" HorizontalOptions="Center" Margin="-10,0,0,0">
+            <Image Source="logo_app.png" HeightRequest="100" WidthRequest="100" BackgroundColor="White"/>
+            <Label Text="AKS" FontSize="50" FontFamily="OpenSansSemibold" HorizontalOptions="Center" Margin="-10,0,0,0">
                 <Label.Shadow>
                     <Shadow Brush="Gray"
                                 Offset="10,10"
@@ -24,39 +25,35 @@
             </Label>
         </StackLayout>
 
-        <Frame BackgroundColor="{StaticResource White}" BorderColor="#f5f5f5" HeightRequest="350"
-               VerticalOptions="Center">
-            <Frame.Shadow>
-                <Shadow
-                        Brush="Gray"
-                        Offset="20,20"
-                        Radius="15"
-                        Opacity="1" />
-            </Frame.Shadow>
+        <mdc:Card BackgroundColor="{StaticResource White}" HeightRequest="400"
+                  VerticalOptions="Center" OutlineColor="{StaticResource Gray100}">
+            <mdc:Card.Shadow>
+                <Shadow Brush="Gray"
+                         Offset="10,10"
+                         Radius="10"
+                         Opacity="0.8" />
+            </mdc:Card.Shadow>
             <StackLayout VerticalOptions="Start">
-
                 <Label Margin="0,0,0,30" HorizontalOptions="Center">
                     <Label.FormattedText>
                         <FormattedString>
-                            <Span Text="Welcome" FontSize="25" FontFamily="OpenSansSemibold"/>
-                            <Span Text=" back!" FontSize="25"/>
+                            <Span Text="Welcome " FontSize="25" FontFamily="OpenSansSemibold"/>
+                            <Span Text="back!" FontSize="25"/>
                         </FormattedString>
                     </Label.FormattedText>
-                    <Label.Shadow>
-                        <Shadow Brush="Gray"
-                                Offset="10,10"
-                                Radius="10"
-                                Opacity="0.8" />
-                    </Label.Shadow>
                 </Label>
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                    <Label Text="Username" VerticalOptions="Center"/>
-                    <Entry WidthRequest="300" />
+                    <Label Text="Username" VerticalOptions="Center" FontSize="{StaticResource SizeMedium}"/>
+                    <Frame Padding="0" CornerRadius="3">
+                        <Entry WidthRequest="300" Text="{Binding Username}" FontSize="{StaticResource SizeMedium}"/>
+                    </Frame>
                 </StackLayout>
 
-                <StackLayout VerticalOptions="Center" HorizontalOptions="Center" >
-                    <Label Text="Password" VerticalOptions="Center"/>
-                    <Entry WidthRequest="300" />
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Margin="0,20">
+                    <Label Text="Password" VerticalOptions="Center" FontSize="{StaticResource SizeMedium}"/>
+                    <Frame Padding="0" CornerRadius="3">
+                        <Entry WidthRequest="300" Text="{Binding Password}" IsPassword="True" FontSize="{StaticResource SizeMedium}"/>
+                    </Frame>
                 </StackLayout>
 
                 <Grid Margin="10" ColumnDefinitions="*,*">
@@ -69,8 +66,9 @@
                            TextDecorations="Underline"/>
                 </Grid>
 
-                <Button Text="Login" WidthRequest="300" HeightRequest="50" Command="{Binding LoginCommand}"/>
+                <Button Text="Login" BackgroundColor="{StaticResource Primary}" WidthRequest="300" HeightRequest="50"
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type domain:BasePage}}, Path=BindingContext.LoginCommand}"/>
             </StackLayout>
-        </Frame>
+        </mdc:Card>
     </Grid>
 </domain:BasePage>

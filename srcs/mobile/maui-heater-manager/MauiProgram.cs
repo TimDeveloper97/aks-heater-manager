@@ -7,6 +7,7 @@ using maui_heater_manager.Pages.Settings;
 using maui_heater_manager.ViewModels;
 using maui_heater_manager.ViewModels.Settings;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Handlers;
 using Plugin.LocalNotification;
 using Serilog;
 using SkiaSharp.Views.Maui.Controls.Hosting;
@@ -24,6 +25,7 @@ public static class MauiProgram
         // CommunityToolkit.Maui
         // CommunityToolkit.Mvvm
         // https://mdc-maui.github.io/getting-started
+        // dotnet add package IconPacks.Material --version 1.0.8732.5-build
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
@@ -40,6 +42,7 @@ public static class MauiProgram
             .UseLocalNotification()
             .UseMaterialComponents();
 
+        BuildConfigUI();
         BuildLogging();
         BuildBinding(builder.Services);
         BuildService(builder.Services);
@@ -49,6 +52,19 @@ public static class MauiProgram
 #endif
 
         return builder.Build();
+    }
+
+    private static void BuildConfigUI()
+    {
+        Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("Placeholder", (h, v) =>
+        {
+#if ANDROID
+            h.PlatformView.BackgroundTintList = Android.Content.Res.ColorStateList.ValueOf(Android.Graphics.Color.Transparent);
+#endif
+#if IOS
+            h.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+#endif
+        });
     }
 
     private static void BuildLogging()

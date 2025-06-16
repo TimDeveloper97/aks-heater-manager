@@ -24,7 +24,7 @@
 		<Nullable>enable</Nullable>
 
 		<!-- Display name -->
-		<ApplicationTitle>maui-heater-manager</ApplicationTitle>
+		<ApplicationTitle>Aks Power</ApplicationTitle>
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.mauiheatermanager</ApplicationId>
@@ -41,7 +41,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Platforms\Android\Resources\mipmap\appicon.png">
+		  <Color>Transparent</Color>
+		</MauiIcon>
+		<MauiIcon Include="Resources\AppIcon\appicon.png" Color="Transparent" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -58,8 +61,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Platforms\Android\Resources\mipmap\appicon.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+		<PackageReference Include="IconPacks.Material" Version="1.0.8732.5-build" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.Maui" Version="2.0.0-rc5.4" />
 		<PackageReference Include="Material.Components.Maui" Version="0.2.2-preview" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
