@@ -9,37 +9,68 @@
              Shell.NavBarIsVisible="False"
              Title="LoginPage">
     <Grid BackgroundColor="{StaticResource White}" Margin="-20" Padding="20">
-        <Grid BackgroundColor="{StaticResource Primary}" Rotation="-70" TranslationY="280" TranslationX="50" WidthRequest="400"/>
+        <Grid BackgroundColor="{StaticResource Primary}" Rotation="-70" TranslationY="280" TranslationX="50"
+              WidthRequest="400" HeightRequest="1000"/>
 
         <StackLayout VerticalOptions="Start">
             <Image Source="logo.png" HeightRequest="80"/>
-            <Label Text="Login" FontSize="25" FontAttributes="Bold" HorizontalOptions="Center" Margin="-10,0,0,0"/>
+            <Label Text="AKS" FontSize="30" FontFamily="OpenSansSemibold" HorizontalOptions="Center" Margin="-10,0,0,0">
+                <Label.Shadow>
+                    <Shadow Brush="Gray"
+                                Offset="10,10"
+                                Radius="10"
+                                Opacity="0.8" />
+                </Label.Shadow>
+            </Label>
         </StackLayout>
 
-        <Frame BackgroundColor="{StaticResource White}" BorderColor="{StaticResource White}" HeightRequest="350"
-               HasShadow="True" VerticalOptions="Center">
-            <StackLayout VerticalOptions="Center">
+        <Frame BackgroundColor="{StaticResource White}" BorderColor="#f5f5f5" HeightRequest="350"
+               VerticalOptions="Center">
+            <Frame.Shadow>
+                <Shadow
+                        Brush="Gray"
+                        Offset="20,20"
+                        Radius="15"
+                        Opacity="1" />
+            </Frame.Shadow>
+            <StackLayout VerticalOptions="Start">
+
+                <Label Margin="0,0,0,30" HorizontalOptions="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Welcome" FontSize="25" FontFamily="OpenSansSemibold"/>
+                            <Span Text=" back!" FontSize="25"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                    <Label.Shadow>
+                        <Shadow Brush="Gray"
+                                Offset="10,10"
+                                Radius="10"
+                                Opacity="0.8" />
+                    </Label.Shadow>
+                </Label>
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
                     <Label Text="Username" VerticalOptions="Center"/>
-                    <mdc:TextField
-                        Style="{DynamicResource OutlinedTextFieldStyle}"
-                        WidthRequest="300" LabelText="duyanh.dinh" SupportingText=""/>
+                    <Entry WidthRequest="300" />
                 </StackLayout>
 
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center" >
                     <Label Text="Password" VerticalOptions="Center"/>
-                    <mdc:TextField
-                        Style="{DynamicResource OutlinedTextFieldStyle}" InputType="Password"
-                        WidthRequest="300" LabelText="password" SupportingText="" />
+                    <Entry WidthRequest="300" />
                 </StackLayout>
 
-                <HorizontalStackLayout>
+                <Grid Margin="10" ColumnDefinitions="*,*">
+                    <HorizontalStackLayout>
+                        <CheckBox/>
+                        <Label Margin="-5,0,0,0" Text="Remember me" VerticalOptions="Center"/>
+                    </HorizontalStackLayout>
 
-                </HorizontalStackLayout>
+                    <Label Grid.Column="1" Text="Forgot password?" VerticalOptions="Center" HorizontalOptions="End"
+                           TextDecorations="Underline"/>
+                </Grid>
 
-                <mdc:Button Text="Login" WidthRequest="300" HeightRequest="50" Command="{Binding LoginCommand}"/>
+                <Button Text="Login" WidthRequest="300" HeightRequest="50" Command="{Binding LoginCommand}"/>
             </StackLayout>
-
         </Frame>
     </Grid>
 </domain:BasePage>
