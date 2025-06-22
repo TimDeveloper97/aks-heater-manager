@@ -13,8 +13,14 @@ using System_aks_vn.Domain;
 using System_aks_vn.Models.Response;
 using System_aks_vn.Resources.Languages;
 using System_aks_vn.Views;
+using VstCommon.ModelResponses;
+using VstCommon.Models;
+using VstCommon;
+using VstService.Models;
 using Xamarin.Essentials;
 using Xamarin.Forms;
+using VstService.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace System_aks_vn.ViewModels
 {
@@ -26,6 +32,8 @@ namespace System_aks_vn.ViewModels
         private ObservableCollection<string> languages;
         private static string _currentLanguage;
         private bool isSaveInfo;
+
+        private IRestApiService _restApiService => App.ServiceProvider.GetService<IRestApiService>();
 
         public bool IsSaveInfo { get => isSaveInfo; set => SetProperty(ref isSaveInfo, value); }
         public string UserName { get => userName; set => SetProperty(ref userName, value); }
@@ -81,6 +89,7 @@ namespace System_aks_vn.ViewModels
 
         public LoginViewModel()
         {
+
             //ServerName = "aks";
             //UserName = "admin";
             //Password = "Aks@1234";
@@ -145,7 +154,28 @@ namespace System_aks_vn.ViewModels
 
             try
             {
-                
+                var x = _restApiService;
+
+                var rdata = new RData
+                {
+                    Data = new VstRequest { Value = new LoginRequest { Password = Password, Username = UserName } },
+                    Endpoint = API.Login,
+                };
+
+                await _restApiService.VstRequestAPI<LoginResponse>(
+                    ERMethod.Post,
+                    rdata,
+                    onSuccess: async (response) =>
+                    {
+                        API.UserType = response.Model?.Role?.ToLower() ?? API.CUSTOMER;
+                        User = response.Model;
+
+                        await Shell.Current.GoToAsync(nameof(HomePage));
+                    },
+                    onFailure: async (e) =>
+                    {
+                        await Shell.Current.DisplayAlert("Information", "Login fail", "Cancel");
+                    });
             }
             catch (Exception e)
             {

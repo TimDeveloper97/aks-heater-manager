@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System_aks_vn.Controls;
 using System_aks_vn.Domain;
 using System_aks_vn.Models.Response;
-using System_aks_vn.Services.Temp;
 using System_aks_vn.ViewModels.Version;
 using System_aks_vn.Views;
 using System_aks_vn.Views.Version;
@@ -89,6 +88,7 @@ namespace System_aks_vn.ViewModels
             try
             {
                 Devices?.Clear();
+
 
             }
             catch (Exception ex)

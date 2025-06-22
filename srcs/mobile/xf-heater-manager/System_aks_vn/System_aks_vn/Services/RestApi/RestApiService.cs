@@ -7,29 +7,19 @@
     using System.Diagnostics;
     using System.Net;
     using System.Threading.Tasks;
+    using System_aks_vn;
     using VstCommon;
     using VstService.Interfaces;
     using VstService.Models;
+    using Xamarin.Forms;
 
     /// <summary>
     /// Rest api service
     /// </summary>
     public partial class RestApiService : IRestApiService
     {
-        private readonly IWebApiRepository _webApiRepository;
-        private readonly ILogger<RestApiService> _logger;
-        private readonly IServiceProvider _serviceProvider;
+        private IWebApiRepository _webApiRepository => App.ServiceProvider.GetService<IWebApiRepository>();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RestApiService"/> class.
-        /// </summary>
-        /// <param name="serviceProvider">serviceProvider</param>
-        public RestApiService(IServiceProvider serviceProvider)
-        {
-            _webApiRepository = serviceProvider.GetRequiredService<IWebApiRepository>();
-            _logger = serviceProvider.GetRequiredService<ILogger<RestApiService>>();
-            _serviceProvider = serviceProvider;
-        }
     }
 
     /// <summary>
@@ -61,8 +51,6 @@
                 {
                     return default!;
                 }
-
-                _logger?.LogInformation(baseResponse.Message);
 
                 var responseStatusCode = int.Parse(baseResponse.Status.ToString() ?? "-1");
                 var message = baseResponse.Message;
@@ -153,7 +141,6 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
 #if DEBUG
                 Debug.WriteLine(ex);
 #endif
@@ -187,8 +174,6 @@
                 {
                     return default!;
                 }
-
-                _logger?.LogInformation(baseResponse.Message);
 
                 var responseStatusCode = int.Parse(baseResponse.Code?.ToString() ?? "-1");
                 var message = baseResponse.Message;
@@ -241,7 +226,6 @@
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, ex.Message);
 #if DEBUG
                 Debug.WriteLine(ex);
 #endif

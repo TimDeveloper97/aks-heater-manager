@@ -1,13 +1,15 @@
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System_aks_vn.Services.Temp;
 using System_aks_vn.Views;
 using System_aks_vn.Views.Devices;
 using System_aks_vn.Views.Devices.Settings;
 using System_aks_vn.Views.Version;
+using VstService.Interfaces;
+using VstService.Repositories;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -20,13 +22,7 @@ namespace System_aks_vn
         {
             InitializeComponent();
 
-            InitDependencyService();
             InitRoute();
-        }
-
-        void InitDependencyService()
-        {
-            DependencyService.Register<SomeService>();
         }
 
         void InitRoute()

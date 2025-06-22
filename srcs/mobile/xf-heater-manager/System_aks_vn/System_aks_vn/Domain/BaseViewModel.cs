@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using VstCommon.ModelResponses;
 using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
 
@@ -27,7 +28,8 @@ namespace System_aks_vn.Domain
         }
 
         #region Extend
-        protected Api Api { get; set; }
+        protected LoginResponse User { get; set; }
+
         protected async Task TimeoutSession(string message)
         {
 
