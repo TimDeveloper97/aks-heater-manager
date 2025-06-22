@@ -1,4 +1,5 @@
 
+using Plugin.LocalNotification;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,6 +37,24 @@ namespace System_aks_vn.Domain
             await MaterialDialog.Instance.SnackbarAsync(message: message,
                               msDuration: MaterialSnackbar.DurationLong);
             await Shell.Current.GoToAsync("//LoginPage");
+        }
+        #endregion
+
+        #region Notification
+        protected async Task ShowNotification(string title, string description, string returnData = null)
+        {
+            var random = new Random();
+            var id = random.Next(1, int.MaxValue);
+
+            var notification = new NotificationRequest
+            {
+                NotificationId = id,
+                Title = title,
+                Description = description,
+                ReturningData = returnData, // Returning data when tapped on notification.
+            };
+
+            await NotificationCenter.Current.Show(notification);
         }
         #endregion
     }

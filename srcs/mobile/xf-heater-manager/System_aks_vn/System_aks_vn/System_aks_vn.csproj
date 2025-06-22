@@ -11,8 +11,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microcharts.Forms" Version="0.9.5.9" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Plugin.LocalNotification" Version="9.2.0" />
 		<PackageReference Include="Plugin.MaterialDesignControls" Version="1.10.8" />
 		<PackageReference Include="Xamarin.CommunityToolkit" Version="1.2.0" />
 		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />

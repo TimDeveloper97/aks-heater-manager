@@ -9,6 +9,7 @@
              xmlns:icon="clr-namespace:System_aks_vn.Resources"
              xmlns:lang="clr-namespace:System_aks_vn.Resources.Languages"
              xmlns:vm="clr-namespace:System_aks_vn.ViewModels"
+             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              x:Name="homepage"
              
              x:Class="System_aks_vn.Views.HomePage">

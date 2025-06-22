@@ -21,6 +21,7 @@ using Xamarin.Essentials;
 using Xamarin.Forms;
 using VstService.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using Plugin.LocalNotification;
 
 namespace System_aks_vn.ViewModels
 {
@@ -89,10 +90,8 @@ namespace System_aks_vn.ViewModels
 
         public LoginViewModel()
         {
-
-            //ServerName = "aks";
-            //UserName = "admin";
-            //Password = "Aks@1234";
+            UserName = "0394852798";
+            Password = "2798";
         }
 
         #region Method
@@ -138,6 +137,7 @@ namespace System_aks_vn.ViewModels
 
             return true;
         }
+
 
         async Task ExecuteLoadLoginCommand()
         {

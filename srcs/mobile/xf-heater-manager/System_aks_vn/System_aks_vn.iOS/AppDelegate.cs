@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using Plugin.LocalNotification;
 using Foundation;
 using UIKit;
 
@@ -30,6 +30,7 @@ namespace System_aks_vn.iOS
 
             Plugin.MaterialDesignControls.iOS.Renderer.Init();
             XF.Material.iOS.Material.Init();
+            
             #endregion
 
             LoadApplication(new App());

@@ -18,6 +18,15 @@ namespace System_aks_vn
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AppShell : Shell
     {
+
+        /// <summary>
+        /// https://devblogs.microsoft.com/xamarin/microcharts-elegant-cross-platform-charts-for-any-app/
+        /// https://github.com/microcharts-dotnet/Microcharts/wiki/LineChart
+        /// https://github.com/microcharts-dotnet/Microcharts
+        /// 
+        /// 
+        /// https://github.com/thudugala/Plugin.LocalNotification/wiki/2.-Usage-10.0.0-Xamarin.Forms-(Support-ended-on-May-1,-2024)
+        /// </summary>
         public AppShell()
         {
             InitializeComponent();

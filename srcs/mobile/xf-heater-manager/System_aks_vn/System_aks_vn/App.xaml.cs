@@ -1,4 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
+using Plugin.LocalNotification;
+using Plugin.LocalNotification.EventArgs;
 using System;
 using VstService.Interfaces;
 using VstService.Repositories;

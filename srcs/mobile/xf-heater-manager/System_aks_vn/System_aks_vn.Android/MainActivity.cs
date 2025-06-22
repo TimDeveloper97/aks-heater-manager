@@ -1,9 +1,10 @@
-using System;
+﻿using System;
 using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
 using Plugin.CurrentActivity;
+using Plugin.LocalNotification;
 
 namespace System_aks_vn.Droid
 {
@@ -17,6 +18,8 @@ namespace System_aks_vn.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
+            NotificationCenter.CreateNotificationChannel();
+
             #region Style Init
             App.ScreenHeight = (int)(Resources.DisplayMetrics.HeightPixels / Resources.DisplayMetrics.Density);
             App.ScreenWidth = (int)(Resources.DisplayMetrics.WidthPixels / Resources.DisplayMetrics.Density);
@@ -24,6 +27,16 @@ namespace System_aks_vn.Droid
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
             Plugin.MaterialDesignControls.Android.Renderer.Init();
             XF.Material.Droid.Material.Init(this, savedInstanceState);
+
+            // Yêu cầu quyền notification cho Android 13+
+            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Cupcake)
+            {
+                if (CheckSelfPermission(Android.Manifest.Permission.AccessNotificationPolicy) != Android.Content.PM.Permission.Granted)
+                {
+                    RequestPermissions(new[] { Android.Manifest.Permission.AccessNotificationPolicy }, 1001);
+                }
+            }
+
             #endregion
 
             LoadApplication(new App());
