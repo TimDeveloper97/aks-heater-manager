@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Maui;
+﻿using AquilaService.Interfaces;
+using AquilaService.Repositories;
+using CommunityToolkit.Maui;
 using LiveChartsCore.SkiaSharpView.Maui;
 using Material.Components.Maui.Extensions;
 using maui_heater_manager.Pages;
@@ -101,6 +103,7 @@ public static class MauiProgram
 
     private static void BuildService(IServiceCollection services)
     {
-
+        services.AddSingleton<IWebApiRepository, WebApiRepository>();
+        services.AddSingleton<IRestApiService, RestApiService>();
     }
 }

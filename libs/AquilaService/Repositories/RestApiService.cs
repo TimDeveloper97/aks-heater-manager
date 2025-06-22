@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Net;
+using VstCommon;
 
 /// <summary>
 /// Rest api service
@@ -156,6 +157,117 @@ public partial class RestApiService
         }
 
         return default!;
+    }
+}
+
+public partial class RestApiService
+{
+    public async Task<TResult> VstRequestAPI<TResponse, TModel, TResult>(
+        ERMethod method, 
+        RData requestData,
+        Func<ResponseSuccess<TModel>, Task<TResult>>? onSuccess = null,
+        Func<ResponseFailure, Task>? onFailure = null,
+        bool isShowPopup = true) 
+        where TResponse : VstResponse
+    {
+        try
+        {
+            var responseAPI = await CallApi(method, requestData);
+
+            var statusCode = (int)responseAPI.Status!;
+
+            var baseResponse = JsonConvert.DeserializeObject<TResponse>(responseAPI.Value?.ToString() ?? string.Empty);
+            var jsonResponseValue = baseResponse?.Value?.ToString();
+
+            if (baseResponse is null)
+            {
+                return default!;
+            }
+
+            _logger?.LogInformation(baseResponse.Message);
+
+            var responseStatusCode = int.Parse(baseResponse.Code?.ToString() ?? "-1");
+            var message = baseResponse.Message;
+
+            if (responseStatusCode == -1)
+            {
+                var isString = typeof(TModel) == typeof(string);
+                dynamic? responseValue = null;
+
+                if (isString)
+                {
+                    responseValue = jsonResponseValue;
+                }
+                else if (jsonResponseValue is not null && AquilaService.TextHelper.IsJson(jsonResponseValue))
+                {
+                    responseValue = JsonConvert.DeserializeObject<TModel>(jsonResponseValue);
+                }
+
+                if (onSuccess is not null && responseStatusCode != (int)HttpStatusCode.NoContent)
+                {
+                    dynamic? result = null;
+
+                    if (onSuccess != null)
+                    {
+                        result = await onSuccess(new ResponseSuccess<TModel>
+                        {
+                            Model = responseValue,
+                            Message = message,
+                        });
+                    }
+
+                    return result ?? default!;
+                }
+            }
+            else
+            {
+                var title = "ERROR: " ?? string.Empty;
+
+                var failResp = new ResponseFailure
+                {
+                    Error = message,
+                    StatusCode = statusCode,
+                };
+
+                if (onFailure != null)
+                    await onFailure(failResp);
+
+                var unauthorized = statusCode == (int)HttpStatusCode.Unauthorized;
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, ex.Message);
+#if DEBUG
+            Debug.WriteLine(ex);
+#endif
+        }
+
+        return default!;
+    }
+
+    public async Task VstRequestAPI<TModel>(
+        ERMethod method,
+        RData requestData,
+        Func<ResponseSuccess<TModel>, Task>? onSuccess = null,
+        Func<ResponseFailure, Task>? onFailure = null,
+        bool isShowPopup = true)
+    {
+        await VstRequestAPI<VstResponse, TModel, object>(
+            method,
+            requestData,
+            onSuccess: onSuccess != null
+                ? async (response) =>
+                {
+                    if (response.Model is not null)
+                    {
+                        await onSuccess(response);
+                    }
+                    return default!;
+                }
+            : null,
+            onFailure: onFailure,
+            isShowPopup: isShowPopup);
     }
 }
 

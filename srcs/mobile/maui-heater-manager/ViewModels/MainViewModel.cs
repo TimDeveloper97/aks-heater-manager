@@ -25,6 +25,12 @@ public partial class MainViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    async Task Back()
+    {
+        await Shell.Current.GoToAsync("..");
+    }
+
+    [RelayCommand]
     async Task Navigate(string page)
     {
         if(page == "Now")

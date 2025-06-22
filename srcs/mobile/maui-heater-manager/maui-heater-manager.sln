@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "maui-heater-manager", "maui
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AquilaService", "..\..\..\libs\AquilaService\AquilaService.csproj", "{0567D004-8143-4DCB-BFB2-2F38B27E4B0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VstCommon", "..\..\shared\VstCommon\VstCommon.csproj", "{368C0234-E30F-4C3D-AD06-146E3B06DC91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{0567D004-8143-4DCB-BFB2-2F38B27E4B0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0567D004-8143-4DCB-BFB2-2F38B27E4B0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0567D004-8143-4DCB-BFB2-2F38B27E4B0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{368C0234-E30F-4C3D-AD06-146E3B06DC91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{368C0234-E30F-4C3D-AD06-146E3B06DC91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{368C0234-E30F-4C3D-AD06-146E3B06DC91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{368C0234-E30F-4C3D-AD06-146E3B06DC91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

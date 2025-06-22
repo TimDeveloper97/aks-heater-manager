@@ -5,16 +5,22 @@
              xmlns:domain="clr-namespace:maui_heater_manager.Domains"
              xmlns:viewmodels="clr-namespace:maui_heater_manager.ViewModels"
              x:TypeArguments="viewmodels:LoginViewModel"
+             xmlns:xct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:mdc="clr-namespace:Material.Components.Maui;assembly=Material.Components.Maui"
              xmlns:icon="clr-namespace:IconPacks.IconKind;assembly=IconPacks.Material"
              Shell.NavBarIsVisible="False"
              Title="LoginPage">
+    <ContentPage.Behaviors>
+        <xct:EventToCommandBehavior
+                EventName="Appearing"
+                Command="{Binding PageAppearingCommand}" />
+    </ContentPage.Behaviors>
     <Grid BackgroundColor="{StaticResource WhiteShallow}" Margin="-20" Padding="20">
         <Grid BackgroundColor="{StaticResource Primary}" Rotation="-70" TranslationY="280" TranslationX="50"
               WidthRequest="400" HeightRequest="1000"/>
 
         <StackLayout VerticalOptions="Start">
-            <Image Source="logo_app.png" HeightRequest="100" WidthRequest="100" BackgroundColor="White"/>
+            <Image Source="slock.png" HeightRequest="100" WidthRequest="100"/>
             <Label Text="AKS" FontSize="50" FontFamily="OpenSansSemibold" HorizontalOptions="Center" Margin="-10,0,0,0">
                 <Label.Shadow>
                     <Shadow Brush="Gray"
@@ -25,7 +31,7 @@
             </Label>
         </StackLayout>
 
-        <mdc:Card BackgroundColor="{StaticResource White}" HeightRequest="400"
+        <mdc:Card BackgroundColor="{StaticResource White}" HeightRequest="320"
                   VerticalOptions="Center" OutlineColor="{StaticResource Gray100}">
             <mdc:Card.Shadow>
                 <Shadow Brush="Gray"
@@ -44,19 +50,19 @@
                 </Label>
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
                     <Label Text="Username" VerticalOptions="Center" FontSize="{StaticResource SizeMedium}"/>
-                    <Frame Padding="0" CornerRadius="3">
-                        <Entry WidthRequest="300" Text="{Binding Username}" FontSize="{StaticResource SizeMedium}"/>
+                    <Frame Padding="5,0,0,0" CornerRadius="3">
+                        <Entry WidthRequest="300" Text="{Binding Source={RelativeSource AncestorType={x:Type domain:BasePage}}, Path=BindingContext.Username}" FontSize="{StaticResource SizeMedium}"/>
                     </Frame>
                 </StackLayout>
 
                 <StackLayout VerticalOptions="Center" HorizontalOptions="Center" Margin="0,20">
                     <Label Text="Password" VerticalOptions="Center" FontSize="{StaticResource SizeMedium}"/>
-                    <Frame Padding="0" CornerRadius="3">
-                        <Entry WidthRequest="300" Text="{Binding Password}" IsPassword="True" FontSize="{StaticResource SizeMedium}"/>
+                    <Frame Padding="5,0,0,0" CornerRadius="3">
+                        <Entry WidthRequest="300" Text="{Binding Source={RelativeSource AncestorType={x:Type domain:BasePage}}, Path=BindingContext.Password}" IsPassword="True" FontSize="{StaticResource SizeMedium}"/>
                     </Frame>
                 </StackLayout>
 
-                <Grid Margin="10" ColumnDefinitions="*,*">
+                <!--<Grid Margin="10" ColumnDefinitions="*,*">
                     <HorizontalStackLayout>
                         <CheckBox/>
                         <Label Margin="-5,0,0,0" Text="Remember me" VerticalOptions="Center"/>
@@ -64,7 +70,7 @@
 
                     <Label Grid.Column="1" Text="Forgot password?" VerticalOptions="Center" HorizontalOptions="End"
                            TextDecorations="Underline"/>
-                </Grid>
+                </Grid>-->
 
                 <Button Text="Login" BackgroundColor="{StaticResource Primary}" WidthRequest="300" HeightRequest="50"
                         Command="{Binding Source={RelativeSource AncestorType={x:Type domain:BasePage}}, Path=BindingContext.LoginCommand}"/>

@@ -26,21 +26,21 @@ public partial class DeviceViewModel
         Devices.Add(new Device
         {
             Title = "AC 30",
-            Status = "316 w",
+            Description = "316 w",
             Icon = "fan.png",
             Color = Colors.LightBlue
         });
         Devices.Add(new Device
         {
             Title = "Always On",
-            Status = "291 w",
+            Description = "291 w",
             Icon = "home.png",
             Color = Colors.AliceBlue
         });
         Devices.Add(new Device
         {
             Title = "Heat Pump Water Heater 1",
-            Status = "206 w",
+            Description = "206 w",
             Icon = "setting.png",
             Color = Colors.CadetBlue
         });
@@ -50,7 +50,7 @@ public partial class DeviceViewModel
             Devices.Add(new Device
             {
                 Title = $"AC {i + 1}",
-                Status = "Off",
+                Description = "Off",
                 Icon = "fan.png",
                 Color = Colors.Gray
             });
