@@ -53,8 +53,7 @@ namespace System_aks_vn.ViewModels
         #region Method
         void Init()
         {
-            Title = "Profile";
-            DependencyService.Get<IStatusBar>().SetWhiteStatusBar();
+            Title = Resources.Languages.LanguageResource.settingTitle;
             Reset();
         }
 

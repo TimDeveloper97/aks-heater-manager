@@ -2,29 +2,37 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System_aks_vn.Domain;
 using VstCommon.ModelResponses;
 
 namespace System_aks_vn.Models.Response
 {
-    public class DeviceModel
+    public class DeviceModel : BaseBinding
     {
-        [JsonProperty("model")]
-        public string Model { get; set; }
+        private string model;
 
-        [JsonProperty("name")]
-        public string Name { get; set; }
+        private string name;
 
-        [JsonProperty("addr")]
-        public string Addr { get; set; }
+        private string addr;
 
-        [JsonProperty("version")]
-        public string Version { get; set; }
+        private string version;
 
-        [JsonProperty("_id")]
-        public string Id { get; set; }
+        private string id;
 
         [JsonProperty("setting")]
         public DeviceSetting Setting { get; set; }
+
+
+        [JsonProperty("model")]
+        public string Model { get => model; set => SetProperty(ref model, value); }
+        [JsonProperty("name")]
+        public string Name { get => name; set => SetProperty(ref name, value); }
+        [JsonProperty("addr")]
+        public string Addr { get => addr; set => SetProperty(ref addr, value)  ; }
+        [JsonProperty("version")]
+        public string Version { get => version; set => SetProperty(ref version, value); }
+        [JsonProperty("_id")]
+        public string Id { get => id; set => SetProperty(ref id, value); }
 
         public DeviceModel()
         {

@@ -24,7 +24,7 @@
         <StackLayout BackgroundColor="{AppThemeBinding Dark={StaticResource BlackSmoke}, Light={StaticResource WhiteSmoke}}">
             <Frame Margin="10" CornerRadius="10">
                 <StackLayout HeightRequest="300">
-                    <Label Text="{Static lang:LanguageResource.settingFrameManager}" FontSize="Title" FontAttributes="Bold" TextColor="{StaticResource Black}"/>
+                    <Label Text="{Static lang:LanguageResource.settingFrameManager}" FontSize="Title" TextColor="{StaticResource Black}"/>
                     <CollectionView VerticalScrollBarVisibility="Never" Margin="0,20,0,-50" ItemsSource="{Binding SettingItems}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -38,6 +38,10 @@
                                             </Grid>
                                             <Image Grid.Column="2" Source="right.png" HeightRequest="15" WidthRequest="15"/>
                                         </Grid>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" CommandParameter="{Binding .}"
+                                                                Command="{Binding Path=BindingContext.NavigatorCommand, Source={x:Reference Name=settingpage}}"/>
+                                        </Frame.GestureRecognizers>
                                     </Frame>
                                     <Line HeightRequest="1" Margin="0,6"/>
                                 </StackLayout>
@@ -49,7 +53,7 @@
 
             <Frame Margin="10" CornerRadius="10">
                 <StackLayout HeightRequest="170">
-                    <Label Text="{Static lang:LanguageResource.settingFrameSupport}" FontSize="Title" FontAttributes="Bold" TextColor="{StaticResource Black}"/>
+                    <Label Text="{Static lang:LanguageResource.settingFrameSupport}" FontSize="Title" TextColor="{StaticResource Black}"/>
                     <CollectionView VerticalScrollBarVisibility="Never" Margin="0,20,0,-50" ItemsSource="{Binding AdditionalItems}">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
@@ -63,6 +67,10 @@
                                             </Grid>
                                             <Image Grid.Column="2" Source="right.png" HeightRequest="15" WidthRequest="15"/>
                                         </Grid>
+                                        <Frame.GestureRecognizers>
+                                            <TapGestureRecognizer NumberOfTapsRequired="1" CommandParameter="{Binding .}"
+                                                                 Command="{Binding Path=BindingContext.NavigatorCommand, Source={x:Reference Name=settingpage}}"/>
+                                        </Frame.GestureRecognizers>
                                     </Frame>
                                     <Line HeightRequest="1" Margin="0,6"/>
                                 </StackLayout>
@@ -74,16 +82,16 @@
 
             <Frame Margin="10" CornerRadius="10" HeightRequest="75">
                 <StackLayout>
-                    <Label Text="{Static lang:LanguageResource.settingContract}" FontSize="Title" FontAttributes="Bold" TextColor="{StaticResource Black}"/>
+                    <Label Text="{Static lang:LanguageResource.settingContract}" FontSize="Title" TextColor="{StaticResource Black}"/>
                     <StackLayout Orientation="Vertical" HorizontalOptions="Start">
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span   FontAttributes="Bold" FontFamily="MaterialIcons"
-                                            FontSize="{OnPlatform Android=20, iOS=18}"
+                                            FontSize="{OnPlatform Android=18, iOS=18}"
                                             Text="{x:Static icon:FontIcons.Phone}"
                                             TextColor="{AppThemeBinding Dark={StaticResource Gray} ,Light={StaticResource Gray}}"/>
-                                    <Span   FontSize="{OnPlatform Android=20, iOS=14}"
+                                    <Span   FontSize="{OnPlatform Android=18, iOS=14}"
                                             Text="{Binding Phone, StringFormat=' {0}'}"
                                             TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}" />
                                 </FormattedString>
@@ -93,13 +101,13 @@
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span   FontAttributes="Bold" FontFamily="MaterialIcons"
-                                            FontSize="{OnPlatform Android=20, iOS=18}"
+                                            FontSize="{OnPlatform Android=18, iOS=18}"
                                             Text="{x:Static icon:FontIcons.Package}"
                                             TextColor="{AppThemeBinding Dark={StaticResource Gray} ,Light={StaticResource Gray}}"/>
-                                    <Span   FontSize="{OnPlatform Android=20, iOS=14}"
+                                    <Span   FontSize="{OnPlatform Android=18, iOS=14}"
                                             Text="{Static lang:LanguageResource.settingVersion}"
                                             TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}" />
-                                    <Span   FontSize="{OnPlatform Android=20, iOS=14}"
+                                    <Span   FontSize="{OnPlatform Android=18, iOS=14}"
                                             Text="{Binding Version, StringFormat=' v{0}'}"
                                             TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}" />
                                 </FormattedString>

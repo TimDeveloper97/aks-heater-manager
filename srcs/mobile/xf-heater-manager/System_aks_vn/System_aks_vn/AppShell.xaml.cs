@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System_aks_vn.Views;
 using System_aks_vn.Views.Devices;
 using System_aks_vn.Views.Devices.Settings;
+using System_aks_vn.Views.Settings;
 using System_aks_vn.Views.Version;
 using VstService.Interfaces;
 using VstService.Repositories;
@@ -45,6 +46,10 @@ namespace System_aks_vn
             Routing.RegisterRoute(nameof(DeviceSettingSmsPage), typeof(DeviceSettingSmsPage));
             Routing.RegisterRoute(nameof(DeviceSettingCallPage), typeof(DeviceSettingCallPage));
             Routing.RegisterRoute(nameof(DeviceSettingSchedulePage), typeof(DeviceSettingSchedulePage));
+
+            Routing.RegisterRoute(nameof(AccountPage), typeof(AccountPage));
+            Routing.RegisterRoute(nameof(DeviceListPage), typeof(DeviceListPage));
+            Routing.RegisterRoute(nameof(StaffListPage), typeof(StaffListPage));
         }
 
         private async void OnMenuItemClicked(object sender, EventArgs e)

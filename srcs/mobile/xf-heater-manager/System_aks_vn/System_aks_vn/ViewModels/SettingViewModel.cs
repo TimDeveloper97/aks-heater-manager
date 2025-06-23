@@ -10,9 +10,11 @@ using System_aks_vn.Domain;
 using System_aks_vn.Models.Settings;
 using System_aks_vn.Models.View;
 using System_aks_vn.Views;
+using System_aks_vn.Views.Settings;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
+using XF.Material.Forms.UI.Dialogs.Configurations;
 
 namespace System_aks_vn.ViewModels
 {
@@ -35,7 +37,13 @@ namespace System_aks_vn.ViewModels
             Init();
         });
 
+        public ICommand NavigatorCommand => new Command<SettingItem>(async (item) =>
+        {
+            if (string.IsNullOrEmpty(item.Page))
+                return;
 
+            await Shell.Current.GoToAsync($"{item.Page}");
+        });
         #endregion
 
         public SettingViewModel()
@@ -61,24 +69,28 @@ namespace System_aks_vn.ViewModels
             {
                 Title = Resources.Languages.LanguageResource.settingActionProfile,
                 Description = Resources.Languages.LanguageResource.settingActionProfileD,
+                Page = nameof(AccountPage),
                 Icon = "account_color.png",
             });
             SettingItems.Add(new SettingItem
             {
                 Title = Resources.Languages.LanguageResource.settingActionDevice,
                 Description = Resources.Languages.LanguageResource.settingActionDeviceD,
+                Page = nameof(DeviceListPage),
                 Icon = "device_v2.png",
             });
             SettingItems.Add(new SettingItem
             {
                 Title = Resources.Languages.LanguageResource.settingActionStaff,
                 Description = Resources.Languages.LanguageResource.settingActionStaffD,
+                Page = nameof(StaffListPage),
                 Icon = "staff_color.png",
             });
             SettingItems.Add(new SettingItem
             {
                 Title = Resources.Languages.LanguageResource.settingTitle,
                 Description = Resources.Languages.LanguageResource.settingActionPasswordD,
+                Page = nameof(ProfilePage),
                 Icon = "password_color.png",
             });
 

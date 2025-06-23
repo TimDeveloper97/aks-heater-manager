@@ -10,7 +10,7 @@ namespace System_aks_vn.Models.Settings
 
         public string Description { get; set; }
 
-        public string Status { get; set; }
+        public string Page { get; set; }
 
         public string Icon { get => icon; set => SetProperty(ref icon, value); }
     }

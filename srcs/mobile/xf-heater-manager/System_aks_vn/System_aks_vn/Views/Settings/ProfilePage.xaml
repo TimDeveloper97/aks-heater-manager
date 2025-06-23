@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              
-             Shell.NavBarIsVisible="False"
+             Shell.NavBarIsVisible="True"
              xmlns:mdc="clr-namespace:Plugin.MaterialDesignControls;assembly=Plugin.MaterialDesignControls"
              xmlns:xf="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
@@ -10,7 +10,7 @@
              xmlns:lang="clr-namespace:System_aks_vn.Resources.Languages"
              xmlns:vm="clr-namespace:System_aks_vn.ViewModels"
              x:Name="profilepage"
-             
+             Title="{Binding Title}"
              x:Class="System_aks_vn.Views.ProfilePage">
     <ContentPage.BindingContext>
         <vm:ProfileViewModel />
@@ -22,9 +22,9 @@
     </ContentPage.Behaviors>
     <ContentPage.Content>
         <Grid BackgroundColor="{AppThemeBinding Dark={StaticResource BlackSmoke}, Light={StaticResource WhiteSmoke}}">
-            <StackLayout HorizontalOptions="Start" VerticalOptions="Start" Margin="7,10"
+            <!--<StackLayout HorizontalOptions="Start" VerticalOptions="Start" Margin="7,10"
                          Orientation="Horizontal">
-                <!--#region Backbutton -->
+                --><!--#region Backbutton --><!--
                 <xf:MaterialCard Padding="5" BackgroundColor="Transparent" 
                                  HasShadow="False" CornerRadius="20" 
                                  IsClickable="True"
@@ -32,11 +32,11 @@
                     <Label FontFamily="MaterialIcons" Text="{Static icon:FontIcons.ArrowLeft}" FontSize="30" 
                        TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}"/>
                 </xf:MaterialCard>
-                <!--#endregion-->
+                --><!--#endregion--><!--
                 <Label Text="{Static lang:LanguageResource.settingProfile}" HorizontalOptions="Center" VerticalOptions="Center"
                        FontSize="{OnPlatform Android=20, iOS=18}" 
                        TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}"/>
-            </StackLayout>
+            </StackLayout>-->
             
             <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
                    BorderColor="{AppThemeBinding Dark={StaticResource Gray}, Light={StaticResource WhiteGray}}"
