@@ -68,7 +68,7 @@
                     <!--#endregion-->
 
                     <StackLayout Orientation="Horizontal" HorizontalOptions="End">
-                        <Label  Text="{x:Static icon:FontIcons.DotsVertical}" 
+                        <!--<Label  Text="{x:Static icon:FontIcons.DotsVertical}" 
                                 TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource White}}"
                                 FontSize="{OnPlatform Android=26, iOS=24}"
                                 HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Margin="10,0,10,0"
@@ -77,7 +77,13 @@
                                 <TapGestureRecognizer NumberOfTapsRequired="1" CommandParameter="{Binding .}"
                                           Command="{Binding Path=BindingContext.MenuCommand, Source={x:Reference Name=homepage}}"/>
                             </Label.GestureRecognizers>
-                        </Label>
+                        </Label>-->
+                        <Image Aspect="AspectFit" HeightRequest="30" Source="setting.png" Margin="0,0,10,0" WidthRequest="30">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" CommandParameter="{Binding .}"
+                                     Command="{Binding Path=BindingContext.MenuCommand, Source={x:Reference Name=homepage}}"/>
+                            </Image.GestureRecognizers>
+                        </Image>
                     </StackLayout>
                 </Grid>
                 <!--#endregion-->

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<linker>
+	<assembly fullname="Xamarin.AndroidX.Core">
+		<type fullname="AndroidX.Core.View.Accessibility.AccessibilityNodeInfoCompat" preserve="all"/>
+	</assembly>
+</linker>

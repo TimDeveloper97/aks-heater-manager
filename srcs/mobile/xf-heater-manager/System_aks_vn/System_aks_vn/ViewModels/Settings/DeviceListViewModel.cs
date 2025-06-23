@@ -28,14 +28,14 @@ namespace System_aks_vn.ViewModels.Settings
         public ICommand PageAppearingCommand => new Command(async () =>
         {
             Init();
+            
         });
 
-        public ICommand LoadDeviceCommand { get; set; }
+        public ICommand LoadDeviceCommand => new Command(async () => await ExecuteLoadDeviceCommand());
         #endregion
 
         public DeviceListViewModel()
         {
-            LoadDeviceCommand = new Command(async () => await ExecuteLoadDeviceCommand());
         }
 
         #region Method
@@ -44,6 +44,7 @@ namespace System_aks_vn.ViewModels.Settings
             Title = Resources.Languages.LanguageResource.settingActionDevice;
             Devices = new ObservableCollection<DeviceModel>();
             WidthCard = App.ScreenWidth * 0.8;
+            IsBusy = true;
         }
 
         async Task ExecuteLoadDeviceCommand()

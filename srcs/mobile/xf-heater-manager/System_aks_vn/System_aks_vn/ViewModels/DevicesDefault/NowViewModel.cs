@@ -32,13 +32,20 @@ namespace System_aks_vn.ViewModels.DevicesDefault
         #region Command 
         public ICommand PageAppearingCommand => new Command(async () =>
         {
-            //await GetDeviceStatus(DateTime.Now.ToString("HH:mm:ss"));
+            _cts = new CancellationTokenSource();
+            RunThreadGetPower(_cts.Token);
         });
 
 
         #endregion
 
         public NowViewModel()
+        {
+            Init();
+        }
+
+        #region Method
+        void Init()
         {
             Chart = new LineChart
             {
@@ -49,11 +56,8 @@ namespace System_aks_vn.ViewModels.DevicesDefault
                 BackgroundColor = SKColor.Parse("#f2f2f2"),
                 LabelTextSize = 18,
             };
-            _cts = new CancellationTokenSource();
-            RunThreadGetPower(_cts.Token);
         }
 
-        #region Method
         void RunThreadGetPower(CancellationToken token)
         {
             Task.Run(async () =>
@@ -89,7 +93,7 @@ namespace System_aks_vn.ViewModels.DevicesDefault
 #if DEBUG
                         var value = response.Model.U * (response.Model.I + (new Random().Next(1, 100)));
 #else
-                        var value = response.Model.U * (response.Model.I));
+                        var value = response.Model.U * (response.Model.I);
 #endif
                         TotalPower += value;
                         AddEntryToChart(value, time);

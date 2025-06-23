@@ -31,7 +31,7 @@
                                 <StackLayout>
                                     <Frame Padding="0">
                                         <Grid ColumnDefinitions="auto,*,auto" Margin="5">
-                                            <Image Source="{Binding Icon}" HeightRequest="35" WidthRequest="35" />
+                                            <Image Source="{Binding Icon}" HeightRequest="30" WidthRequest="30" />
                                             <Grid Grid.Column="1" RowDefinitions="6*, 4*">
                                                 <Label Text="{Binding Title}" Margin="0,0,0,-5" VerticalOptions="Center" TextColor="{StaticResource Black}" FontSize="20"/>
                                                 <Label Grid.Row="1" Margin="0,-5,0,0" Text="{Binding Description}" HorizontalOptions="Start" TextColor="{StaticResource Gray300}" FontSize="Subtitle"/>
@@ -60,7 +60,7 @@
                                 <StackLayout>
                                     <Frame Padding="0">
                                         <Grid ColumnDefinitions="auto,*,auto" Margin="5">
-                                            <Image Source="{Binding Icon}" HeightRequest="35" WidthRequest="35" />
+                                            <Image Source="{Binding Icon}" HeightRequest="30" WidthRequest="30" />
                                             <Grid Grid.Column="1" RowDefinitions="6*, 4*">
                                                 <Label Text="{Binding Title}" Margin="0,0,0,-5" VerticalOptions="Center" TextColor="{StaticResource Black}" FontSize="20"/>
                                                 <Label Grid.Row="1" Margin="0,-5,0,0" Text="{Binding Description}" HorizontalOptions="Start" TextColor="{StaticResource Gray300}" FontSize="Subtitle"/>
@@ -83,17 +83,17 @@
             <Frame Margin="10" CornerRadius="10" HeightRequest="75">
                 <StackLayout>
                     <Label Text="{Static lang:LanguageResource.settingContract}" FontSize="Title" TextColor="{StaticResource Black}"/>
-                    <StackLayout Orientation="Vertical" HorizontalOptions="Start">
+                    <StackLayout Orientation="Vertical" HorizontalOptions="Start" Margin="0,5,0,0">
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span   FontAttributes="Bold" FontFamily="MaterialIcons"
                                             FontSize="{OnPlatform Android=18, iOS=18}"
                                             Text="{x:Static icon:FontIcons.Phone}"
-                                            TextColor="{AppThemeBinding Dark={StaticResource Gray} ,Light={StaticResource Gray}}"/>
+                                            TextColor="{AppThemeBinding Dark={StaticResource Gray500} ,Light={StaticResource Gray500}}"/>
                                     <Span   FontSize="{OnPlatform Android=18, iOS=14}"
                                             Text="{Binding Phone, StringFormat=' {0}'}"
-                                            TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}" />
+                                            TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Gray500}}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
@@ -103,13 +103,13 @@
                                     <Span   FontAttributes="Bold" FontFamily="MaterialIcons"
                                             FontSize="{OnPlatform Android=18, iOS=18}"
                                             Text="{x:Static icon:FontIcons.Package}"
-                                            TextColor="{AppThemeBinding Dark={StaticResource Gray} ,Light={StaticResource Gray}}"/>
+                                            TextColor="{AppThemeBinding Dark={StaticResource Gray500} ,Light={StaticResource Gray500}}"/>
                                     <Span   FontSize="{OnPlatform Android=18, iOS=14}"
                                             Text="{Static lang:LanguageResource.settingVersion}"
-                                            TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}" />
+                                            TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Gray500}}" />
                                     <Span   FontSize="{OnPlatform Android=18, iOS=14}"
                                             Text="{Binding Version, StringFormat=' v{0}'}"
-                                            TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}" />
+                                            TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Gray500}}" />
                                 </FormattedString>
                             </Label.FormattedText>
                         </Label>
