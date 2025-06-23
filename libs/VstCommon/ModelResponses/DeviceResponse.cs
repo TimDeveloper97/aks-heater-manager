@@ -2,11 +2,8 @@
 
 namespace VstCommon.ModelResponses
 {
-    public class DeviceResponse
+    public class DeviceResponse : VstBaseResponse
     {
-        [JsonProperty("_id")]
-        public string? Id { get; set; }
-
         [JsonProperty("name")]
         public string? Name { get; set; }
 

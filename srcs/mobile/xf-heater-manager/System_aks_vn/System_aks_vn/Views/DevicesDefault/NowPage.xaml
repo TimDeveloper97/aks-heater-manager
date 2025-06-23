@@ -9,7 +9,7 @@
             xmlns:icon="clr-namespace:System_aks_vn.Resources"
             xmlns:lang="clr-namespace:System_aks_vn.Resources.Languages"
             xmlns:vm="clr-namespace:System_aks_vn.ViewModels.DevicesDefault"
-             IconImageSource="history.png"
+             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              x:Class="System_aks_vn.Views.DevicesDefault.NowPage">
     <ContentPage.BindingContext>
         <vm:NowViewModel />
@@ -20,11 +20,74 @@
         Command="{Binding PageAppearingCommand}" />
     </ContentPage.Behaviors>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="now"
-            VerticalOptions="CenterAndExpand" 
-            HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid RowDefinitions="auto, *, 200" Padding="10" BackgroundColor="{StaticResource WhiteGray}">
+            <Label FontSize="{OnPlatform Android=24, iOS=18}" Text="{Binding TotalPower, StringFormat='{0:N0} (kw)'}"
+                   TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}"
+                   HorizontalOptions="End" VerticalOptions="End"/>
+
+            <Grid Grid.Row="1" Margin="-50,0">
+                <forms:ChartView Chart="{Binding Chart}" BackgroundColor="{StaticResource GrayLight}"/>
+            </Grid>
+
+            <Frame Grid.Row="2" HeightRequest="200" Padding="0,20" BorderColor="{StaticResource Gray100}">
+                <Grid ColumnDefinitions="*,auto,*" RowDefinitions="*,auto,*">
+
+                    <BoxView Grid.Row="0" Grid.Column="1" WidthRequest="1" BackgroundColor="{StaticResource Gray100}"/>
+                    <BoxView Grid.Row="2" Grid.Column="1" WidthRequest="1" BackgroundColor="{StaticResource Gray100}"/>
+                    <BoxView Grid.Row="1" Grid.Column="0" HeightRequest="1" BackgroundColor="{StaticResource Gray100}"/>
+                    <BoxView Grid.Row="1" Grid.Column="2" HeightRequest="1" BackgroundColor="{StaticResource Gray100}"/>
+
+
+                    <StackLayout Grid.Row="0" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">
+                        <Image>
+                            <Image.Source>
+                                <FontImageSource Glyph="&#xf071;" FontFamily="FontAwesomeSolid" Size="20" Color="Black"/>
+                            </Image.Source>
+                        </Image>
+                        <Label Text="Cảnh báo"/>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Now"/>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="0" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center">
+                        <Image>
+                            <Image.Source>
+                                <FontImageSource Glyph="&#xf06a;" FontFamily="FontAwesomeSolid" Size="20" Color="Black"/>
+                            </Image.Source>
+                        </Image>
+                        <Label Text="Bất thường"/>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Now"/>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="2" Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">
+                        <Image>
+                            <Image.Source>
+                                <FontImageSource Glyph="&#xf0e7;" FontFamily="FontAwesomeSolid" Size="20" Color="Black"/>
+                            </Image.Source>
+                        </Image>
+                        <Label Text="Ngắt relay tổng"/>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Now"/>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+
+                    <StackLayout Grid.Row="2" Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center">
+                        <Image>
+                            <Image.Source>
+                                <FontImageSource Glyph="&#xf1e6;" FontFamily="FontAwesomeSolid" Size="20" Color="Black"/>
+                            </Image.Source>
+                        </Image>
+                        <Label Text="Ngắt relay phụ thường"/>
+                        <StackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateCommand}" CommandParameter="Now"/>
+                        </StackLayout.GestureRecognizers>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+        </Grid>
     </ContentPage.Content>
 
 </ContentPage>

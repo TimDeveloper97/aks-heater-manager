@@ -35,6 +35,7 @@ namespace System_aks_vn.ViewModels.Version
             set
             {
                 parameterDeviceId = Uri.UnescapeDataString(value ?? string.Empty);
+                CurrentDeviceId = parameterDeviceId;
                 SetProperty(ref parameterDeviceId, value);
             }
         }

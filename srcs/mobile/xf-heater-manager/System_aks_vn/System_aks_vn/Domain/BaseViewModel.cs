@@ -31,6 +31,8 @@ namespace System_aks_vn.Domain
         #region Extend
         protected static LoginResponse User { get; set; }
 
+        protected static string CurrentDeviceId { get; set; }
+
         protected async Task TimeoutSession(string message)
         {
 
