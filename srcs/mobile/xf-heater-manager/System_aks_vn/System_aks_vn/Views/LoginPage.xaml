@@ -20,7 +20,7 @@
                 EventName="Appearing"
                 Command="{Binding PageAppearingCommand}" />
     </ContentPage.Behaviors>
-    
+
     <ContentPage.Content>
         <Grid BackgroundColor="{AppThemeBinding Dark={StaticResource BlackSmoke}, Light={StaticResource WhiteSmoke}}">
             <StackLayout Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="Start"
@@ -43,11 +43,15 @@
                     <StackLayout Orientation="Vertical" 
                                  VerticalOptions="FillAndExpand" HorizontalOptions="Center">
 
-                        <Label Text="{Static lang:LanguageResource.loginTitle}" 
-                               HeightRequest="50" VerticalOptions="Center" Padding="20,0" VerticalTextAlignment="Center"
-                               TextColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
-                               BackgroundColor="{AppThemeBinding Dark={StaticResource AppColor}, Light={StaticResource AppColor}}"
-                               FontSize="{OnPlatform Android=20, iOS=18}" FontAttributes="Bold" FontFamily="MuliBold"/>
+                        <StackLayout Orientation="Horizontal" 
+                                     BackgroundColor="{AppThemeBinding Dark={StaticResource AppColor}, Light={StaticResource AppColor}}">
+                            <Image Grid.Row="0" Grid.Column="0" Aspect="AspectFit"
+                                    HeightRequest="30" Source="logo_app.png" Margin="20,0,0,0" WidthRequest="30" />
+                            <Label Text="{Static lang:LanguageResource.loginTitle}" 
+                                   HeightRequest="50" VerticalOptions="Center" VerticalTextAlignment="Center"
+                                   TextColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
+                                   FontSize="{OnPlatform Android=20, iOS=18}" FontAttributes="Bold" FontFamily="MuliBold"/>
+                        </StackLayout>
 
                         <StackLayout Margin="20,20,20,0">
                             <mdc:MaterialEntry Type="Filled" LeadingIcon="{AppThemeBinding Dark=userdark, Light=userlight}" Padding="0"

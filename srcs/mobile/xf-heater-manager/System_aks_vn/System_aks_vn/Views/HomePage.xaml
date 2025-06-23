@@ -50,15 +50,15 @@
                     <StackLayout Grid.Row="0" Margin="20,0,0,0"
                                      HorizontalOptions="FillAndExpand" Orientation="Horizontal">
                         <Image Grid.Row="0" Grid.Column="0" Aspect="AspectFit"
-                               HeightRequest="30" Source="slock" WidthRequest="30" />
+                               HeightRequest="30" Source="logo_app.png" Margin="0,-4,0,0" WidthRequest="30" />
                         <Label>
                             <Label.FormattedText>
                                 <FormattedString>
                                     <Span   FontAttributes="Bold"
-                                            FontSize="{OnPlatform Android=24, iOS=18}"
+                                            FontSize="{OnPlatform Android=22, iOS=18}"
                                             Text="AKS"
                                             TextColor="{AppThemeBinding Dark={StaticResource Yellow} ,Light={StaticResource Yellow}}"/>
-                                    <Span   FontSize="{OnPlatform Android=24, iOS=18}"
+                                    <Span   FontSize="{OnPlatform Android=22, iOS=18}"
                                             Text=" POWER"
                                             TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource White}}" />
                                 </FormattedString>
