@@ -177,6 +177,39 @@
   <data name="loginUserNamePlaceHold" xml:space="preserve">
     <value>ユーザー</value>
   </data>
+  <data name="settingActionDevice" xml:space="preserve">
+    <value>デバイス</value>
+  </data>
+  <data name="settingActionDeviceD" xml:space="preserve">
+    <value>デバイスリストを管理する</value>
+  </data>
+  <data name="settingActionGuide" xml:space="preserve">
+    <value>使い方</value>
+  </data>
+  <data name="settingActionGuideD" xml:space="preserve">
+    <value>アプリケーション機能の使用手順</value>
+  </data>
+  <data name="settingActionPasswordD" xml:space="preserve">
+    <value>新しいパスワードに変更してください</value>
+  </data>
+  <data name="settingActionProfile" xml:space="preserve">
+    <value>プロフィール</value>
+  </data>
+  <data name="settingActionProfileD" xml:space="preserve">
+    <value>ユーザー情報を設定する</value>
+  </data>
+  <data name="settingActionQuestion" xml:space="preserve">
+    <value>質問</value>
+  </data>
+  <data name="settingActionQuestionD" xml:space="preserve">
+    <value>よくある質問一覧</value>
+  </data>
+  <data name="settingActionStaff" xml:space="preserve">
+    <value>スタッフ</value>
+  </data>
+  <data name="settingActionStaffD" xml:space="preserve">
+    <value>ユーザーリストを管理する</value>
+  </data>
   <data name="settingCall" xml:space="preserve">
     <value>電話</value>
   </data>
@@ -185,6 +218,18 @@
   </data>
   <data name="settingConfirmPassword" xml:space="preserve">
     <value>パスワードを認証する</value>
+  </data>
+  <data name="settingContract" xml:space="preserve">
+    <value>aksとの契約</value>
+  </data>
+  <data name="settingFrameManager" xml:space="preserve">
+    <value>管理とセットアップ</value>
+  </data>
+  <data name="settingFrameSupport" xml:space="preserve">
+    <value>サポート情報</value>
+  </data>
+  <data name="settingHome" xml:space="preserve">
+    <value>設定</value>
   </data>
   <data name="settingLogout" xml:space="preserve">
     <value>ログアウト</value>
@@ -221,6 +266,9 @@
   </data>
   <data name="settingTitle" xml:space="preserve">
     <value>パスワードを変更する</value>
+  </data>
+  <data name="settingVersion" xml:space="preserve">
+    <value> 使用されたバージョン</value>
   </data>
   <data name="shellHome" xml:space="preserve">
     <value>家</value>

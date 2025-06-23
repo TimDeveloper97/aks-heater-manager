@@ -1,56 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System_aks_vn.Controls;
 using System_aks_vn.Domain;
+using System_aks_vn.Models.Settings;
 using System_aks_vn.Models.View;
 using System_aks_vn.Views;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
 
 namespace System_aks_vn.ViewModels
 {
-    public class SettingViewModel: BaseViewModel
+    public class SettingViewModel : BaseViewModel
     {
         #region Property
-        private string oldPassword, newPassword, confirmPassword;
-        private string errorOldPassword, errorNewPassword, errorConfirmPassword;
+        private ObservableCollection<SettingItem> settingItems, additionalItems;
+        private string version, phone;
 
-        public string OldPassword { get => oldPassword; set => SetProperty(ref oldPassword, value); }
-        public string NewPassword { get => newPassword; set => SetProperty(ref newPassword, value); }
-        public string ConfirmPassword { get => confirmPassword; set => SetProperty(ref confirmPassword, value); }
-        public string ErrorOldPassword { get => errorOldPassword; set => SetProperty(ref errorOldPassword, value); }
-        public string ErrorNewPassword { get => errorNewPassword; set => SetProperty(ref errorNewPassword, value); }
-        public string ErrorConfirmPassword { get => errorConfirmPassword; set => SetProperty(ref errorConfirmPassword, value); }
-
+        public ObservableCollection<SettingItem> SettingItems { get => settingItems; set => SetProperty(ref settingItems, value); }
+        public ObservableCollection<SettingItem> AdditionalItems { get => additionalItems; set => SetProperty(ref additionalItems, value); }
+        public string Version { get => version; set => SetProperty(ref version, value); }
+        public string Phone { get => phone; set => SetProperty(ref phone, value); }
         #endregion
 
         #region Command  
-        public ICommand ChangePasswordCommand => new Command(async () =>
-        {
-            if (CheckChangePassword())
-            {
-                Reset();
-                await ExecuteLoadChangePasswordCommand();
-            }
-        });
-
-        public ICommand LogoutCommand => new Command(async () =>
-        {
-            //Mqtt.Disconnect();
-            //Topic = null;
-            //Token = null;
-
-            await Shell.Current.GoToAsync("//LoginPage");
-        });
 
         public ICommand PageAppearingCommand => new Command(() =>
         {
             Init();
         });
+
+
         #endregion
 
         public SettingViewModel()
@@ -62,87 +47,53 @@ namespace System_aks_vn.ViewModels
         {
             Title = "Settings";
             DependencyService.Get<IStatusBar>().SetColoredStatusBar("#007bff");
-            Reset();
+            GenerateRandomSettings();
+            Version = AppInfo.VersionString;
+            Phone = "0394852798";
         }
 
-        void Reset()
+        private void GenerateRandomSettings()
         {
-            ErrorOldPassword = null;
-            ErrorConfirmPassword = null;
-            ErrorNewPassword = null;
-        }
+            SettingItems = new ObservableCollection<SettingItem>();
+            AdditionalItems = new ObservableCollection<SettingItem>();
 
-        bool CheckChangePassword()
-        {
-            if (string.IsNullOrEmpty(OldPassword))
+            SettingItems.Add(new SettingItem
             {
-                ErrorOldPassword = "Old password is required.";
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(NewPassword))
+                Title = Resources.Languages.LanguageResource.settingActionProfile,
+                Description = Resources.Languages.LanguageResource.settingActionProfileD,
+                Icon = "account_color.png",
+            });
+            SettingItems.Add(new SettingItem
             {
-                ErrorNewPassword = "New password is required.";
-                return false;
-            }
-
-            if (string.IsNullOrEmpty(ConfirmPassword))
+                Title = Resources.Languages.LanguageResource.settingActionDevice,
+                Description = Resources.Languages.LanguageResource.settingActionDeviceD,
+                Icon = "device_v2.png",
+            });
+            SettingItems.Add(new SettingItem
             {
-                ErrorConfirmPassword = "Confirm password is required.";
-                return false;
-            }
-
-            return true;
-        }
-
-        async Task ExecuteLoadChangePasswordCommand()
-        {
-            IsBusy = true;
-
-            try
+                Title = Resources.Languages.LanguageResource.settingActionStaff,
+                Description = Resources.Languages.LanguageResource.settingActionStaffD,
+                Icon = "staff_color.png",
+            });
+            SettingItems.Add(new SettingItem
             {
-                //if (!Mqtt.IsConnected)
-                //    Mqtt.Connect();
+                Title = Resources.Languages.LanguageResource.settingTitle,
+                Description = Resources.Languages.LanguageResource.settingActionPasswordD,
+                Icon = "password_color.png",
+            });
 
-                //Mqtt.ClearEvent();
-                //Mqtt.Publish(Topic, new AccountContext
-                //{
-                //    Token = Token,
-                //    OldPass = OldPassword,
-                //    NewPass = NewPassword,
-                //    Confirm = ConfirmPassword,
-                //});
-
-                //Mqtt.MessageReceived += async (s, e) =>
-                //{
-                //    var res = (s as Mqtt).Response;
-                //    if (res.Code == 100)
-                //        await TimeoutSession(res.Message);
-
-                //    if(res.Code != 0)
-                //    {
-                //        if(res.Code == -2)
-                //            ErrorConfirmPassword = res.Message;
-                //        else
-                //            ErrorOldPassword = res.Message;
-
-                //        await MaterialDialog.Instance.SnackbarAsync(message: res.Message,
-                //              msDuration: MaterialSnackbar.DurationLong);
-                //    }    
-                //    else
-                //        await MaterialDialog.Instance.SnackbarAsync(message: "Success",
-                //              msDuration: MaterialSnackbar.DurationLong);
-                //};
-                
-            }
-            catch (Exception e)
+            AdditionalItems.Add(new SettingItem
             {
-                Debug.WriteLine(e.Message);
-            }
-            finally
+                Title = Resources.Languages.LanguageResource.settingActionGuide,
+                Description = Resources.Languages.LanguageResource.settingActionGuideD,
+                Icon = "book.png",
+            });
+            AdditionalItems.Add(new SettingItem
             {
-                IsBusy = false;
-            }
+                Title = Resources.Languages.LanguageResource.settingActionQuestion,
+                Description = Resources.Languages.LanguageResource.settingActionQuestionD,
+                Icon = "question.png",
+            });
         }
         #endregion
     }

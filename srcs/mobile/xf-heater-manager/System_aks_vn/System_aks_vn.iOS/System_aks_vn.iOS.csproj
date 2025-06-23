@@ -178,7 +178,14 @@
     <BundleResource Include="Resources\icon.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\account_color.png" />
+    <Content Include="Resources\book.png" />
+    <Content Include="Resources\device_v2.png" />
     <Content Include="Resources\history.png" />
+    <Content Include="Resources\password_color.png" />
     <Content Include="Resources\power.png" />
+    <Content Include="Resources\question.png" />
+    <Content Include="Resources\right.png" />
+    <Content Include="Resources\staff_color.png" />
   </ItemGroup>
 </Project>

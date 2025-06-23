@@ -9,7 +9,7 @@
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              xmlns:icon="clr-namespace:System_aks_vn.Resources"
              xmlns:lang="clr-namespace:System_aks_vn.Resources.Languages"
-             x:Name="settingpage" Title="{Static lang:LanguageResource.settingTitle}"
+             x:Name="settingpage" Title="{Static lang:LanguageResource.settingHome}"
              
              x:Class="System_aks_vn.Views.SettingPage">
     <ContentPage.BindingContext>
@@ -21,89 +21,93 @@
                 Command="{Binding PageAppearingCommand}" />
     </ContentPage.Behaviors>
     <ContentPage.Content>
-        <Grid BackgroundColor="{AppThemeBinding Dark={StaticResource BlackSmoke}, Light={StaticResource WhiteSmoke}}">
-            <!--<StackLayout Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="Start"
-                         Margin="10">
-                <Label  FontFamily="MaterialIcons" Text="{Static icon:FontIcons.Logout}" FontSize="30"
-                        VerticalTextAlignment="Center" HorizontalOptions="End" Margin="0,0,-5,0"
-                        TextColor="{AppThemeBinding Dark={StaticResource Red}, Light={StaticResource Red}}"/>
-                <Label Text="{Static lang:LanguageResource.settingLogout}"
-                       TextColor="{AppThemeBinding Dark={StaticResource Red}, Light={StaticResource Red}}"
-                       FontSize="{OnPlatform Android=20, iOS=18}"/>
-                <StackLayout.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" CommandParameter="{Binding .}"
-                                          Command="{Binding Path=BindingContext.LogoutCommand, Source={x:Reference Name=settingpage}}"/>
-                </StackLayout.GestureRecognizers>
-            </StackLayout>-->
-
-            <Frame BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
-                   BorderColor="{AppThemeBinding Dark={StaticResource Gray}, Light={StaticResource WhiteGray}}"
-                   HorizontalOptions="Center" VerticalOptions="Center" Margin="30,0"
-                   HasShadow="True" IsClippedToBounds="True" CornerRadius="10" Padding="0">
-                <Grid>
-                    <StackLayout Orientation="Vertical" 
-                                 VerticalOptions="FillAndExpand" HorizontalOptions="Center">
-
-                        <Label Text="{Static lang:LanguageResource.settingTitle}" 
-                               HeightRequest="50" VerticalOptions="Center" Padding="20,0" VerticalTextAlignment="Center"
-                               TextColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
-                               BackgroundColor="{AppThemeBinding Dark={StaticResource AppColor}, Light={StaticResource AppColor}}"
-                               FontSize="{OnPlatform Android=20, iOS=18}" FontAttributes="Bold" FontFamily="MuliBold"/>
-
-                        <StackLayout Margin="20,20">
-                            <mdc:MaterialEntry Type="Filled" LeadingIcon="password" Padding="0"
-                                                LabelText="{Static lang:LanguageResource.settingOldPassword}" 
-                                                Placeholder="{Static lang:LanguageResource.settingOldPasswordPlaceHold}"
-                                                MaxLength="20" Text="{Binding OldPassword}"
-                                                AssistiveText="{Binding ErrorOldPassword}" 
-                                                AnimateError="True" TabIndex="0"
-                                                LabelMargin="0,0,10,5" FontSize="{OnPlatform Android=15, iOS=13}"
-                                                LabelTextColor="{AppThemeBinding Dark={StaticResource AppColor}, Light={StaticResource AppColor}}"
-                                                TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
-                                                PlaceholderColor="{AppThemeBinding Dark={StaticResource GrayLight}, Light={StaticResource GrayLight}}"
-                                                BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
-                                                BorderColor="{AppThemeBinding Dark={StaticResource GrayLight}, Light={StaticResource GrayLight}}" 
-                                                AssistiveTextColor="{StaticResource Red}" />
-
-
-                            <mdc:MaterialEntry Type="Filled" LeadingIcon="password" Padding="0" Margin="0,20,0,0"
-                                               LabelText="{Static lang:LanguageResource.settingNewPassword}" 
-                                               Placeholder="{Static lang:LanguageResource.settingNewPasswordPlaceHold}"
-                                               MaxLength="20" Text="{Binding NewPassword}"
-                                               AssistiveText="{Binding ErrorNewPassword}" 
-                                               AnimateError="True" TabIndex="1"
-                                               LabelMargin="0,0,10,5" FontSize="{OnPlatform Android=15, iOS=13}"
-                                               LabelTextColor="{AppThemeBinding Dark={StaticResource AppColor}, Light={StaticResource AppColor}}"
-                                               TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
-                                               PlaceholderColor="{AppThemeBinding Dark={StaticResource GrayLight}, Light={StaticResource GrayLight}}"
-                                               BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
-                                               BorderColor="{AppThemeBinding Dark={StaticResource GrayLight}, Light={StaticResource GrayLight}}" 
-                                               AssistiveTextColor="{StaticResource Red}" />
-                            <mdc:MaterialEntry Type="Filled" LeadingIcon="password" Padding="0"
-                                               Placeholder="{Static lang:LanguageResource.settingConfirmPassword}"
-                                               IsPassword="True" MaxLength="20" Text="{Binding ConfirmPassword}"
-                                               AssistiveText="{Binding ErrorConfirmPassword}" 
-                                               AnimateError="True" TabIndex="1" Margin="0,10,0,0"
-                                               LabelMargin="0,0,10,5" FontSize="{OnPlatform Android=15, iOS=13}"
-                                               LabelTextColor="{AppThemeBinding Dark={StaticResource AppColor}, Light={StaticResource AppColor}}"
-                                               TextColor="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}"
-                                               PlaceholderColor="{AppThemeBinding Dark={StaticResource GrayLight}, Light={StaticResource GrayLight}}"
-                                               BackgroundColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
-                                               BorderColor="{AppThemeBinding Dark={StaticResource GrayLight}, Light={StaticResource GrayLight}}" 
-                                               AssistiveTextColor="{StaticResource Red}" />
-                        </StackLayout>
-
-                        <Grid BackgroundColor="{AppThemeBinding Dark={StaticResource Gray}, Light={StaticResource WhiteSmoke}}"
-                              Padding="0,10" HorizontalOptions="Fill">
-                            <mdc:MaterialButton BackgroundColor="{AppThemeBinding Dark={StaticResource AppColor}, Light={StaticResource AppColor}}"
-                                                TextColor="{AppThemeBinding Dark={StaticResource Black}, Light={StaticResource White}}"
-                                                WidthRequest="100" Text="{Static lang:LanguageResource.settingSubmitBtn}"
-                                                FontSize="{OnPlatform Android=18, iOS=16}" IsBusy="{Binding IsBusy}"
-                                                HorizontalOptions="Center" Command="{Binding ChangePasswordCommand}"/>
-                        </Grid>
-                    </StackLayout>
-                </Grid>
+        <StackLayout BackgroundColor="{AppThemeBinding Dark={StaticResource BlackSmoke}, Light={StaticResource WhiteSmoke}}">
+            <Frame Margin="10" CornerRadius="10">
+                <StackLayout HeightRequest="300">
+                    <Label Text="{Static lang:LanguageResource.settingFrameManager}" FontSize="Title" FontAttributes="Bold" TextColor="{StaticResource Black}"/>
+                    <CollectionView VerticalScrollBarVisibility="Never" Margin="0,20,0,-50" ItemsSource="{Binding SettingItems}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <Frame Padding="0">
+                                        <Grid ColumnDefinitions="auto,*,auto" Margin="5">
+                                            <Image Source="{Binding Icon}" HeightRequest="35" WidthRequest="35" />
+                                            <Grid Grid.Column="1" RowDefinitions="6*, 4*">
+                                                <Label Text="{Binding Title}" Margin="0,0,0,-5" VerticalOptions="Center" TextColor="{StaticResource Black}" FontSize="20"/>
+                                                <Label Grid.Row="1" Margin="0,-5,0,0" Text="{Binding Description}" HorizontalOptions="Start" TextColor="{StaticResource Gray300}" FontSize="Subtitle"/>
+                                            </Grid>
+                                            <Image Grid.Column="2" Source="right.png" HeightRequest="15" WidthRequest="15"/>
+                                        </Grid>
+                                    </Frame>
+                                    <Line HeightRequest="1" Margin="0,6"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
             </Frame>
-        </Grid>
+
+            <Frame Margin="10" CornerRadius="10">
+                <StackLayout HeightRequest="170">
+                    <Label Text="{Static lang:LanguageResource.settingFrameSupport}" FontSize="Title" FontAttributes="Bold" TextColor="{StaticResource Black}"/>
+                    <CollectionView VerticalScrollBarVisibility="Never" Margin="0,20,0,-50" ItemsSource="{Binding AdditionalItems}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <Frame Padding="0">
+                                        <Grid ColumnDefinitions="auto,*,auto" Margin="5">
+                                            <Image Source="{Binding Icon}" HeightRequest="35" WidthRequest="35" />
+                                            <Grid Grid.Column="1" RowDefinitions="6*, 4*">
+                                                <Label Text="{Binding Title}" Margin="0,0,0,-5" VerticalOptions="Center" TextColor="{StaticResource Black}" FontSize="20"/>
+                                                <Label Grid.Row="1" Margin="0,-5,0,0" Text="{Binding Description}" HorizontalOptions="Start" TextColor="{StaticResource Gray300}" FontSize="Subtitle"/>
+                                            </Grid>
+                                            <Image Grid.Column="2" Source="right.png" HeightRequest="15" WidthRequest="15"/>
+                                        </Grid>
+                                    </Frame>
+                                    <Line HeightRequest="1" Margin="0,6"/>
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </Frame>
+
+            <Frame Margin="10" CornerRadius="10" HeightRequest="75">
+                <StackLayout>
+                    <Label Text="{Static lang:LanguageResource.settingContract}" FontSize="Title" FontAttributes="Bold" TextColor="{StaticResource Black}"/>
+                    <StackLayout Orientation="Vertical" HorizontalOptions="Start">
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span   FontAttributes="Bold" FontFamily="MaterialIcons"
+                                            FontSize="{OnPlatform Android=20, iOS=18}"
+                                            Text="{x:Static icon:FontIcons.Phone}"
+                                            TextColor="{AppThemeBinding Dark={StaticResource Gray} ,Light={StaticResource Gray}}"/>
+                                    <Span   FontSize="{OnPlatform Android=20, iOS=14}"
+                                            Text="{Binding Phone, StringFormat=' {0}'}"
+                                            TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Label>
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span   FontAttributes="Bold" FontFamily="MaterialIcons"
+                                            FontSize="{OnPlatform Android=20, iOS=18}"
+                                            Text="{x:Static icon:FontIcons.Package}"
+                                            TextColor="{AppThemeBinding Dark={StaticResource Gray} ,Light={StaticResource Gray}}"/>
+                                    <Span   FontSize="{OnPlatform Android=20, iOS=14}"
+                                            Text="{Static lang:LanguageResource.settingVersion}"
+                                            TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}" />
+                                    <Span   FontSize="{OnPlatform Android=20, iOS=14}"
+                                            Text="{Binding Version, StringFormat=' v{0}'}"
+                                            TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}" />
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

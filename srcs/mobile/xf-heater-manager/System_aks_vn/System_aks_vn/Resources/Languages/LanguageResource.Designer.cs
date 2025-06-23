@@ -241,6 +241,105 @@ namespace System_aks_vn.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Devices.
+        /// </summary>
+        internal static string settingActionDevice {
+            get {
+                return ResourceManager.GetString("settingActionDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage your device list.
+        /// </summary>
+        internal static string settingActionDeviceD {
+            get {
+                return ResourceManager.GetString("settingActionDeviceD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How to use.
+        /// </summary>
+        internal static string settingActionGuide {
+            get {
+                return ResourceManager.GetString("settingActionGuide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instructions for using application features.
+        /// </summary>
+        internal static string settingActionGuideD {
+            get {
+                return ResourceManager.GetString("settingActionGuideD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change your password with a new one.
+        /// </summary>
+        internal static string settingActionPasswordD {
+            get {
+                return ResourceManager.GetString("settingActionPasswordD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        internal static string settingActionProfile {
+            get {
+                return ResourceManager.GetString("settingActionProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configure user information.
+        /// </summary>
+        internal static string settingActionProfileD {
+            get {
+                return ResourceManager.GetString("settingActionProfileD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question.
+        /// </summary>
+        internal static string settingActionQuestion {
+            get {
+                return ResourceManager.GetString("settingActionQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List of frequently asked questions.
+        /// </summary>
+        internal static string settingActionQuestionD {
+            get {
+                return ResourceManager.GetString("settingActionQuestionD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Staffs.
+        /// </summary>
+        internal static string settingActionStaff {
+            get {
+                return ResourceManager.GetString("settingActionStaff", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage your list of users.
+        /// </summary>
+        internal static string settingActionStaffD {
+            get {
+                return ResourceManager.GetString("settingActionStaffD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Call.
         /// </summary>
         internal static string settingCall {
@@ -264,6 +363,42 @@ namespace System_aks_vn.Resources.Languages {
         internal static string settingConfirmPassword {
             get {
                 return ResourceManager.GetString("settingConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contract to AKS.
+        /// </summary>
+        internal static string settingContract {
+            get {
+                return ResourceManager.GetString("settingContract", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Management and setup.
+        /// </summary>
+        internal static string settingFrameManager {
+            get {
+                return ResourceManager.GetString("settingFrameManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Support Information.
+        /// </summary>
+        internal static string settingFrameSupport {
+            get {
+                return ResourceManager.GetString("settingFrameSupport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setting.
+        /// </summary>
+        internal static string settingHome {
+            get {
+                return ResourceManager.GetString("settingHome", resourceCulture);
             }
         }
         
@@ -372,6 +507,15 @@ namespace System_aks_vn.Resources.Languages {
         internal static string settingTitle {
             get {
                 return ResourceManager.GetString("settingTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  Version used.
+        /// </summary>
+        internal static string settingVersion {
+            get {
+                return ResourceManager.GetString("settingVersion", resourceCulture);
             }
         }
         

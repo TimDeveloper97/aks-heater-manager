@@ -177,6 +177,39 @@
   <data name="loginUserNamePlaceHold" xml:space="preserve">
     <value>User</value>
   </data>
+  <data name="settingActionDevice" xml:space="preserve">
+    <value>Devices</value>
+  </data>
+  <data name="settingActionDeviceD" xml:space="preserve">
+    <value>Manage your device list</value>
+  </data>
+  <data name="settingActionGuide" xml:space="preserve">
+    <value>How to use</value>
+  </data>
+  <data name="settingActionGuideD" xml:space="preserve">
+    <value>Instructions for using application features</value>
+  </data>
+  <data name="settingActionPasswordD" xml:space="preserve">
+    <value>Change your password with a new one</value>
+  </data>
+  <data name="settingActionProfile" xml:space="preserve">
+    <value>Profile</value>
+  </data>
+  <data name="settingActionProfileD" xml:space="preserve">
+    <value>Configure user information</value>
+  </data>
+  <data name="settingActionQuestion" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="settingActionQuestionD" xml:space="preserve">
+    <value>List of frequently asked questions</value>
+  </data>
+  <data name="settingActionStaff" xml:space="preserve">
+    <value>Staffs</value>
+  </data>
+  <data name="settingActionStaffD" xml:space="preserve">
+    <value>Manage your list of users</value>
+  </data>
   <data name="settingCall" xml:space="preserve">
     <value>Call</value>
   </data>
@@ -185,6 +218,18 @@
   </data>
   <data name="settingConfirmPassword" xml:space="preserve">
     <value>Confirm</value>
+  </data>
+  <data name="settingContract" xml:space="preserve">
+    <value>Contract to AKS</value>
+  </data>
+  <data name="settingFrameManager" xml:space="preserve">
+    <value>Management and setup</value>
+  </data>
+  <data name="settingFrameSupport" xml:space="preserve">
+    <value>Support Information</value>
+  </data>
+  <data name="settingHome" xml:space="preserve">
+    <value>Setting</value>
   </data>
   <data name="settingLogout" xml:space="preserve">
     <value>Logout</value>
@@ -221,6 +266,9 @@
   </data>
   <data name="settingTitle" xml:space="preserve">
     <value>Change password</value>
+  </data>
+  <data name="settingVersion" xml:space="preserve">
+    <value> Version used</value>
   </data>
   <data name="shellHome" xml:space="preserve">
     <value>Home</value>

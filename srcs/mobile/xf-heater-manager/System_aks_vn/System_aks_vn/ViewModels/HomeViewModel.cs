@@ -61,14 +61,14 @@ namespace System_aks_vn.ViewModels
 
             var actions = new string[]
             {
-                Resources.Languages.LanguageResource.settingTitle,
+                Resources.Languages.LanguageResource.settingHome,
                 Resources.Languages.LanguageResource.settingLogout
             };
             var result = await MaterialDialog.Instance.SelectActionAsync(
                 title: Resources.Languages.LanguageResource.homeMenu, actions: actions, configuration);
 
             if (result == 0)
-                await ExecuteLoadChangePassword();
+                await ExecuteLoadSetting();
             else if (result == 1)
                 await ExecuteLoadLogout();
         });
@@ -137,6 +137,11 @@ namespace System_aks_vn.ViewModels
 
         async Task ExecuteLoadChangePassword()
         {
+            await Shell.Current.GoToAsync($"{nameof(ProfilePage)}");
+        }
+
+        async Task ExecuteLoadSetting()
+        {
             await Shell.Current.GoToAsync($"{nameof(SettingPage)}");
         }
 
@@ -148,6 +153,7 @@ namespace System_aks_vn.ViewModels
 
             await Shell.Current.GoToAsync("//LoginPage");
         }
+
         Color GetColorTextMenu()
         {
             OSAppTheme currentTheme = Application.Current.RequestedTheme;

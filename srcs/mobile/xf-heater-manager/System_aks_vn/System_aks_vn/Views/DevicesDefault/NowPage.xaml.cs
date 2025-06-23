@@ -16,5 +16,15 @@ namespace System_aks_vn.Views.DevicesDefault
         {
             InitializeComponent();
         }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+
+            if (BindingContext is ViewModels.DevicesDefault.NowViewModel vm)
+            {
+                vm.StopThread();
+            }
+        }
     }
 }

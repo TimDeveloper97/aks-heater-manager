@@ -177,6 +177,39 @@
   <data name="loginUserNamePlaceHold" xml:space="preserve">
     <value>Tài khoản</value>
   </data>
+  <data name="settingActionDevice" xml:space="preserve">
+    <value>Danh sách thiết bị</value>
+  </data>
+  <data name="settingActionDeviceD" xml:space="preserve">
+    <value>Quản lý danh sách các thiết bị của bạn</value>
+  </data>
+  <data name="settingActionGuide" xml:space="preserve">
+    <value>Hướng dẫn sử dụng</value>
+  </data>
+  <data name="settingActionGuideD" xml:space="preserve">
+    <value>Hướng dẫn sử dụng các tính năng của ứng dụng</value>
+  </data>
+  <data name="settingActionPasswordD" xml:space="preserve">
+    <value>Thay đổi mật khẩu của bạn bằng mật khẩu mới</value>
+  </data>
+  <data name="settingActionProfile" xml:space="preserve">
+    <value>Tài khoản</value>
+  </data>
+  <data name="settingActionProfileD" xml:space="preserve">
+    <value>Cấu hình thông tin người dùng</value>
+  </data>
+  <data name="settingActionQuestion" xml:space="preserve">
+    <value>Câu hỏi thường gặp</value>
+  </data>
+  <data name="settingActionQuestionD" xml:space="preserve">
+    <value>Danh sách các câu hỏi thường gặp</value>
+  </data>
+  <data name="settingActionStaff" xml:space="preserve">
+    <value>Danh sách User cấp 2</value>
+  </data>
+  <data name="settingActionStaffD" xml:space="preserve">
+    <value>Quản lý danh sách các người dùng của bạn</value>
+  </data>
   <data name="settingCall" xml:space="preserve">
     <value>Cuộc gọi</value>
   </data>
@@ -185,6 +218,18 @@
   </data>
   <data name="settingConfirmPassword" xml:space="preserve">
     <value>Xác nhận</value>
+  </data>
+  <data name="settingContract" xml:space="preserve">
+    <value>Liên hệ với AKS</value>
+  </data>
+  <data name="settingFrameManager" xml:space="preserve">
+    <value>Quản lý và thiết lập</value>
+  </data>
+  <data name="settingFrameSupport" xml:space="preserve">
+    <value>Thông tin hỗ trợ</value>
+  </data>
+  <data name="settingHome" xml:space="preserve">
+    <value>Cài đặt</value>
   </data>
   <data name="settingLogout" xml:space="preserve">
     <value>Đăng xuất</value>
@@ -221,6 +266,9 @@
   </data>
   <data name="settingTitle" xml:space="preserve">
     <value>Đổi mật khẩu</value>
+  </data>
+  <data name="settingVersion" xml:space="preserve">
+    <value> Phiên bản sử dụng</value>
   </data>
   <data name="shellHome" xml:space="preserve">
     <value>Trang chủ</value>
