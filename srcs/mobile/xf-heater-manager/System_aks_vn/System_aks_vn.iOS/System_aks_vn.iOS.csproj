@@ -177,4 +177,8 @@
   <ItemGroup>
     <BundleResource Include="Resources\icon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\history.png" />
+    <Content Include="Resources\power.png" />
+  </ItemGroup>
 </Project>

@@ -1,12 +1,10 @@
 
+using Microsoft.Extensions.DependencyInjection;
 using Plugin.LocalNotification;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using VstCommon.ModelResponses;
+using VstService.Interfaces;
 using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
 
@@ -14,6 +12,8 @@ namespace System_aks_vn.Domain
 {
     public class BaseViewModel : BaseBinding
     {
+        protected IRestApiService _restApiService => App.ServiceProvider.GetService<IRestApiService>();
+
         bool isBusy = false;
         public bool IsBusy
         {
@@ -29,7 +29,7 @@ namespace System_aks_vn.Domain
         }
 
         #region Extend
-        protected LoginResponse User { get; set; }
+        protected static LoginResponse User { get; set; }
 
         protected async Task TimeoutSession(string message)
         {

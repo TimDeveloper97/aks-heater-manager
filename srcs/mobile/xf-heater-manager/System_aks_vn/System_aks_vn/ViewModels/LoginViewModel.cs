@@ -34,8 +34,6 @@ namespace System_aks_vn.ViewModels
         private static string _currentLanguage;
         private bool isSaveInfo;
 
-        private IRestApiService _restApiService => App.ServiceProvider.GetService<IRestApiService>();
-
         public bool IsSaveInfo { get => isSaveInfo; set => SetProperty(ref isSaveInfo, value); }
         public string UserName { get => userName; set => SetProperty(ref userName, value); }
         public string Password { get => password; set => SetProperty(ref password, value); }
@@ -102,11 +100,11 @@ namespace System_aks_vn.ViewModels
             SelectedLanguage = Preferences.Get("language", "English");
             IsSaveInfo = Preferences.Get("saveinfo", false);
 
-            if(IsSaveInfo)
+            if (IsSaveInfo)
             {
                 UserName = Preferences.Get("username", null);
                 Password = Preferences.Get("password", null);
-            }    
+            }
 
             //if (Mqtt.IsConnected == false)
             //    Mqtt.Connect();
@@ -154,8 +152,6 @@ namespace System_aks_vn.ViewModels
 
             try
             {
-                var x = _restApiService;
-
                 var rdata = new RData
                 {
                     Data = new VstRequest { Value = new LoginRequest { Password = Password, Username = UserName } },
@@ -170,11 +166,12 @@ namespace System_aks_vn.ViewModels
                         API.UserType = response.Model?.Role?.ToLower() ?? API.CUSTOMER;
                         User = response.Model;
 
-                        await Shell.Current.GoToAsync(nameof(HomePage));
+                        await Shell.Current.GoToAsync($"///{nameof(HomePage)}");
                     },
                     onFailure: async (e) =>
                     {
-                        await Shell.Current.DisplayAlert("Information", "Login fail", "Cancel");
+                        await XF.Material.Forms.UI.Dialogs.MaterialDialog.Instance.LoadingSnackbarAsync(
+                            message: "Login fail");
                     });
             }
             catch (Exception e)

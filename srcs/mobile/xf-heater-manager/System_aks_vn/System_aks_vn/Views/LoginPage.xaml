@@ -50,7 +50,7 @@
                                FontSize="{OnPlatform Android=20, iOS=18}" FontAttributes="Bold" FontFamily="MuliBold"/>
 
                         <StackLayout Margin="20,20,20,0">
-                            <mdc:MaterialEntry Type="Filled" LeadingIcon="{AppThemeBinding Dark=userdark, Light=userlight}" Padding="0" Margin="0,20,0,0"
+                            <mdc:MaterialEntry Type="Filled" LeadingIcon="{AppThemeBinding Dark=userdark, Light=userlight}" Padding="0"
                                                LabelText="{Static lang:LanguageResource.loginUserName}" 
                                                Placeholder="{Static lang:LanguageResource.loginUserNamePlaceHold}"
                                                MaxLength="20" 

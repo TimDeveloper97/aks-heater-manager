@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             
+             Shell.NavBarIsVisible="true"
+            xmlns:mdc="clr-namespace:Plugin.MaterialDesignControls;assembly=Plugin.MaterialDesignControls"
+            xmlns:xf="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+            xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+            xmlns:icon="clr-namespace:System_aks_vn.Resources"
+            xmlns:lang="clr-namespace:System_aks_vn.Resources.Languages"
+            xmlns:vm="clr-namespace:System_aks_vn.ViewModels.Version"
+             xmlns:devicedefault="clr-namespace:System_aks_vn.Views.DevicesDefault"
+            
+            BarBackgroundColor="{StaticResource AppColor}"
+            BarTextColor="{StaticResource White}"
+            UnselectedTabColor="{StaticResource GrayLight}"
+            SelectedTabColor="{StaticResource White}"
+            x:Class="System_aks_vn.Views.Version.DeviceDefaultPage">
+    <TabbedPage.BindingContext>
+        <vm:DeviceDefaultViewModel/>
+    </TabbedPage.BindingContext>
+    <Shell.TitleView>
+        <Grid>
+            <Label Text="{Binding Title}"
+                TextColor="{AppThemeBinding Dark={StaticResource Black} ,Light={StaticResource White}}"
+                FontSize="Title" Margin="0,0,70,0"
+                HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"
+                FontFamily="MuliBold"/>
+        </Grid>
+    </Shell.TitleView>
+
+    <TabbedPage.Children>
+        <devicedefault:NowPage Title="{Static lang:LanguageResource.deviceDefaultNow}">
+            <devicedefault:NowPage.IconImageSource>
+                <FontImageSource Glyph="&#xf0e7;" FontFamily="FontAwesomeSolid" Size="20" />
+            </devicedefault:NowPage.IconImageSource>
+        </devicedefault:NowPage>
+        <devicedefault:HistoryPage Title="{Static lang:LanguageResource.deviceDefaultHistory}">
+            <devicedefault:HistoryPage.IconImageSource>
+                <FontImageSource Glyph="&#xf1da;" FontFamily="FontAwesomeSolid" Size="20" />
+            </devicedefault:HistoryPage.IconImageSource>
+        </devicedefault:HistoryPage>
+    </TabbedPage.Children>
+</TabbedPage>

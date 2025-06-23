@@ -41,7 +41,7 @@
     </TabBar>-->
     
     <TabBar>
-        <ShellContent Route="LoginPage"  ContentTemplate="{DataTemplate view:LoginPage}" />
+        <ShellContent Route="LoginPage"  ContentTemplate="{DataTemplate view:LoginPage}"/>
         <ShellContent Route="HomePage"  ContentTemplate="{DataTemplate view:HomePage}" />
     </TabBar>
 </Shell>

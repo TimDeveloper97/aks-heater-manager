@@ -8,3 +8,5 @@ using Xamarin.Forms.Xaml;
 [assembly: ExportFont("OpensansSemibold.ttf", Alias = "OpenSansSemiBold")]
 [assembly: ExportFont("Fontello.ttf", Alias = "Fontello")]
 [assembly: ExportFont("Materialdesignicons.ttf", Alias = "MaterialIcons")]
+[assembly: ExportFont("fa-solid-900.otf", Alias = "FontAwesomeSolid")]
+

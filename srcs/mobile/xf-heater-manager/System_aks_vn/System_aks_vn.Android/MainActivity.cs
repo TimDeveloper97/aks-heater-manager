@@ -8,7 +8,7 @@ using Plugin.LocalNotification;
 
 namespace System_aks_vn.Droid
 {
-    [Activity(Label = "S-AKS", Icon = "@mipmap/slock", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
+    [Activity(Label = "AKS Power", Icon = "@mipmap/slock", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize )]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -29,13 +29,13 @@ namespace System_aks_vn.Droid
             XF.Material.Droid.Material.Init(this, savedInstanceState);
 
             // Yêu cầu quyền notification cho Android 13+
-            if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Cupcake)
-            {
-                if (CheckSelfPermission(Android.Manifest.Permission.AccessNotificationPolicy) != Android.Content.PM.Permission.Granted)
-                {
-                    RequestPermissions(new[] { Android.Manifest.Permission.AccessNotificationPolicy }, 1001);
-                }
-            }
+            //if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Cupcake)
+            //{
+            //    if (CheckSelfPermission(Android.Manifest.Permission.AccessNotificationPolicy) != Android.Content.PM.Permission.Granted)
+            //    {
+            //        RequestPermissions(new[] { Android.Manifest.Permission.AccessNotificationPolicy }, 1001);
+            //    }
+            //}
 
             #endregion
 

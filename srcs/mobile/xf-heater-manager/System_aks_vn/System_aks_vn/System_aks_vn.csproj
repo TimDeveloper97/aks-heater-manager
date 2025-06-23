@@ -11,6 +11,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Resources\Fonts\fa-solid-900.otf" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microcharts.Forms" Version="0.9.5.9" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -23,6 +27,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Include="Resources\Fonts\fa-solid-900.otf" />
 		<EmbeddedResource Include="Resources\Fonts\fontello.ttf" />
 		<EmbeddedResource Include="Resources\Fonts\materialdesignicons.ttf" />
 		<EmbeddedResource Include="Resources\Fonts\muli-black.ttf" />
@@ -54,19 +59,25 @@
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>LanguageResource.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Views\Devices\DeviceHistoryPage.xaml">
+		<EmbeddedResource Update="Views\DevicesDefault\HistoryPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Views\Devices\DeviceSettingPage.xaml">
+		<EmbeddedResource Update="Views\DevicesDefault\NowPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Views\Devices\Settings\DeviceSettingCallPage.xaml">
+		<EmbeddedResource Update="Views\DevicesV30\DeviceHistoryPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Views\Devices\Settings\DeviceSettingSchedulePage.xaml">
+		<EmbeddedResource Update="Views\DevicesV30\DeviceSettingPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Views\Devices\Settings\DeviceSettingSmsPage.xaml">
+		<EmbeddedResource Update="Views\DevicesV30\Settings\DeviceSettingCallPage.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\DevicesV30\Settings\DeviceSettingSchedulePage.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\DevicesV30\Settings\DeviceSettingSmsPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Views\HomePage.xaml">
@@ -79,6 +90,9 @@
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Views\SettingPage.xaml">
+		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Views\Version\DeviceDefaultPage.xaml">
 		  <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Views\Version\DeviceV30Page.xaml">

@@ -12,6 +12,10 @@ using System_aks_vn.Models.Response;
 using System_aks_vn.ViewModels.Version;
 using System_aks_vn.Views;
 using System_aks_vn.Views.Version;
+using VstCommon;
+using VstCommon.ModelResponses;
+using VstCommon.Models;
+using VstService.Models;
 using Xamarin.Forms;
 using XF.Material.Forms.UI.Dialogs;
 using XF.Material.Forms.UI.Dialogs.Configurations;
@@ -41,6 +45,12 @@ namespace System_aks_vn.ViewModels
                 await Shell.Current.GoToAsync($"{nameof(DeviceV30Page)}" +
                 $"?{nameof(DeviceV30ViewModel.ParameterDeviceId)}={device.Id}");
             }
+            else
+            {
+                await Shell.Current.GoToAsync($"{nameof(DeviceDefaultPage)}" +
+                $"?{nameof(DeviceDefaultViewModel.ParameterDeviceId)}={device.Id}" +
+                $"&{nameof(DeviceDefaultViewModel.ParameterDeviceName)}={device.Name}");
+            }    
         });
         public ICommand MenuCommand => new Command(async () =>
         {
@@ -52,7 +62,7 @@ namespace System_aks_vn.ViewModels
             var actions = new string[]
             {
                 Resources.Languages.LanguageResource.settingTitle,
-                Resources.Languages.LanguageResource.settingLogout 
+                Resources.Languages.LanguageResource.settingLogout
             };
             var result = await MaterialDialog.Instance.SelectActionAsync(
                 title: Resources.Languages.LanguageResource.homeMenu, actions: actions, configuration);
@@ -68,7 +78,7 @@ namespace System_aks_vn.ViewModels
 
         public HomeViewModel()
         {
-            LoadDeviceCommand = new Command(() => ExecuteLoadDeviceCommand());
+            LoadDeviceCommand = new Command(async () => await ExecuteLoadDeviceCommand());
         }
 
         #region Method
@@ -81,7 +91,7 @@ namespace System_aks_vn.ViewModels
             IsBusy = true;
         }
 
-        void ExecuteLoadDeviceCommand()
+        async Task ExecuteLoadDeviceCommand()
         {
             IsBusy = true;
 
@@ -89,7 +99,30 @@ namespace System_aks_vn.ViewModels
             {
                 Devices?.Clear();
 
+                var rdata = new RData
+                {
+                    Data = new VstRequest { Token = User.Token },
+                    Endpoint = API.DeviceList,
+                };
 
+                await _restApiService.VstRequestAPI<List<DeviceResponse>>(
+                    ERMethod.Post,
+                    rdata,
+                    onSuccess: (response) =>
+                    {
+                        foreach (var dr in response.Model)
+                        {
+                            Devices.Add(new DeviceModel(dr));
+                        }
+
+                        //Debug.WriteLine(JsonConvert.SerializeObject(response.Model));
+                        return Task.CompletedTask;
+                    },
+                    onFailure: async (e) =>
+                    {
+                        await XF.Material.Forms.UI.Dialogs.MaterialDialog.Instance.LoadingSnackbarAsync(
+                            message: "Loading device fail.");
+                    });
             }
             catch (Exception ex)
             {

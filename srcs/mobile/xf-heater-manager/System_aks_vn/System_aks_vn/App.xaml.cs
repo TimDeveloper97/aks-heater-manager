@@ -5,6 +5,7 @@ using System;
 using VstService.Interfaces;
 using VstService.Repositories;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 using Xamarin.Forms.Xaml;
 
 namespace System_aks_vn
