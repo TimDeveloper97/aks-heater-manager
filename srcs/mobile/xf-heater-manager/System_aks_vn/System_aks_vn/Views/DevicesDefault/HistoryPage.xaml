@@ -9,7 +9,7 @@
             xmlns:icon="clr-namespace:System_aks_vn.Resources"
             xmlns:lang="clr-namespace:System_aks_vn.Resources.Languages"
             xmlns:vm="clr-namespace:System_aks_vn.ViewModels.DevicesDefault"
-             
+             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              x:Class="System_aks_vn.Views.DevicesDefault.HistoryPage">
     <ContentPage.BindingContext>
         <vm:HistoryViewModel />
@@ -21,7 +21,73 @@
     </ContentPage.Behaviors>
     <ContentPage.Content>
         <Grid BackgroundColor="{StaticResource WhiteGray}">
-            
+            <Grid RowDefinitions="auto,auto, *, 30,auto,20" Padding="10">
+                <!--header-->
+                <StackLayout Orientation="Horizontal">
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span FontAttributes="Bold"
+                                 FontSize="{OnPlatform Android=22, iOS=18}"
+                                 Text="{Static lang:LanguageResource.deviceHistoryPower}"
+                                 TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}"/>
+                                <Span FontSize="{OnPlatform Android=22, iOS=18}"
+                                 Text="{Binding TotalPower, StringFormat=': {0:N0} (kw)'}"
+                                 TextColor="{AppThemeBinding Dark={StaticResource White} ,Light={StaticResource Black}}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+
+                <!--chart-->
+                <Grid Row="2">
+                    <forms:ChartView Chart="{Binding Chart}" BackgroundColor="{StaticResource GrayLight}"/>
+                </Grid>
+
+                <Frame Grid.Row="4" Padding="0,20">
+                    <Grid ColumnDefinitions="*,auto,*,auto,*">
+                        <StackLayout Grid.Column="0" VerticalOptions="Center" HorizontalOptions="Center">
+                            <Image>
+                                <Image.Source>
+                                    <FontImageSource Glyph="&#xf783;" FontFamily="FontAwesomeSolid" Size="20" Color="Black"/>
+                                </Image.Source>
+                            </Image>
+                            <Label Text="{Static lang:LanguageResource.deviceHistoryDay}"/>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ModeCommand}" CommandParameter="day"/>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+
+                        <BoxView Grid.Column="1" WidthRequest="1" BackgroundColor="{StaticResource Gray100}"/>
+
+                        <StackLayout Grid.Column="2" VerticalOptions="Center" HorizontalOptions="Center">
+                            <Image>
+                                <Image.Source>
+                                    <FontImageSource Glyph="&#xf784;" FontFamily="FontAwesomeSolid" Size="20" Color="Black"/>
+                                </Image.Source>
+                            </Image>
+                            <Label Text="{Static lang:LanguageResource.deviceHistoryWeek}"/>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ModeCommand}" CommandParameter="week"/>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+
+                        <BoxView Grid.Column="3" WidthRequest="1" BackgroundColor="{StaticResource Gray100}"/>
+
+                        <StackLayout Grid.Column="4" VerticalOptions="Center" HorizontalOptions="Center">
+                            <Image>
+                                <Image.Source>
+                                    <FontImageSource Glyph="&#xf073;" FontFamily="FontAwesomeSolid" Size="20" Color="Black"/>
+                                </Image.Source>
+                            </Image>
+                            <Label Text="{Static lang:LanguageResource.deviceHistoryMonth}"/>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ModeCommand}" CommandParameter="month"/>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </Grid>
+                </Frame>
+            </Grid>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

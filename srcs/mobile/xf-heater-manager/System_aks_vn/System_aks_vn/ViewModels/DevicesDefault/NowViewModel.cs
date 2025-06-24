@@ -50,6 +50,7 @@ namespace System_aks_vn.ViewModels.DevicesDefault
             Chart = new LineChart
             {
                 Entries = new List<ChartEntry>(),
+                ValueLabelOrientation = Orientation.Horizontal,
                 //IsAnimated = true,
                 AnimationProgress = 1,
                 AnimationDuration = new TimeSpan(1200),

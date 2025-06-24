@@ -88,11 +88,47 @@ namespace System_aks_vn.Resources.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Day.
+        /// </summary>
+        internal static string deviceHistoryDay {
+            get {
+                return ResourceManager.GetString("deviceHistoryDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
         internal static string devicehistorydetail {
             get {
                 return ResourceManager.GetString("devicehistorydetail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Month.
+        /// </summary>
+        internal static string deviceHistoryMonth {
+            get {
+                return ResourceManager.GetString("deviceHistoryMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Power Meter.
+        /// </summary>
+        internal static string deviceHistoryPower {
+            get {
+                return ResourceManager.GetString("deviceHistoryPower", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Week.
+        /// </summary>
+        internal static string deviceHistoryWeek {
+            get {
+                return ResourceManager.GetString("deviceHistoryWeek", resourceCulture);
             }
         }
         

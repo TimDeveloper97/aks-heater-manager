@@ -126,8 +126,20 @@
   <data name="deviceHistory" xml:space="preserve">
     <value>歴史</value>
   </data>
+  <data name="deviceHistoryDay" xml:space="preserve">
+    <value>日</value>
+  </data>
   <data name="devicehistorydetail" xml:space="preserve">
     <value>詳細</value>
+  </data>
+  <data name="deviceHistoryMonth" xml:space="preserve">
+    <value>月</value>
+  </data>
+  <data name="deviceHistoryPower" xml:space="preserve">
+    <value>パワーメーター</value>
+  </data>
+  <data name="deviceHistoryWeek" xml:space="preserve">
+    <value>週</value>
   </data>
   <data name="deviceSetting" xml:space="preserve">
     <value>設定</value>

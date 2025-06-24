@@ -126,8 +126,20 @@
   <data name="deviceHistory" xml:space="preserve">
     <value>Lịch sử</value>
   </data>
+  <data name="deviceHistoryDay" xml:space="preserve">
+    <value>Ngày</value>
+  </data>
   <data name="devicehistorydetail" xml:space="preserve">
     <value>Chi tiết </value>
+  </data>
+  <data name="deviceHistoryMonth" xml:space="preserve">
+    <value>Tháng</value>
+  </data>
+  <data name="deviceHistoryPower" xml:space="preserve">
+    <value>Công suất</value>
+  </data>
+  <data name="deviceHistoryWeek" xml:space="preserve">
+    <value>Tuần</value>
   </data>
   <data name="deviceSetting" xml:space="preserve">
     <value>Cấu hình</value>
